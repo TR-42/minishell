@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 23:01:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/01/30 13:00:12 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/05 22:14:58 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ int		ft_isprint(int c);
 int		ft_islower(int c);
 int		ft_isupper(int c);
 int		ft_isspace(int c);
+
+// Additional Functions (original)
+int		ft_isspcornil(int c);
 
 #endif
