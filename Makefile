@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/05 23:27:15 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/06 00:06:55 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 
 VPATH	=	\
 	$(SRCS_MAIN_DIR)\
+
+TEST_DIR	=	.tests
+TEST_SERIALIZER	=	test_serializer
 
 LIBFT_DIR	=	./libft
 LIBFT	=	$(LIBFT_DIR)/libft.a
@@ -54,8 +57,7 @@ $(LIBFT):
 bonus:	$(NAME)
 
 clean_local:
-	rm -f $(OBJS) $(DEPS)
-	rm -d $(OBJ_DIR) || exit 0
+	rm -rf $(OBJ_DIR)
 
 fclean_local: clean_local
 	rm -f $(NAME)
@@ -74,3 +76,14 @@ norm:
 -include $(DEPS)
 
 .PHONY:	clean_local bonus norm
+
+t: test
+test:\
+	$(OBJ_DIR)/$(TEST_SERIALIZER)\
+
+	@echo '~~~~~~~~~~ TEST ~~~~~~~~~~~~'
+	@$(OBJ_DIR)/$(TEST_SERIALIZER) 'abc def'
+
+
+$(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
