@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:01 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 08:41:35 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 08:41:52 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 
 	mode = M_NORMAL;
 	cmd = vect_init(16, sizeof(t_cmd_elem));
+	if (cmd.p == NULL)
+		return (false);
 	while (**input != '\0')
 	{
 		if (ft_isspace(**input))
