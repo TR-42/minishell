@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:01 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/05 23:11:24 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 08:38:20 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 			|| _serializer_dquote(input, mode, &v)
 			|| _serializer_var(input, mode, &v))
 			return (v);
-		if (mode == M_NORMAL)
+		if (*mode == M_NORMAL)
 		{
 			if (ft_isspace(*((*input)++)))
 				return (v);
@@ -48,8 +48,9 @@ static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 	t_pars_mde	mode;
 	t_cmd_elem	elem;
 
+	mode = M_NORMAL;
 	cmd = vect_init(16, sizeof(t_cmd_elem));
-	while (**input != '\0' && (mode == M_NORMAL && **input != '|'))
+	while (**input != '\0')
 	{
 		if (ft_isspace(**input))
 			*input += 1;
