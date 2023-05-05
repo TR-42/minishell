@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/03 20:25:34 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/05 23:27:15 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ NAME	=	minishell
 SRCS_MAIN	= \
 	main.c \
 
-SRCS	= \
-	$(SRCS_MAIN)\
+SRCS_NOMAIN	= \
 
 HEADERS_DIR		=	./headers
 
@@ -24,8 +23,9 @@ SRCS_BASE_DIR	=	./srcs
 SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
 
 OBJ_DIR	=	./obj
-OBJS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
-DEPS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.d))
+OBJS_NOMAIN	=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
+OBJS	=	$(OBJS_NOMAIN) $(addprefix $(OBJ_DIR)/, $(SRCS_MAIN:.c=.o))
+DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 
 VPATH	=	\
 	$(SRCS_MAIN_DIR)\
