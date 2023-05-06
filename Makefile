@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/06 10:59:23 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/06 23:00:18 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ fclean:	fclean_local
 re:	fclean all
 
 norm:
-	norminette $(HEADERS_DIR) $(SRC_DIR)
+	norminette $(HEADERS_DIR) $(SRCS_MAIN_DIR)
 
 -include $(DEPS)
 
