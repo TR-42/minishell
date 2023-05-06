@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 13:24:53 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 13:26:22 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,24 @@ bool	_is_valid_var_char(char c)
 		|| c == '$');
 }
 
+static bool	_when_pars_mde_normal(const char **input, t_pars_mde *mode,
+	t_cmd_elem *v)
+{
+	if (**input != '$' || !_is_valid_var_char((*input)[1]))
+		return (false);
+	*input += 1;
+	*mode = M_VAR;
+	if (v->len < 0)
+		return (false);
+	v->elem_top = *input;
+	return (false);
+}
+
 // return: Elementが終了するかどうか
 bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 {
 	if (*mode == M_NORMAL)
-	{
-		if (**input != '$' || !_is_valid_var_char((*input)[1]))
-			return (false);
-		*input += 1;
-		*mode = M_VAR;
-		return (0 < v->len);
-	}
+		return (_when_pars_mde_normal(input, mode, v));
 	if (*mode == M_VAR || *mode == M_DQUOTE_VAR)
 	{
 		v->type = CMDTYP_VARIABLE;
