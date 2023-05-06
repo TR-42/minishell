@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/05 23:13:27 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:18:53 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 	}
 	if (*mode == M_VAR || *mode == M_DQUOTE_VAR)
 	{
+		v->type = CMDTYP_VARIABLE;
 		if (**input == '$')
 		{
 			v->nospace = true;
