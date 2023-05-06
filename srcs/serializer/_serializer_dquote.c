@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 11:54:15 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 16:46:36 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	_serializer_dquote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 	{
 		*mode = M_NORMAL;
 		v->nospace = !ft_isspace(*(++(*input)));
-		return (true);
+		return (0 < v->len || *((*input) - 2) == '\"');
 	}
 	if (**input == '$' && _is_valid_var_char((*input)[1]))
 	{

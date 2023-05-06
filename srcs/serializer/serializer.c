@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:01 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 08:41:52 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 12:02:59 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 		else
 		{
 			elem = _take_one_elem(input, &mode);
+			if (*(elem.elem_top) == '\0')
+				break ;
 			if (!vect_push_back(&cmd, &elem, NULL))
 			{
 				vect_dispose(&cmd);
