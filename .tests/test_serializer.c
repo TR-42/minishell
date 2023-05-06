@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 10:43:26 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:13:00 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ __attribute__((destructor))
 static void	destructor(void) {
 	char	cmd[DEBUG_LEAKS_CMD_LEN];
 
+	if (getenv("DEBUG") == NULL)
+		return ;
 	snprintf(cmd, DEBUG_LEAKS_CMD_LEN, "leaks %d", getpid());
 	system(cmd);
 }
