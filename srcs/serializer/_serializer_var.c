@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 16:52:06 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 22:48:37 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static bool	_when_pars_mde_normal(const char **input, t_pars_mde *mode,
 		return (false);
 	*input += 1;
 	*mode = M_VAR;
-	if (v->len < 0)
-		return (false);
+	if (0 < v->len)
+		return (true);
 	v->elem_top = *input;
 	return (false);
 }
