@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 11:13:22 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 13:05:46 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static const char	*_cmdelmtyp_to_string(t_cmd_elem_type type)
 		return (STR(CMDTYP_NORMAL));
 	else if (type == CMDTYP_VARIABLE)
 		return (STR(CMDTYP_VARIABLE));
+	else if (type == CMDTYP_QUOTE_VAR)
+		return (STR(CMDTYP_QUOTE_VAR));
 	else if (type == CMDTYP_RED_IN)
 		return (STR(CMDTYP_RED_IN));
 	else if (type == CMDTYP_RED_HEREDOC)

@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/05 23:11:49 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 13:05:26 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum e_cmd_elem_type
 {
 	CMDTYP_NORMAL,
 	CMDTYP_VARIABLE,
+	CMDTYP_QUOTE_VAR,
 	CMDTYP_RED_IN,
 	CMDTYP_RED_HEREDOC,
 	CMDTYP_RED_OUT,
