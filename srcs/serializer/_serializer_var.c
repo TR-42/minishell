@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 13:26:22 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 13:33:09 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 
 bool	_is_valid_var_char(char c)
 {
-	return (ft_isalnum(c)
-		|| c == '$');
+	return (ft_isalnum(c));
 }
 
 static bool	_when_pars_mde_normal(const char **input, t_pars_mde *mode,
