@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:01 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/07 01:17:11 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/07 01:28:43 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 		return (false);
 	if (!_take_elems(&cmd, input))
 		return (false);
+	if (cmd.len == 0 && **input == '\0')
+	{
+		vect_dispose(&cmd);
+		return (true);
+	}
 	return (vect_push_back(v, &cmd, NULL));
 }
 
