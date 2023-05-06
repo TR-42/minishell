@@ -67,3 +67,27 @@ $1\
 	'$ABC"xyz"$ABC'\
 	'""$ABC'\
 	'"xyz"$ABC'\
+
+echo "Redirect"
+$1\
+	'<'\
+	'>'\
+	'<<'\
+	'>>'\
+	'<xyz'\
+	'abc<'\
+	'abc<xyz'\
+	'<<xyz'\
+	'abc<<'\
+	'abc<<xyz'\
+	' < '\
+	' > '\
+	' << '\
+	' >> '\
+	' < xyz'\
+	'abc < '\
+	'abc < xyz'\
+	'<< xyz'\
+	'abc <<'\
+	'abc << xyz'\
+	'abc$<<$xyz'\
