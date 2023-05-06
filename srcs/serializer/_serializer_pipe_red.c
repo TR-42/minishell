@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/07 01:24:55 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/07 01:25:42 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ bool	_serializer_pipe(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 {
 	if (*mode != M_NORMAL || **input != '|')
 		return (false);
+	if (0 < v->len)
+		return (true);
 	v->type = CMDTYP_PIPE;
 	v->len = 1;
 	*input += 1;
