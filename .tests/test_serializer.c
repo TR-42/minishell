@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 11:13:00 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:13:22 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	print_elem(size_t i, const t_cmd_elem *elem)
 		exit(1);
 	}
 	memcpy(buf, elem->elem_top, elem->len);
-	printf("\t[%zu]: %16s '%s'(%zu) -> spc:%d\n",
+	printf("\telem[%zu]: %16s '%s'(%zu) -> spc:%d\n",
 		i,
 		_cmdelmtyp_to_string(elem->type),
 		buf,
@@ -77,7 +77,7 @@ static void	print_cmdarr(const t_cmdarr *cmdarr)
 	i = 0;
 	while (i < cmdarr->len)
 	{
-		printf("[%zu] ~~~~~~~~~~~~~~~~~~\n", i);
+		printf("cmd[%zu] ~~~~~~~~~~~~~~~~~~\n", i);
 		print_elemarr((t_cmdelmarr *)vect_at(cmdarr, i++));
 	}
 }
@@ -95,12 +95,13 @@ int	main(int argc, const char *argv[])
 	i = 1;
 	while (i < argc)
 	{
-		printf("'%s'\n", argv[i]);
+		printf("\nargv[%i]: '%s'\n", i, argv[i]);
 		arr = serialize(argv[i]);
 		print_cmdarr(&arr);
 		dispose_t_cmdarr(&arr);
 		i++;
 	}
+	puts("");
 	return (0);
 }
 
