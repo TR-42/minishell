@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 13:05:46 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 13:43:47 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ static const char	*_cmdelmtyp_to_string(t_cmd_elem_type type)
 	return (NULL);
 }
 
-static void	print_elem(size_t i, const t_cmd_elem *elem)
+static void	print_elem(size_t i, const char *str, const t_cmd_elem *elem)
 {
 	char	*buf;
+	long	offset;
 
 	buf = calloc(elem->len + 1, 1);
 	if (buf == NULL)
@@ -50,29 +51,31 @@ static void	print_elem(size_t i, const t_cmd_elem *elem)
 		perror("ERR");
 		exit(1);
 	}
+	offset = elem->elem_top - str;
 	memcpy(buf, elem->elem_top, elem->len);
-	printf("\telem[%zu]: %16s '%s'(%zu) -> spc:%d\n",
+	printf("\telem[%zu]: %16s '%s'(%ld .. %zu) -> spc:%d\n",
 		i,
 		_cmdelmtyp_to_string(elem->type),
 		buf,
+		offset,
 		elem->len,
 		elem->nospace);
 	free(buf);
 }
 
-static void	print_elemarr(const t_cmdelmarr *elemarr)
+static void	print_elemarr(const char *str, const t_cmdelmarr *elemarr)
 {
 	size_t		i;
 
 	i = 0;
 	while (i < elemarr->len)
 	{
-		print_elem(i, (t_cmd_elem *)vect_at(elemarr, i));
+		print_elem(i, str, (t_cmd_elem *)vect_at(elemarr, i));
 		i++;
 	}
 }
 
-static void	print_cmdarr(const t_cmdarr *cmdarr)
+static void	print_cmdarr(const char *str, const t_cmdarr *cmdarr)
 {
 	size_t		i;
 
@@ -80,7 +83,7 @@ static void	print_cmdarr(const t_cmdarr *cmdarr)
 	while (i < cmdarr->len)
 	{
 		printf("cmd[%zu] ~~~~~~~~~~~~~~~~~~\n", i);
-		print_elemarr((t_cmdelmarr *)vect_at(cmdarr, i++));
+		print_elemarr(str, (t_cmdelmarr *)vect_at(cmdarr, i++));
 	}
 }
 
@@ -99,7 +102,7 @@ int	main(int argc, const char *argv[])
 	{
 		printf("\nargv[%i]: '%s'\n", i, argv[i]);
 		arr = serialize(argv[i]);
-		print_cmdarr(&arr);
+		print_cmdarr(argv[i], &arr);
 		dispose_t_cmdarr(&arr);
 		i++;
 	}
