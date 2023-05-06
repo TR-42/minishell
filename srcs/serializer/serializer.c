@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:01 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 22:55:08 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/07 01:17:11 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 	v.elem_top = *input;
 	while (**input != '\0')
 	{
-		if (_serializer_squote(input, mode, &v)
+		if (_serializer_redirect(input, mode, &v)
+			|| _serializer_pipe(input, mode, &v)
+			|| _serializer_squote(input, mode, &v)
 			|| _serializer_dquote(input, mode, &v)
 			|| _serializer_var(input, mode, &v))
 			return (v);

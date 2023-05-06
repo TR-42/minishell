@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/06 23:00:18 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/07 01:16:26 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS_MAIN	= \
 
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \
+	_serializer_pipe_red.c \
 	_serializer_squote.c \
 	_serializer_var.c \
 	dispose_t_cmd.c \
