@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/06 00:09:19 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/06 10:59:23 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ test:\
 	$(OBJ_DIR)/$(TEST_SERIALIZER)\
 
 	@echo '~~~~~~~~~~ TEST ~~~~~~~~~~~~'
-	@$(OBJ_DIR)/$(TEST_SERIALIZER) 'abc def'
+	@./$(TEST_DIR)/$(TEST_SERIALIZER).sh $(OBJ_DIR)/$(TEST_SERIALIZER)
 
 
 $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJS_NOMAIN)
