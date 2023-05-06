@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 13:43:47 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/07 01:22:32 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	print_elem(size_t i, const char *str, const t_cmd_elem *elem)
 	}
 	offset = elem->elem_top - str;
 	memcpy(buf, elem->elem_top, elem->len);
-	printf("\telem[%zu]: %16s '%s'(%ld .. %zu) -> spc:%d\n",
+	printf("\telem[%2zu]: %18s '%s'(%ld .. %zu) -> spc:%d\n",
 		i,
 		_cmdelmtyp_to_string(elem->type),
 		buf,
