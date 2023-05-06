@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:02:19 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/05 21:48:26 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:46:04 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef enum e_parser_mode
 	M_DQUOTE,
 	M_DQUOTE_VAR,
 }	t_pars_mde;
+
+bool	_is_valid_var_char(char c);
 
 // ダブルクォーテーションまわりの処理を行う。
 // return: Elementが終了するかどうか

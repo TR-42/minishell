@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 11:20:44 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 11:45:29 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 #include "_serializer.h"
 
+bool	_is_valid_var_char(char c)
+{
+	return (ft_isalnum(c)
+		|| c == '$');
+}
+
 // return: Elementが終了するかどうか
 bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 {
 	if (*mode == M_NORMAL)
 	{
-		if (**input != '$' || ft_isspcornil((*input)[1]))
+		if (**input != '$' || !_is_valid_var_char((*input)[1]))
 			return (false);
 		*input += 1;
 		*mode = M_VAR;
@@ -33,7 +39,7 @@ bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 			v->nospace = true;
 			return (true);
 		}
-		if (ft_isspcornil(**input))
+		if (!_is_valid_var_char(**input))
 		{
 			*mode -= 1;
 			return (true);
