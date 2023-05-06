@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:01 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 12:02:59 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/06 22:55:08 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,12 @@ static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 	return (v);
 }
 
-static bool	_take_one_cmd(t_cmdarr *v, const char **input)
+static bool	_take_elems(t_cmdelmarr *elmarr, const char **input)
 {
-	t_cmdelmarr	cmd;
 	t_pars_mde	mode;
 	t_cmd_elem	elem;
 
 	mode = M_NORMAL;
-	cmd = vect_init(16, sizeof(t_cmd_elem));
-	if (cmd.p == NULL)
-		return (false);
 	while (**input != '\0')
 	{
 		if (ft_isspace(**input))
@@ -61,15 +57,27 @@ static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 			elem = _take_one_elem(input, &mode);
 			if (*(elem.elem_top) == '\0')
 				break ;
-			if (!vect_push_back(&cmd, &elem, NULL))
+			if (!vect_push_back(elmarr, &elem, NULL))
 			{
-				vect_dispose(&cmd);
+				vect_dispose(elmarr);
 				return (false);
 			}
 			if (elem.type == CMDTYP_PIPE)
 				break ;
 		}
 	}
+	return (true);
+}
+
+static bool	_take_one_cmd(t_cmdarr *v, const char **input)
+{
+	t_cmdelmarr	cmd;
+
+	cmd = vect_init(16, sizeof(t_cmd_elem));
+	if (cmd.p == NULL)
+		return (false);
+	if (!_take_elems(&cmd, input))
+		return (false);
 	return (vect_push_back(v, &cmd, NULL));
 }
 
