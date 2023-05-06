@@ -55,3 +55,15 @@ $1\
 	'"$"'\
 	"\"\$'\""\
 	'"$ "'\
+	'$ABC $ABC'\
+	'$ABC$ABC'\
+	'a$ABC'\
+	'$ABC a'\
+	'$ABC a$ABC'\
+	' $ABC'\
+	'$ABC '\
+	'$ABC""'\
+	'$ABC"xyz"'\
+	'$ABC"xyz"$ABC'\
+	'""$ABC'\
+	'"xyz"$ABC'\
