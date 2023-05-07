@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/07 01:16:26 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/07 19:06:37 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME	=	minishell
 
 SRCS_MAIN	= \
 	main.c \
+
+SRCS_CHILDS	=\
 
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \
@@ -24,12 +26,14 @@ SRCS_SERIALIZER	= \
 	serializer.c \
 
 SRCS_NOMAIN	= \
+	$(SRCS_CHILDS)\
 	$(SRCS_SERIALIZER)\
 
 HEADERS_DIR		=	./headers
 
 SRCS_BASE_DIR	=	./srcs
 SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
+SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
 SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
 
 OBJ_DIR	=	./obj
@@ -39,6 +43,7 @@ DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 
 VPATH	=	\
 	$(SRCS_MAIN_DIR)\
+	:$(SRCS_CHILDS_DIR)\
 	:$(SRCS_SERIALIZER_DIR)\
 
 TEST_DIR	=	.tests
