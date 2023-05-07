@@ -16,7 +16,10 @@ SRCS_MAIN	= \
 	main.c \
 
 SRCS_CHILDS	=\
+	childs_dispose.c\
+	childs.c\
 	env_util.c\
+	exec_cmd.c\
 	filectrl_tools.c\
 
 SRCS_SERIALIZER	= \
