@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/03 20:25:34 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/07 01:16:26 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,34 @@ NAME	=	minishell
 SRCS_MAIN	= \
 	main.c \
 
-SRCS	= \
-	$(SRCS_MAIN)\
+SRCS_SERIALIZER	= \
+	_serializer_dquote.c \
+	_serializer_pipe_red.c \
+	_serializer_squote.c \
+	_serializer_var.c \
+	dispose_t_cmd.c \
+	serializer.c \
+
+SRCS_NOMAIN	= \
+	$(SRCS_SERIALIZER)\
 
 HEADERS_DIR		=	./headers
 
 SRCS_BASE_DIR	=	./srcs
 SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
+SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
 
 OBJ_DIR	=	./obj
-OBJS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
-DEPS	=	$(addprefix $(OBJ_DIR)/, $(SRCS:.c=.d))
+OBJS_NOMAIN	=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
+OBJS	=	$(OBJS_NOMAIN) $(addprefix $(OBJ_DIR)/, $(SRCS_MAIN:.c=.o))
+DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 
 VPATH	=	\
 	$(SRCS_MAIN_DIR)\
+	:$(SRCS_SERIALIZER_DIR)\
+
+TEST_DIR	=	.tests
+TEST_SERIALIZER	=	test_serializer
 
 LIBFT_DIR	=	./libft
 LIBFT	=	$(LIBFT_DIR)/libft.a
@@ -54,8 +68,7 @@ $(LIBFT):
 bonus:	$(NAME)
 
 clean_local:
-	rm -f $(OBJS) $(DEPS)
-	rm -d $(OBJ_DIR) || exit 0
+	rm -rf $(OBJ_DIR)
 
 fclean_local: clean_local
 	rm -f $(NAME)
@@ -69,8 +82,19 @@ fclean:	fclean_local
 re:	fclean all
 
 norm:
-	norminette $(HEADERS_DIR) $(SRC_DIR)
+	norminette $(HEADERS_DIR) $(SRCS_MAIN_DIR)
 
 -include $(DEPS)
 
 .PHONY:	clean_local bonus norm
+
+t: test
+test:\
+	$(OBJ_DIR)/$(TEST_SERIALIZER)\
+
+	@echo '~~~~~~~~~~ TEST ~~~~~~~~~~~~'
+	@./$(TEST_DIR)/$(TEST_SERIALIZER).sh $(OBJ_DIR)/$(TEST_SERIALIZER)
+
+
+$(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^

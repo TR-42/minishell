@@ -1,6 +1,7 @@
 *[Tt]ester/
 .DS_Store
 minishell
+obj/
 
 # Prerequisites
 *.d

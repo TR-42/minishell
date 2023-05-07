@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   dispose_t_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/30 12:56:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/05 23:14:57 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/05 18:01:50 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/05 22:45:43 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_is.h"
+#include <stdlib.h>
 
-int	ft_isspace(int c)
+#include "serializer.h"
+
+static void	_vect_dispose(void *vect)
 {
-	unsigned char	uc;
-
-	uc = (unsigned char)c;
-	return (
-		uc == CHAR_HTAB
-		|| uc == CHAR_LF
-		|| uc == CHAR_VTAB
-		|| uc == CHAR_FF
-		|| uc == CHAR_CR
-		|| uc == CHAR_WS
-	);
+	vect_dispose((t_vect *)vect);
 }
 
-int	ft_isspcornil(int c)
+void	dispose_t_cmdarr(t_cmdarr *cmd)
 {
-	unsigned char	uc;
-
-	uc = (unsigned char)c;
-	return (
-		uc == '\0'
-		|| ft_isspace(c)
-	);
+	if (cmd == NULL)
+		return ;
+	vect_dispose_each(cmd, _vect_dispose);
 }
