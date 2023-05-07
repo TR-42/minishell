@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/07 19:06:37 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/08 00:27:09 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS_MAIN	= \
 	main.c \
 
 SRCS_CHILDS	=\
+	env_util.c\
 
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \
