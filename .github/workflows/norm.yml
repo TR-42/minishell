@@ -1,0 +1,36 @@
+name: Norminette
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  workflow_dispatch:
+
+env:
+  PKG_REG: ghcr.io
+  DOCKER_PATH: /usr/bin/docker
+
+jobs:
+  run-norm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Sign in to ghcr.io
+      run: echo ${{ secrets.GITHUB_TOKEN }} | ${{ env.DOCKER_PATH }} login -u ${{ github.actor }} --password-stdin ${{ env.PKG_REG }}
+
+    - name: pull norm image
+      run: ${{ env.DOCKER_PATH }} pull ${{ env.PKG_REG }}/tr-42/norminette:v3.3.51
+
+    - name: run norm
+      run: ${{ env.DOCKER_PATH }} run -v $PWD:/code ${{ env.PKG_REG }}/tr-42/norminette:v3.3.51
+
+    - name: logout from docker
+      if: always()
+      run: ${{ env.DOCKER_PATH }} logout ${{ env.PKG_REG }}
