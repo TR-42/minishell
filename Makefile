@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/08 00:32:38 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/11 23:49:24 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS_MAIN	= \
 	main.c \
 
 SRCS_CHILDS	=\
+	build_cmd.c\
 	childs_dispose.c\
 	childs.c\
 	env_util.c\
