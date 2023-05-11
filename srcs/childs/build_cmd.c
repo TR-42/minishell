@@ -38,7 +38,8 @@ int	_get_argc(const t_cmdelmarr *elemarr)
 				i++;
 			continue ;
 		}
-		if (!(elem[i].nospace))
+		if (!(elem[i].nospace) || (i + 1) == elemarr->len
+			|| elem[i + 1].type == CMDTYP_PIPE)
 			argc++;
 		if (INT_MAX <= argc)
 			return (-1);
