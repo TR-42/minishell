@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:31:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 19:31:31 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/14 21:11:51 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
 	i = 0;
 	if (is_cetyp_redirect(elem[i].type))
 	{
-		if (is_cetyp_var_or_normal(elem[++i].type))
-			i++;
+		i++;
+		while (is_cetyp_var_or_normal(elem[i].type))
+			if (!(elem[i++].nospace))
+				break ;
 		return (i);
 	}
 	else if (elem[i].type == CMDTYP_PIPE)
