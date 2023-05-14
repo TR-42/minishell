@@ -56,7 +56,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	if (ret != 0)
 	{
 		if (ret == CHK_GET_PATH_ERR_NOCMD)
-			ft_dprintf(STDERR_FILENO, "%s: Command not found", argv[0]);
+			ft_dprintf(STDERR_FILENO, "%s: Command not found\n", argv[0]);
 		else
 			perror(argv[0]);
 		dispose_proc_info_arr(info_arr);
