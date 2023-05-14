@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:18:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 23:13:08 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:17:25 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*join_path(const char *path1, const char *path2)
 	return (ret);
 }
 
-int	chk_and_get_fpath(const char *given_path, const char **env_path, char **dst)
+int	chk_and_get_fpath(const char *given_path, char *const *env_path, char **dst)
 {
 	*dst = NULL;
 	if (given_path == NULL)

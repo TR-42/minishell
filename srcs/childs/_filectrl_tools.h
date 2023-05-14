@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:16:23 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/08 00:13:47 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:17:10 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # define CHK_GET_PATH_ERR_NOCMD (2)
 
 int	chk_and_get_fpath(
-		const char *given_path, const char **env_path, char **dst);
+		const char *given_path, char *const *env_path, char **dst);
 
 #endif

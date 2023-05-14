@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 21:03:36 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:18:50 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "_build_cmd.h"
 
 // TODO: 環境変数を用いた形に書き換える
-static size_t	_get_elem_str_len(const t_cmd_elem *elem, const char **envp)
+static size_t	_get_elem_str_len(const t_cmd_elem *elem, char * const*envp)
 {
 	if (elem->type == CMDTYP_VARIABLE || elem->type == CMDTYP_QUOTE_VAR)
 	{
@@ -30,7 +30,7 @@ static size_t	_get_elem_str_len(const t_cmd_elem *elem, const char **envp)
 
 // TODO: 環境変数を用いた形に書き換える
 static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
-	const char **envp)
+	char *const *envp)
 {
 	if (elem->type == CMDTYP_VARIABLE || elem->type == CMDTYP_QUOTE_VAR)
 	{
@@ -46,7 +46,7 @@ static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
 }
 
 static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
-	const char **envp)
+	char *const *envp)
 {
 	size_t	str_len;
 	size_t	i;
@@ -70,7 +70,7 @@ static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
 }
 
 static char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
-	const char **envp)
+	char *const *envp)
 {
 	size_t		current_seg_len;
 	t_cmd_elem	*elem;
@@ -90,7 +90,7 @@ static char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 // ここに来る段階では、既にバリデーションが完了していると期待する
 //   - 0 < argcは確定している
 //   - リダイレクトの引数は正常に設定されている
-char	**build_cmd(t_cmdelmarr *elemarr, const char **envp)
+char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 {
 	int			argc;
 	char		**argv;
