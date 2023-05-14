@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/14 21:04:05 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/14 23:44:11 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS_CHILDS	=\
 	env_util.c\
 	exec_cmd.c\
 	filectrl_tools.c\
+	init_ch_proc_info_arr.c\
 
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \

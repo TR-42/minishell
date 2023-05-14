@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 23:18:50 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/15 00:50:20 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "_build_cmd.h"
 
 // TODO: 環境変数を用いた形に書き換える
-static size_t	_get_elem_str_len(const t_cmd_elem *elem, char * const*envp)
+static size_t	_get_elem_str_len(const t_cmd_elem *elem, char *const*envp)
 {
 	if (elem->type == CMDTYP_VARIABLE || elem->type == CMDTYP_QUOTE_VAR)
 	{
