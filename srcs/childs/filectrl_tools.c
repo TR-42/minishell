@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:18:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/08 00:32:21 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/14 23:13:08 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static char	*join_path(const char *path1, const char *path2)
 
 int	chk_and_get_fpath(const char *given_path, const char **env_path, char **dst)
 {
+	*dst = NULL;
 	if (given_path == NULL)
 		return (CHK_GET_PATH_ERR_NOCMD);
 	else if (*given_path == '\0' || ft_strchr(given_path, '/') != NULL)
