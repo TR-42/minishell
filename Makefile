@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/14 20:42:44 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/14 21:04:05 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ VPATH	=	\
 
 TEST_DIR	=	.tests
 TEST_SERIALIZER	=	test_serializer
+TEST_BUILD_CMD	=	test_build_cmd
 
 LIBFT_DIR	=	./libft
 LIBFT	=	$(LIBFT_DIR)/libft.a
@@ -109,6 +110,11 @@ test:\
 	@echo '~~~~~~~~~~ TEST ~~~~~~~~~~~~'
 	@./$(TEST_DIR)/$(TEST_SERIALIZER).sh $(OBJ_DIR)/$(TEST_SERIALIZER)
 
+	@./$(TEST_DIR)/$(TEST_BUILD_CMD).sh $(OBJ_DIR)/$(TEST_BUILD_CMD)
+
 
 $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+
+$(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_NOMAIN)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
