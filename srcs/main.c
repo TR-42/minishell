@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 00:56:48 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/15 08:50:12 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	_parse_exec(const char *str, const char *envp[])
 	i = 0;
 	while (i < arr.len)
 	{
-		pipe_fork_exec(cparr + i, i, arr.len);
+		pipe_fork_exec(cparr, i, arr.len);
 		i++;
 	}
 	i = 0;
