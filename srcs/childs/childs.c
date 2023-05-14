@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:56:28 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/08 00:30:34 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/15 01:13:07 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ noreturn static void	_perr_dispose_exit(const char *str, t_ch_proc_info *arr)
 	exit(1);
 }
 
+// TODO: パイプを含む場合のみパイプを繋ぐようにする
 static void	create_pipe(t_ch_proc_info *info_arr, size_t index, size_t count)
 {
 	int		pipefd[2];
@@ -51,8 +52,8 @@ void	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
 		_perr_dispose_exit("fork", info_arr);
 	else if (info_arr[index].pid == PID_FORKED)
 		exec_command(info_arr, index);
-	if ((index + 1) != count)
+	if (info_arr[index].fd_from_this != STDOUT_FILENO)
 		close(info_arr[index].fd_from_this);
-	if (index != 0)
+	if (info_arr[index].fd_to_this != STDIN_FILENO)
 		close(info_arr[index].fd_to_this);
 }

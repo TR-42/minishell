@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 23:43:45 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 00:51:02 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/15 01:13:32 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static t_cprocinf	_init_ch_proc_info(t_cmdarr *cmdarr, size_t i,
 	info.cmd = (t_cmdelmarr *)vect_at(cmdarr, i);
 	info.path_arr = path_arr;
 	info.envp = envp;
+	info.fd_to_this = STDIN_FILENO;
+	info.fd_from_this = STDOUT_FILENO;
 	return (info);
 }
 
