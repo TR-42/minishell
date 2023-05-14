@@ -6,9 +6,12 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 08:45:39 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/15 08:49:13 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// - bool
+#include <stdbool.h>
 
 // - close
 #include <unistd.h>
@@ -16,14 +19,9 @@
 // - exit
 #include <stdlib.h>
 
-// - perror
-#include <stdio.h>
-
 // - dup2
 // - execve
 #include <unistd.h>
-
-#include "ft_printf/ft_printf.h"
 
 #include "_build_cmd.h"
 #include "_childs.h"
@@ -49,7 +47,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	char	**envp;
 	char	**argv;
 	char	*exec_path;
-	int		ret;
+	bool	ret;
 
 	if (!_proc_redirect(info_arr + index))
 		exit(1);
@@ -57,12 +55,8 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	envp = info_arr[index].envp;
 	argv = build_cmd(info_arr[index].cmd, info_arr[index].envp);
 	ret = chk_and_get_fpath(argv[0], info_arr[index].path_arr, &exec_path);
-	if (ret != 0)
+	if (ret != true)
 	{
-		if (ret == CHK_GET_PATH_ERR_NOCMD)
-			ft_dprintf(STDERR_FILENO, "%s: Command not found\n", argv[0]);
-		else
-			perror(argv[0]);
 		dispose_proc_info_arr(info_arr);
 		exit(1);
 	}
