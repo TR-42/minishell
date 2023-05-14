@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 23:41:48 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/15 08:45:39 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	dup2_and_close(int fd_dup_from, int fd_dup_to)
 // TODO: エラー時にFDを閉じる?
 noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 {
+	char	**envp;
 	char	**argv;
 	char	*exec_path;
 	int		ret;
@@ -53,6 +54,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	if (!_proc_redirect(info_arr + index))
 		exit(1);
 	exec_path = NULL;
+	envp = info_arr[index].envp;
 	argv = build_cmd(info_arr[index].cmd, info_arr[index].envp);
 	ret = chk_and_get_fpath(argv[0], info_arr[index].path_arr, &exec_path);
 	if (ret != 0)
@@ -67,7 +69,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	dup2_and_close(info_arr[index].fd_to_this, STDIN_FILENO);
 	dup2_and_close(info_arr[index].fd_from_this, STDOUT_FILENO);
 	dispose_proc_info_arr(info_arr);
-	execve(exec_path, argv, info_arr[index].envp);
+	execve(exec_path, argv, envp);
 	free(argv);
 	exit(1);
 }
