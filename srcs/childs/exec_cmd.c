@@ -37,6 +37,8 @@ static bool	_proc_redirect(t_ch_proc_info *info)
 
 static void	dup2_and_close(int fd_dup_from, int fd_dup_to)
 {
+	if (fd_dup_from == fd_dup_to)
+		return ;
 	dup2(fd_dup_from, fd_dup_to);
 	close(fd_dup_from);
 }
