@@ -47,6 +47,20 @@ static char	*join_path(const char *path1, const char *path2)
 	return (ret);
 }
 
+static int	_search_executable(const char *given_path, char *const *env_path,
+	char **dst)
+{
+	while (*env_path != NULL)
+	{
+		*dst = join_path(*env_path, given_path);
+		if (access(*dst, X_OK) == 0)
+			return (CHK_GET_PATH_ERR_OK);
+		free(*dst);
+		env_path++;
+	}
+	return (CHK_GET_PATH_ERR_NOCMD);
+}
+
 int	chk_and_get_fpath(const char *given_path, char *const *env_path, char **dst)
 {
 	*dst = NULL;
@@ -62,15 +76,5 @@ int	chk_and_get_fpath(const char *given_path, char *const *env_path, char **dst)
 	else if (env_path == NULL)
 		return (CHK_GET_PATH_ERR_NOCMD);
 	else
-	{
-		while (*env_path != NULL)
-		{
-			*dst = join_path(*env_path, given_path);
-			if (access(*dst, X_OK) == 0)
-				return (CHK_GET_PATH_ERR_OK);
-			free(*dst);
-			env_path++;
-		}
-		return (CHK_GET_PATH_ERR_NOCMD);
-	}
+		return (_search_executable(given_path, env_path, dst));
 }
