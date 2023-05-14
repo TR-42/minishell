@@ -52,7 +52,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 		exit(1);
 	exec_path = NULL;
 	argv = build_cmd(info_arr[index].cmd, info_arr[index].envp);
-	ret = chk_and_get_fpath(argv[0], info_arr[index].envp, &exec_path);
+	ret = chk_and_get_fpath(argv[0], info_arr[index].path_arr, &exec_path);
 	if (ret != 0)
 	{
 		if (ret == CHK_GET_PATH_ERR_NOCMD)
