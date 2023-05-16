@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:31:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 21:11:51 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/16 23:00:24 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
 	if (is_cetyp_redirect(elem[i].type))
 	{
 		i++;
-		while (is_cetyp_var_or_normal(elem[i].type))
+		while ((i + i_start) < elemarr->len
+			&& is_cetyp_var_or_normal(elem[i].type))
 			if (!(elem[i++].nospace))
 				break ;
 		return (i);
