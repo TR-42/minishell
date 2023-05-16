@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/14 23:44:11 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/16 22:14:28 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,14 @@ SRCS_SERIALIZER	= \
 	is_cetyp.c \
 	serializer.c \
 
+SRCS_VALIDATOR =\
+	is_valid_cmd.c\
+	is_valid_input.c\
+
 SRCS_NOMAIN	= \
 	$(SRCS_CHILDS)\
 	$(SRCS_SERIALIZER)\
+	$(SRCS_VALIDATOR)\
 
 HEADERS_DIR		=	./headers
 
@@ -45,6 +50,7 @@ SRCS_BASE_DIR	=	./srcs
 SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
 SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
 SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
+SRCS_VALIDATOR_DIR	=	$(SRCS_BASE_DIR)/validator
 
 OBJ_DIR	=	./obj
 OBJS_NOMAIN	=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
@@ -55,6 +61,7 @@ VPATH	=	\
 	$(SRCS_MAIN_DIR)\
 	:$(SRCS_CHILDS_DIR)\
 	:$(SRCS_SERIALIZER_DIR)\
+	:$(SRCS_VALIDATOR_DIR)\
 
 TEST_DIR	=	.tests
 TEST_SERIALIZER	=	test_serializer
