@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 08:50:12 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/16 23:08:44 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
 	_parse_exec(argv[2], envp);
 	exit(0);
 }
-
 
 int	main(int argc, const char *argv[], const char *envp[])
 {
