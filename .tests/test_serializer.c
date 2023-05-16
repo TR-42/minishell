@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/07 01:22:32 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/11 23:48:50 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include <unistd.h>
 
 #include "serializer.h"
+
+#include "../srcs/childs/_build_cmd.h"
+
 
 #define STR(S) (#S)
 
@@ -73,6 +76,7 @@ static void	print_elemarr(const char *str, const t_cmdelmarr *elemarr)
 		print_elem(i, str, (t_cmd_elem *)vect_at(elemarr, i));
 		i++;
 	}
+	printf("\t\t(AGRC: %d)\n", _get_argc(elemarr));
 }
 
 static void	print_cmdarr(const char *str, const t_cmdarr *cmdarr)

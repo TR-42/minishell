@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 13:05:26 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/14 19:27:09 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,9 @@ typedef struct s_cmd_elem
 t_cmdarr	serialize(const char *input);
 
 void		dispose_t_cmdarr(t_cmdarr *cmd);
+
+bool		is_cetyp_redirect(t_cmd_elem_type t);
+bool		is_cetyp_var_or_normal(t_cmd_elem_type t);
+bool		is_cetyp_terminator(t_cmd_elem_type t);
 
 #endif

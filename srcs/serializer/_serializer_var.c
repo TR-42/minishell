@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/06 22:48:37 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/14 21:20:51 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static bool	_when_pars_mde_normal(const char **input, t_pars_mde *mode,
 	*input += 1;
 	*mode = M_VAR;
 	if (0 < v->len)
+	{
+		v->nospace = true;
 		return (true);
+	}
 	v->elem_top = *input;
 	return (false);
 }
@@ -51,7 +54,7 @@ bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 			}
 			else
 				*mode -= 1;
-			v->nospace = !ft_isspcornil(**input);
+			v->nospace = (*mode == M_DQUOTE || !ft_isspcornil(**input));
 			return (true);
 		}
 		v->len += 1;

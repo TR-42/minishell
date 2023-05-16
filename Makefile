@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/07 01:16:26 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/14 23:44:11 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,21 +15,35 @@ NAME	=	minishell
 SRCS_MAIN	= \
 	main.c \
 
+SRCS_CHILDS	=\
+	_get_argc.c\
+	_one_elem_count.c\
+	build_cmd.c\
+	childs_dispose.c\
+	childs.c\
+	env_util.c\
+	exec_cmd.c\
+	filectrl_tools.c\
+	init_ch_proc_info_arr.c\
+
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \
 	_serializer_pipe_red.c \
 	_serializer_squote.c \
 	_serializer_var.c \
 	dispose_t_cmd.c \
+	is_cetyp.c \
 	serializer.c \
 
 SRCS_NOMAIN	= \
+	$(SRCS_CHILDS)\
 	$(SRCS_SERIALIZER)\
 
 HEADERS_DIR		=	./headers
 
 SRCS_BASE_DIR	=	./srcs
 SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
+SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
 SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
 
 OBJ_DIR	=	./obj
@@ -39,10 +53,12 @@ DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 
 VPATH	=	\
 	$(SRCS_MAIN_DIR)\
+	:$(SRCS_CHILDS_DIR)\
 	:$(SRCS_SERIALIZER_DIR)\
 
 TEST_DIR	=	.tests
 TEST_SERIALIZER	=	test_serializer
+TEST_BUILD_CMD	=	test_build_cmd
 
 LIBFT_DIR	=	./libft
 LIBFT	=	$(LIBFT_DIR)/libft.a
@@ -95,6 +111,11 @@ test:\
 	@echo '~~~~~~~~~~ TEST ~~~~~~~~~~~~'
 	@./$(TEST_DIR)/$(TEST_SERIALIZER).sh $(OBJ_DIR)/$(TEST_SERIALIZER)
 
+	@./$(TEST_DIR)/$(TEST_BUILD_CMD).sh $(OBJ_DIR)/$(TEST_BUILD_CMD)
+
 
 $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+
+$(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_NOMAIN)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
