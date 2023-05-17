@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/11 23:48:50 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/17 09:08:12 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <unistd.h>
 
 #include "serializer.h"
+#include "validator.h"
 
 #include "../srcs/childs/_build_cmd.h"
-
 
 #define STR(S) (#S)
 
@@ -40,6 +40,19 @@ static const char	*_cmdelmtyp_to_string(t_cmd_elem_type type)
 		return (STR(CMDTYP_RED_APPEND));
 	else if (type == CMDTYP_PIPE)
 		return (STR(CMDTYP_PIPE));
+	return (NULL);
+}
+
+static const char	*_cmd_inval_typ_to_string(t_cmd_inval_typ type)
+{
+	if (type == CMD_INVAL_NO_ERR)
+		return (STR(CMD_INVAL_NO_ERR));
+	else if (type == CMD_INVAL_NOCMD)
+		return (STR(CMD_INVAL_NOCMD));
+	else if (type == CMD_INVAL_PIPE_NOPAIR)
+		return (STR(CMD_INVAL_PIPE_NOPAIR));
+	else if (type == CMD_INVAL_REDIRECT_NOARG)
+		return (STR(CMD_INVAL_REDIRECT_NOARG));
 	return (NULL);
 }
 
@@ -66,7 +79,7 @@ static void	print_elem(size_t i, const char *str, const t_cmd_elem *elem)
 	free(buf);
 }
 
-static void	print_elemarr(const char *str, const t_cmdelmarr *elemarr)
+static void	print_elemarr(const char *str, const t_cmdelmarr *elemarr, bool is_last)
 {
 	size_t		i;
 
@@ -76,18 +89,26 @@ static void	print_elemarr(const char *str, const t_cmdelmarr *elemarr)
 		print_elem(i, str, (t_cmd_elem *)vect_at(elemarr, i));
 		i++;
 	}
-	printf("\t\t(AGRC: %d)\n", _get_argc(elemarr));
+	printf("\t\t(AGRC: %d / isValid?: %s)\n",
+	_get_argc(elemarr),
+	_cmd_inval_typ_to_string(is_valid_cmd(elemarr, is_last)));
 }
 
 static void	print_cmdarr(const char *str, const t_cmdarr *cmdarr)
 {
-	size_t		i;
+	size_t			i;
+	t_cmd_i_inval	ret;
 
 	i = 0;
 	while (i < cmdarr->len)
 	{
-		printf("cmd[%zu] ~~~~~~~~~~~~~~~~~~\n", i);
-		print_elemarr(str, (t_cmdelmarr *)vect_at(cmdarr, i++));
+		ret = is_valid_input(cmdarr);
+		printf("cmd[%zu] ~~~~~~~~~~~~~~~~~~ (isValid?: %s at %zu)\n", i, _cmd_inval_typ_to_string(ret.type), ret.index);
+		print_elemarr(
+			str,
+			(t_cmdelmarr *)vect_at(cmdarr, i),
+			(i + 1) == cmdarr->len);
+		i++;
 	}
 }
 
