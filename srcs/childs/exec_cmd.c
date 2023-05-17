@@ -6,9 +6,12 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/18 00:22:14 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/18 00:27:21 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// - errno
+#include <errno.h>
 
 // - bool
 #include <stdbool.h>
@@ -19,9 +22,14 @@
 // - exit
 #include <stdlib.h>
 
+// - strerror
+#include <string.h>
+
 // - dup2
 // - execve
 #include <unistd.h>
+
+#include "ft_printf/ft_printf.h"
 
 #include "_build_cmd.h"
 #include "_childs.h"
@@ -79,6 +87,9 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	dispose_proc_info_arr(info_arr);
 	if (ret == true)
 		execve(exec_path, argv, envp);
+	if (ret == true)
+		ft_dprintf(STDERR_FILENO,
+			"minishell: %s: %s\n", argv[0], strerror(errno));
 	free_2darr((void ***)&argv);
 	exit(1);
 }
