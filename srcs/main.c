@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/16 23:08:44 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/17 22:57:22 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 // TODO: serialize後のバリデーション/エラー処理
 // TODO: init_ch_...後のエラー処理
-static void	_parse_exec(const char *str, const char *envp[])
+static int	_parse_exec(const char *str, const char *envp[])
 {
 	t_cmdarr	arr;
 	t_cprocinf	*cparr;
@@ -48,6 +48,10 @@ static void	_parse_exec(const char *str, const char *envp[])
 	while (i < arr.len)
 		waitpid(cparr[i++].pid, &cpstat, 0);
 	dispose_proc_info_arr(cparr);
+	if (WIFEXITED(cpstat))
+		return (WEXITSTATUS(cpstat));
+	else
+		return (130);
 }
 
 static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
@@ -59,8 +63,7 @@ static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
 		ft_dprintf(STDERR_FILENO, E_OPT_LESS_ARG, argv[0], argv[1]);
 		exit(2);
 	}
-	_parse_exec(argv[2], envp);
-	exit(0);
+	exit(_parse_exec(argv[2], envp));
 }
 
 int	main(int argc, const char *argv[], const char *envp[])
