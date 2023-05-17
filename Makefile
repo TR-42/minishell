@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/16 22:14:28 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/17 23:25:50 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ LIBFT_DIR	=	./libft
 LIBFT	=	$(LIBFT_DIR)/libft.a
 LIBFT_MAKE	=	make -C $(LIBFT_DIR)
 
-CFLAGS	=	-Wall -Wextra -Werror -MMD -MP
+override CFLAGS	+=	-Wall -Wextra -Werror -MMD -MP
 INCLUDES	=	-I $(HEADERS_DIR) -I $(LIBFT_DIR)
 
 CC		=	cc
@@ -80,6 +80,8 @@ all:	$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+debug: clean_local
+	make CFLAGS='-DDEBUG'
 
 $(OBJ_DIR)/%.o:	%.c
 	@mkdir -p $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/17 23:16:52 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/17 23:27:31 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,19 @@
 #include <stdbool.h>
 
 // - exit
+// (for debug)
+// - getenv
+// - system
 #include <stdlib.h>
 
 // - STDERR_FILENO
+// (for debug)
+// - getpid
 #include <unistd.h>
+
+// (for debug)
+// - sprintf
+#include <stdio.h>
 
 #include "ft_string/ft_string.h"
 #include "ft_printf/ft_printf.h"
@@ -98,3 +107,19 @@ int	main(int argc, const char *argv[], const char *envp[])
 	_chk_do_c_opt(argc, argv, envp);
 	return (0);
 }
+
+#if DEBUG
+
+# define DEBUG_LEAKS_CMD_LEN (32)
+
+__attribute__((destructor))
+static void	destructor(void) {
+	char	cmd[DEBUG_LEAKS_CMD_LEN];
+
+	if (getenv("DEBUG") == NULL)
+		return ;
+	snprintf(cmd, DEBUG_LEAKS_CMD_LEN, "leaks %d", getpid());
+	system(cmd);
+}
+
+#endif
