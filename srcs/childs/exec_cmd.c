@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 01:22:14 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/19 01:23:34 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
+	{
+		dispose_proc_info_arr(info_arr);
 		exit(1);
+	}
 	exec_path = NULL;
 	argv = build_cmd(info.cmd, info.envp);
 	ret = chk_and_get_fpath(argv[0], info.path_arr, &exec_path);
