@@ -34,12 +34,7 @@
 #include "_build_cmd.h"
 #include "_childs.h"
 #include "_filectrl_tools.h"
-
-static bool	_proc_redirect(t_ch_proc_info *info)
-{
-	(void)info;
-	return (true);
-}
+#include "_redirect.h"
 
 // TODO: エラー処理
 static void	dup2_and_close(t_ch_proc_info *info)
