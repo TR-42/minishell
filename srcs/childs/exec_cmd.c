@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 20:41:59 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/19 22:01:26 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,25 @@ static void	dup2_and_close(t_ch_proc_info *info)
 {
 	if (info->fd_to_this != STDIN_FILENO)
 	{
-		info->fd_stdin_save = dup(STDIN_FILENO);
 		dup2(info->fd_to_this, STDIN_FILENO);
 		close(info->fd_to_this);
 		info->fd_to_this = -1;
 	}
+	else
+	{
+		close(info->fd_stdin_save);
+		info->fd_stdin_save = -1;
+	}
 	if (info->fd_from_this != STDOUT_FILENO)
 	{
-		info->fd_stdout_save = dup(STDOUT_FILENO);
 		dup2(info->fd_from_this, STDOUT_FILENO);
 		close(info->fd_from_this);
 		info->fd_from_this = -1;
+	}
+	else
+	{
+		close(info->fd_stdout_save);
+		info->fd_stdout_save = -1;
 	}
 }
 
@@ -73,6 +81,8 @@ static void	_revert_stdio_dispose_arr(
 	t_ch_proc_info *info_arr,
 	char ***argv)
 {
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	if (0 < info->fd_stdin_save)
 	{
 		dup2(info->fd_stdin_save, STDIN_FILENO);
