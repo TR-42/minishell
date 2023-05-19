@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 01:03:57 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 20:38:29 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/19 20:46:35 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 
 #include "_build_cmd.h"
 #include "_redirect.h"
-
 
 static bool	_perror_ret_false(const char *str)
 {
