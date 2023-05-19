@@ -55,6 +55,19 @@ static void	dup2_and_close(t_ch_proc_info *info)
 	}
 }
 
+static void	free_2darr(void ***argv)
+{
+	size_t	i;
+
+	if (argv == NULL || *argv == NULL)
+		return ;
+	i = 0;
+	while ((*argv)[i] != NULL)
+		free((*argv)[i++]);
+	free(*argv);
+	*argv = NULL;
+}
+
 static void	_revert_stdio(const t_ch_proc_info *info)
 {
 	if (info->fd_stdin_save != 0)
@@ -67,19 +80,6 @@ static void	_revert_stdio(const t_ch_proc_info *info)
 		dup2(info->fd_stdout_save, STDOUT_FILENO);
 		close(info->fd_stdout_save);
 	}
-}
-
-static void	free_2darr(void ***argv)
-{
-	size_t	i;
-
-	if (argv == NULL || *argv == NULL)
-		return ;
-	i = 0;
-	while ((*argv)[i] != NULL)
-		free((*argv)[i++]);
-	free(*argv);
-	*argv = NULL;
 }
 
 // TODO: エラー時にFDを閉じる?
