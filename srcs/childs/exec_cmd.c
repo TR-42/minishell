@@ -44,12 +44,14 @@ static void	dup2_and_close(t_ch_proc_info *info)
 		info->fd_stdin_save = dup(STDIN_FILENO);
 		dup2(info->fd_to_this, STDIN_FILENO);
 		close(info->fd_to_this);
+		info->fd_to_this = -1;
 	}
 	if (info->fd_from_this != STDOUT_FILENO)
 	{
 		info->fd_stdout_save = dup(STDOUT_FILENO);
 		dup2(info->fd_from_this, STDOUT_FILENO);
 		close(info->fd_from_this);
+		info->fd_from_this = -1;
 	}
 }
 
