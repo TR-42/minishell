@@ -73,12 +73,12 @@ static void	_revert_stdio_dispose_arr(
 	t_ch_proc_info *info_arr,
 	char ***argv)
 {
-	if (info->fd_stdin_save != 0)
+	if (0 < info->fd_stdin_save)
 	{
 		dup2(info->fd_stdin_save, STDIN_FILENO);
 		close(info->fd_stdin_save);
 	}
-	if (info->fd_stdout_save != 0)
+	if (0 < info->fd_stdout_save)
 	{
 		dup2(info->fd_stdout_save, STDOUT_FILENO);
 		close(info->fd_stdout_save);
