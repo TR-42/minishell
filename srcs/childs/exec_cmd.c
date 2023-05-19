@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 01:23:34 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/19 20:41:59 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ static void	_revert_stdio_dispose_arr(
 		dup2(info->fd_stdout_save, STDOUT_FILENO);
 		close(info->fd_stdout_save);
 	}
+	if (0 <= info->fd_to_this && info->fd_to_this != STDIN_FILENO)
+		close(info->fd_to_this);
+	if (0 <= info->fd_from_this && info->fd_from_this != STDOUT_FILENO)
+		close(info->fd_from_this);
 	if (info_arr != NULL)
 		dispose_proc_info_arr(info_arr);
 	if (argv != NULL)
