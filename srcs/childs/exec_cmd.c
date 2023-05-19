@@ -68,7 +68,10 @@ static void	free_2darr(void ***argv)
 	*argv = NULL;
 }
 
-static void	_revert_stdio(const t_ch_proc_info *info)
+static void	_revert_stdio_dispose_arr(
+	const t_ch_proc_info *info,
+	t_ch_proc_info *info_arr,
+	char ***argv)
 {
 	if (info->fd_stdin_save != 0)
 	{
@@ -80,6 +83,10 @@ static void	_revert_stdio(const t_ch_proc_info *info)
 		dup2(info->fd_stdout_save, STDOUT_FILENO);
 		close(info->fd_stdout_save);
 	}
+	if (info_arr != NULL)
+		dispose_proc_info_arr(info_arr);
+	if (argv != NULL)
+		free_2darr((void ***)argv);
 }
 
 // TODO: エラー時にFDを閉じる?
@@ -93,7 +100,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
 	{
-		dispose_proc_info_arr(info_arr);
+		_revert_stdio_dispose_arr(&info, info_arr, NULL);
 		exit(1);
 	}
 	exec_path = NULL;
@@ -107,7 +114,6 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	if (ret == true)
 		ft_dprintf(STDERR_FILENO,
 			"minishell: %s: %s\n", argv[0], strerror(errno));
-	_revert_stdio(&info);
-	free_2darr((void ***)&argv);
+	_revert_stdio_dispose_arr(&info, NULL, &argv);
 	exit(1);
 }
