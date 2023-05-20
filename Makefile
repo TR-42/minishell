@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/19 01:13:18 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/20 16:40:36 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,9 @@ SRCS_CHILDS	=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
+SRCS_HEREDOC =\
+	create_tmpfile.c\
+
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \
 	_serializer_pipe_red.c \
@@ -42,6 +45,7 @@ SRCS_VALIDATOR =\
 
 SRCS_NOMAIN	= \
 	$(SRCS_CHILDS)\
+	$(SRCS_HEREDOC)\
 	$(SRCS_SERIALIZER)\
 	$(SRCS_VALIDATOR)\
 
@@ -50,6 +54,7 @@ HEADERS_DIR		=	./headers
 SRCS_BASE_DIR	=	./srcs
 SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
 SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
+SRCS_HEREDOC_DIR	=	$(SRCS_BASE_DIR)/heredoc
 SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
 SRCS_VALIDATOR_DIR	=	$(SRCS_BASE_DIR)/validator
 
@@ -61,6 +66,7 @@ DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 VPATH	=	\
 	$(SRCS_MAIN_DIR)\
 	:$(SRCS_CHILDS_DIR)\
+	:$(SRCS_HEREDOC_DIR)\
 	:$(SRCS_SERIALIZER_DIR)\
 	:$(SRCS_VALIDATOR_DIR)\
 
