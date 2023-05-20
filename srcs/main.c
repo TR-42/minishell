@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 01:14:44 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 01:37:52 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #include "ft_printf/ft_printf.h"
 
 #include "childs.h"
+#include "heredoc.h"
 #include "serializer.h"
 #include "validator.h"
 
@@ -82,6 +83,8 @@ static int	_parse_exec(const char *str, char *const envp[])
 	arr = serialize(str);
 	if (!_validate_input(&arr, &cpstat))
 		return (cpstat);
+	if (!chk_do_heredoc(&arr, envp))
+		return (dispose_t_cmdarr(&arr) + 1);
 	cparr = init_ch_proc_info_arr(&arr, (char **)envp);
 	i = 0;
 	while (i < arr.len)
