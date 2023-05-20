@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 19:27:09 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/20 23:01:23 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef enum e_cmd_elem_type
 	CMDTYP_RED_OUT,
 	CMDTYP_RED_APPEND,
 	CMDTYP_PIPE,
+	CMDTYP_RED_HEREDOC_SAVED,
 }	t_cmd_elem_type;
 
 // type		: その範囲が担う役割
