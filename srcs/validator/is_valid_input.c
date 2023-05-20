@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   childs_dispose.c                                   :+:      :+:    :+:   */
+/*   is_valid_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 18:58:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/17 23:50:32 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/16 21:32:10 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/16 21:37:47 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "validator.h"
 
-#include "childs.h"
-
-// TODO: きちんと一つ一つdisposeする
-void	dispose_proc_info_arr(t_ch_proc_info *info_arr)
+t_cmd_i_inval	is_valid_input(const t_cmdarr *cmdarr)
 {
-	size_t	i;
+	t_cmd_i_inval	v;
+	t_cmdelmarr		*p;
 
-	if (info_arr == NULL)
-		return ;
-	i = 0;
-	dispose_t_cmdarr(info_arr->cmdarr);
-	while (info_arr->path_arr[i] != NULL)
-		free((void *)(info_arr->path_arr[i++]));
-	free(info_arr->path_arr);
-	free(info_arr);
+	v = (t_cmd_i_inval){0};
+	p = (t_cmdelmarr *)(cmdarr->p);
+	while (v.index < cmdarr->len)
+	{
+		v.type = is_valid_cmd(p + v.index, (v.index + 1) == cmdarr->len);
+		if (v.type != CMD_INVAL_NO_ERR)
+			break ;
+		v.index += 1;
+	}
+	return (v);
 }
