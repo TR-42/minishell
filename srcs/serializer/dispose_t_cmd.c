@@ -16,7 +16,22 @@
 
 static void	_vect_dispose(void *vect)
 {
-	vect_dispose((t_vect *)vect);
+	t_cmdelmarr	*elems;
+	t_cmd_elem	*elemarr;
+	size_t		i;
+
+	elems = (t_cmdelmarr *)vect;
+	elemarr = (t_cmd_elem *)(elems->p);
+	i = 0;
+	while (i < elems->len)
+	{
+		if (elemarr[i++].type == CMDTYP_RED_HEREDOC_SAVED)
+		{
+			free((char *)(elemarr[i - 1].elem_top));
+			elemarr[i - 1].elem_top = NULL;
+		}
+	}
+	vect_dispose(elems);
 }
 
 // return: always 0
