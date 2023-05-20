@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 19:40:24 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/20 23:51:09 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static size_t	_get_elem_str_len(const t_cmd_elem *elem, char *const*envp)
 {
 	if (elem->type == CMDTYP_VARIABLE || elem->type == CMDTYP_QUOTE_VAR)
 	{
-		(void)envp;
+		if (envp == NULL)
+			return (elem->len + 1);
 		return (elem->len);
 	}
 	else
@@ -34,6 +35,11 @@ static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
 {
 	if (elem->type == CMDTYP_VARIABLE || elem->type == CMDTYP_QUOTE_VAR)
 	{
+		if (envp == NULL)
+		{
+			ft_memcpy(dst, elem->elem_top - 1, elem->len + 1);
+			return (elem->len + 1);
+		}
 		(void)envp;
 		ft_memcpy(dst, elem->elem_top, elem->len);
 		return (elem->len);
