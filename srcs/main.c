@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 21:53:38 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 01:14:44 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static bool	_validate_input(t_cmdarr *arr, int *ret)
 
 // TODO: serialize後のバリデーション/エラー処理
 // TODO: init_ch_...後のエラー処理
-static int	_parse_exec(const char *str, const char *envp[])
+static int	_parse_exec(const char *str, char *const envp[])
 {
 	t_cmdarr		arr;
 	t_cprocinf		*cparr;
@@ -99,7 +99,7 @@ static int	_parse_exec(const char *str, const char *envp[])
 		return (130);
 }
 
-static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
+static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
 {
 	if (argc < 2 || ft_strncmp(argv[1], "-c", 3) != 0)
 		return ;
@@ -111,7 +111,7 @@ static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
 	exit(_parse_exec(argv[2], envp));
 }
 
-int	main(int argc, const char *argv[], const char *envp[])
+int	main(int argc, const char *argv[], char *const envp[])
 {
 	_chk_do_c_opt(argc, argv, envp);
 	return (0);
