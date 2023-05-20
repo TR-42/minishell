@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:58:30 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/20 16:42:34 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 01:37:09 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,31 @@
 // - NULL
 #include <stddef.h>
 
+// - stderror
+#include <string.h>
+
 // - access
+// - write
+// - STDERR_FILENO
 #include <unistd.h>
 
 // - open
 #include <fcntl.h>
 
 #include "ft_mem/ft_mem.h"
+#include "ft_printf/ft_printf.h"
 #include "ft_string/ft_string.h"
 
 #include "_env_util.h"
 #include "heredoc.h"
 
+#define EMSG_PATHJOIN "minishell: failed to generate path to tmp file"
+
 #define TMPFN_HEAD "minishell/heredoc_"
 #define TMPFN_MAXLEN 10
 
+// TODO: `minishell` dirが存在しない場合に、No such file or dirが出るかも? -> mkdir
+// TODO: access != 0では?
 static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 {
 	const char	*tmpdir;
@@ -88,7 +98,8 @@ int	create_tmpfile(char *const *envp, char **fname_save)
 
 	fname_head_pos = _get_tmpfile_path_buf(envp, fname_save);
 	if (fname_head_pos == 0)
-		return (-1);
+		return ((write(STDERR_FILENO, EMSG_PATHJOIN,
+					sizeof(EMSG_PATHJOIN) - 1) * 0) - 1);
 	fd = -1;
 	c = *fname_save + fname_head_pos;
 	while (fd < 0 && (c - *fname_save - fname_head_pos) < TMPFN_MAXLEN)
@@ -100,7 +111,8 @@ int	create_tmpfile(char *const *envp, char **fname_save)
 		}
 		fd = open(*fname_save, O_WRONLY | O_CREAT | O_EXCL, 0600);
 		if (fd < 0 && errno != EEXIST)
-			return (-1);
+			return ((ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n",
+						*fname_save, strerror(errno)) * 0) - 1);
 	}
 	return (fd);
 }
