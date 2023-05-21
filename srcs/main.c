@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 17:39:58 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 21:40:18 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,10 @@ int	main(int argc, const char *argv[], const char *envp[])
 {
 	char	*line;
 	int		ret;
-	size_t	i;
 
 	_chk_do_c_opt(argc, argv, envp);
-	i = 0;
 	ret = 0;
-	while (i++ < 10)
+	while (true)
 	{
 		line = readline(PROMPT_STR);
 		if (line == NULL)
