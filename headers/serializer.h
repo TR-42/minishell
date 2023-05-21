@@ -32,6 +32,8 @@ typedef enum e_cmd_elem_type
 	CMDTYP_RED_APPEND,
 	CMDTYP_PIPE,
 	CMDTYP_RED_HEREDOC_SAVED,
+	CMDTYP_OP_OR,
+	CMDTYP_OP_AND,
 }	t_cmd_elem_type;
 
 // type		: その範囲が担う役割

@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:25:45 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/20 23:47:40 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 23:29:26 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ bool	is_cetyp_var_or_normal(t_cmd_elem_type t)
 // !! NO_ERROR
 bool	is_cetyp_terminator(t_cmd_elem_type t)
 {
-	return (t == CMDTYP_PIPE);
+	return (t == CMDTYP_PIPE
+		|| t == CMDTYP_OP_OR
+		|| t == CMDTYP_OP_AND);
 }
