@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:58:30 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 13:37:48 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 13:38:29 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 		tmpdir = "/tmp";
 	tmpdir_len = ft_strlen(tmpdir);
 	*fname_save = ft_calloc(
-			tmpdir_len + sizeof(TMPFN_HEAD) + TMPFN_MAXLEN + 2, 1);
+			tmpdir_len + sizeof(TMPFN_HEAD) + TMPFN_MAXLEN + 1, 1);
 	if (*fname_save == NULL)
 		return (0);
 	ft_memcpy(*fname_save, tmpdir, tmpdir_len);
