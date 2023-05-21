@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/21 00:59:58 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/21 14:22:22 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS_CHILDS	=\
 SRCS_HEREDOC =\
 	chk_do_heredoc.c\
 	create_tmpfile.c\
+	rm_tmpfile.c\
 
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \

@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 01:37:52 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 14:42:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	_parse_exec(const char *str, char *const envp[])
 	i = 0;
 	while (i < arr.len)
 		waitpid(cparr[i++].pid, &cpstat, 0);
-	dispose_t_cmdarr(&arr);
+	(void)(rm_tmpfile(&arr) + dispose_t_cmdarr(&arr));
 	dispose_proc_info_arr(cparr);
 	if (WIFEXITED(cpstat))
 		return (WEXITSTATUS(cpstat));
