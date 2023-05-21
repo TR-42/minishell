@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/21 16:00:16 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/21 17:19:47 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,13 +74,21 @@ LIBFT_MAKE	=	make -C $(LIBFT_DIR)
 
 override CFLAGS	+=	-Wall -Wextra -Werror -MMD -MP
 INCLUDES	=	-I $(HEADERS_DIR) -I $(LIBFT_DIR)
+LIB_LINK	=	-lreadline
+
+# os switch ref: https://qiita.com/y-vectorfield/items/5e117e090ed38422de6b
+OS_TYPE	:= $(shell uname -s)
+ifeq ($(OS_TYPE),Darwin)
+	INCLUDES += -I$(shell brew --prefix readline)/include
+	LIB_LINK += -L$(shell brew --prefix readline)/lib
+endif
 
 CC		=	cc
 
 all:	$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 debug: clean_local
 	make CFLAGS='-DDEBUG'
 
@@ -125,7 +133,7 @@ test:\
 
 
 $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJS_NOMAIN)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_NOMAIN)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
