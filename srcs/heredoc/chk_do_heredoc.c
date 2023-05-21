@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:57:31 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 01:38:46 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 13:50:21 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static bool	is_same_line(const char *a, const char *b)
 
 static bool	_read_write(const char *term, int fd)
 {
-	t_vect		str;
 	t_gnl_state	state;
 	char		*gnl_result;
 
@@ -66,11 +65,10 @@ static bool	_read_write(const char *term, int fd)
 		gnl_result = get_next_line(&state);
 		if (gnl_result == NULL || is_same_line(term, gnl_result))
 			break ;
-		vect_append_str(&str, gnl_result, ft_strlen(gnl_result));
+		ft_putstr_fd(state.buf, fd);
 		free(gnl_result);
 	}
 	free(gnl_result);
-	ft_putstr_fd(state.buf, fd);
 	dispose_gnl_state(&state);
 	return (true);
 }
