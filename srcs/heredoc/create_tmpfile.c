@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:58:30 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 13:38:29 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 13:44:38 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@
 
 #define EMSG_PATHJOIN "minishell: failed to generate path to tmp file"
 
-#define TMPFN_HEAD "minishell/heredoc_"
+#define TMPFN_HEAD "minish_heredoc_"
 #define TMPFN_MAXLEN 10
 
-// TODO: `minishell` dirが存在しない場合に、No such file or dirが出るかも? -> mkdir
 static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 {
 	const char	*tmpdir;
