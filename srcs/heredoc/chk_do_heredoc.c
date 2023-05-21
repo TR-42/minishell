@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:57:31 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 13:50:21 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 14:41:05 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static bool	_read_write(const char *term, int fd)
 		gnl_result = get_next_line(&state);
 		if (gnl_result == NULL || is_same_line(term, gnl_result))
 			break ;
-		ft_putstr_fd(state.buf, fd);
+		ft_putstr_fd(gnl_result, fd);
 		free(gnl_result);
 	}
 	free(gnl_result);
