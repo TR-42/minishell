@@ -46,6 +46,8 @@ static int	_parse_exec(const char *str, const char *envp[])
 	size_t			i;
 	int				cpstat;
 
+	if (str == NULL || *str == '\0')
+		return (0);
 	arr = serialize(str);
 	if (!_validate_input(&arr, &cpstat))
 		return (cpstat);
