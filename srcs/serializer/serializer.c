@@ -69,7 +69,7 @@ static bool	_take_elems(t_cmdelmarr *elmarr, const char **input)
 				vect_dispose(elmarr);
 				return (false);
 			}
-			if (elem.type == CMDTYP_PIPE)
+			if (is_cetyp_terminator(elem.type))
 				break ;
 		}
 	}

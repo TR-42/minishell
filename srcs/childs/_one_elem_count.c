@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:31:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/16 23:00:24 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/22 00:28:42 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
 				break ;
 		return (i);
 	}
-	else if (elem[i].type == CMDTYP_PIPE)
+	else if (is_cetyp_terminator(elem[i].type))
 		return (1);
 	while ((i + i_start) < elemarr->len)
 	{
 		if (!is_cetyp_var_or_normal(elem[i].type))
 			break ;
 		i++;
-		if (!(elem[i - 1].nospace) || elem[i].type == CMDTYP_PIPE)
+		if (!(elem[i - 1].nospace) || is_cetyp_terminator(elem[i].type))
 			break ;
 	}
 	return (i);
