@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 21:02:15 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 23:04:49 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 23:18:56 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,9 @@ inline bool	get_is_interrupted(void)
 	return (g_is_interrupted == true);
 }
 
-// SIGQUIT: Ctrl-Backslash
 // SIGINT: Ctrl-C
 static void	_sig_handler(int sig_no)
 {
-	if (sig_no == SIGQUIT)
-		return ;
 	if (sig_no != SIGINT)
 		return ;
 	g_is_interrupted = true;
@@ -61,6 +58,7 @@ static int	_rl_ev_hook_handler(void)
 bool	init_sig_handler(void)
 {
 	struct sigaction	action;
+	struct sigaction	action_sigquit;
 
 	action.sa_handler = _sig_handler;
 	action.sa_flags = 0;
@@ -69,8 +67,10 @@ bool	init_sig_handler(void)
 		perror("minishell: signal handler init");
 		return (false);
 	}
+	action_sigquit = action;
+	action_sigquit.sa_handler = SIG_IGN;
 	if (sigaction(SIGINT, &action, NULL) != 0
-		|| sigaction(SIGQUIT, &action, NULL) != 0)
+		|| sigaction(SIGQUIT, &action_sigquit, NULL) != 0)
 	{
 		perror("minishell: register signal handler");
 		return (false);
