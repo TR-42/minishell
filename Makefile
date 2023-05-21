@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/17 23:25:50 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/21 16:00:16 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS_SERIALIZER	= \
 	serializer.c \
 
 SRCS_VALIDATOR =\
+	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
 
