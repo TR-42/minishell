@@ -66,8 +66,8 @@ static const char	*_cmd_inval_typ_to_string(t_cmd_inval_typ type)
 		return (COLOR_GREEN STR(CMD_INVAL_NO_ERR) COLOR_DEFAULT);
 	else if (type == CMD_INVAL_NOCMD)
 		return (COLOR_BOLD_RED STR(CMD_INVAL_NOCMD) COLOR_DEFAULT);
-	else if (type == CMD_INVAL_PIPE_NOPAIR)
-		return (COLOR_PURPLE STR(CMD_INVAL_PIPE_NOPAIR) COLOR_DEFAULT);
+	else if (type == CMD_INVAL_OP_NOPAIR)
+		return (COLOR_PURPLE STR(CMD_INVAL_OP_NOPAIR) COLOR_DEFAULT);
 	else if (type == CMD_INVAL_REDIRECT_NOARG)
 		return (COLOR_RED STR(CMD_INVAL_REDIRECT_NOARG) COLOR_DEFAULT);
 	return (NULL);

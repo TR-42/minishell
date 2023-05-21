@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:05:48 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/16 23:23:40 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/22 00:34:01 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_cmd_inval_typ	_is_valid_elem(
 		if (is_cetyp_terminator(elems[i].type))
 		{
 			if (is_last_cmd)
-				return (CMD_INVAL_PIPE_NOPAIR);
+				return (CMD_INVAL_OP_NOPAIR);
 			else if (i == 0)
 				return (CMD_INVAL_NOCMD);
 		}

@@ -18,7 +18,7 @@
 #include "validator.h"
 
 #define E_INVAL_NO_CMD "minishell: no command was found at cmd[%d]\n"
-#define E_PIPE_NO_PAIR "minishell: no pipe pair was set with cmd[%d]\n"
+#define E_OP_NO_PAIR "minishell: no op pair was set with cmd[%d]\n"
 #define E_REDIR_NO_ARG "minishell: no redirect arg was set in cmd[%d]\n"
 #define E_VALID_UNKNOW "minishell: unknown validation error in cmd[%d]\n"
 
@@ -45,8 +45,8 @@ bool	_validate_input(t_cmdarr *arr, int *ret)
 	*ret = 1;
 	if (inval.type == CMD_INVAL_NOCMD)
 		ft_dprintf(STDERR_FILENO, E_INVAL_NO_CMD, (int)(inval.index));
-	else if (inval.type == CMD_INVAL_PIPE_NOPAIR)
-		ft_dprintf(STDERR_FILENO, E_PIPE_NO_PAIR, (int)(inval.index));
+	else if (inval.type == CMD_INVAL_OP_NOPAIR)
+		ft_dprintf(STDERR_FILENO, E_OP_NO_PAIR, (int)(inval.index));
 	else if (inval.type == CMD_INVAL_REDIRECT_NOARG)
 		ft_dprintf(STDERR_FILENO, E_REDIR_NO_ARG, (int)(inval.index));
 	else
