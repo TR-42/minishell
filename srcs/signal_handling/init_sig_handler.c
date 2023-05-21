@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 21:02:15 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 22:04:40 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 22:28:37 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 #include "signal_handling.h"
 
-static bool	g_is_interrupted = false;
+static volatile bool	g_is_interrupted = false;
 
 inline bool	get_is_interrupted(void)
 {
