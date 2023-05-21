@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 17:33:36 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 17:39:58 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 // - readline etc.
 #include <readline/readline.h>
+#include <readline/history.h>
 
 #include "ft_string/ft_string.h"
 #include "ft_printf/ft_printf.h"
@@ -98,6 +99,8 @@ int	main(int argc, const char *argv[], const char *envp[])
 		if (line == NULL)
 			return (ret);
 		ret = _parse_exec(line, envp);
+		if (*line != '\0')
+			add_history(line);
 		free(line);
 		rl_on_new_line();
 	}
