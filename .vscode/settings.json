@@ -3,6 +3,7 @@
   "editor.tabSize": 4,
   "files.associations": {
     "*.embeddedhtml": "html",
-    "error_utils.h": "c"
+    "error_utils.h": "c",
+    "stdbool.h": "c"
   }
 }

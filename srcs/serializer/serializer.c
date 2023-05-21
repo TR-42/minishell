@@ -31,7 +31,7 @@ static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 	while (**input != '\0')
 	{
 		if (_serializer_redirect(input, mode, &v)
-			|| _serializer_pipe(input, mode, &v)
+			|| _serializer_term(input, mode, &v)
 			|| _serializer_squote(input, mode, &v)
 			|| _serializer_dquote(input, mode, &v)
 			|| _serializer_var(input, mode, &v))
