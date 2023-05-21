@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:58:30 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 01:37:09 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 13:37:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 #define TMPFN_MAXLEN 10
 
 // TODO: `minishell` dirが存在しない場合に、No such file or dirが出るかも? -> mkdir
-// TODO: access != 0では?
 static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 {
 	const char	*tmpdir;
@@ -49,7 +48,7 @@ static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 	if (envp == NULL || fname_save == NULL)
 		return (0);
 	tmpdir = get_env_value(envp, "TMPDIR");
-	if (tmpdir == NULL || access(tmpdir, R_OK | W_OK) == 0)
+	if (tmpdir == NULL || access(tmpdir, R_OK | W_OK) != 0)
 		tmpdir = "/tmp";
 	tmpdir_len = ft_strlen(tmpdir);
 	*fname_save = ft_calloc(
