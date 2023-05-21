@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 15:59:58 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 17:33:36 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@
 // - sprintf
 #include <stdio.h>
 
+// - readline etc.
+#include <readline/readline.h>
+
 #include "ft_string/ft_string.h"
 #include "ft_printf/ft_printf.h"
 
 #include "childs.h"
 #include "serializer.h"
 #include "validator.h"
+
+#define PROMPT_STR "minishell> "
 
 #define E_OPT_LESS_ARG "%s: %s: option requires an argument\n"
 
@@ -80,7 +85,22 @@ static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
 
 int	main(int argc, const char *argv[], const char *envp[])
 {
+	char	*line;
+	int		ret;
+	size_t	i;
+
 	_chk_do_c_opt(argc, argv, envp);
+	i = 0;
+	ret = 0;
+	while (i++ < 10)
+	{
+		line = readline(PROMPT_STR);
+		if (line == NULL)
+			return (ret);
+		ret = _parse_exec(line, envp);
+		free(line);
+		rl_on_new_line();
+	}
 	return (0);
 }
 
