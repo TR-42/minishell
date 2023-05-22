@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/17 23:41:45 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/19 21:53:38 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static int	_parse_exec(const char *str, const char *envp[])
 	i = 0;
 	while (i < arr.len)
 		pipe_fork_exec(cparr, i++, arr.len);
+	close(cparr->fd_stdin_save);
+	close(cparr->fd_stdout_save);
 	i = 0;
 	while (i < arr.len)
 		waitpid(cparr[i++].pid, &cpstat, 0);
