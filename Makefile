@@ -18,6 +18,7 @@ SRCS_MAIN	= \
 SRCS_CHILDS	=\
 	_get_argc.c\
 	_one_elem_count.c\
+	_redirect.c\
 	build_cmd.c\
 	childs_dispose.c\
 	childs.c\

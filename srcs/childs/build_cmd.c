@@ -69,7 +69,7 @@ static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
 	return (str);
 }
 
-static char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
+char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 	char *const *envp)
 {
 	size_t		current_seg_len;

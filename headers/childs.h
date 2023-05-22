@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 00:46:47 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/19 00:52:31 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_ch_proc_info
 {
 	t_cmdarr	*cmdarr;
 	t_cmdelmarr	*cmd;
+	int			fd_stdin_save;
+	int			fd_stdout_save;
 	int			fd_to_this;
 	int			fd_from_this;
 	pid_t		pid;
