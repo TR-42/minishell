@@ -18,6 +18,7 @@ SRCS_MAIN	= \
 SRCS_CHILDS	=\
 	_get_argc.c\
 	_one_elem_count.c\
+	_redirect.c\
 	build_cmd.c\
 	childs_dispose.c\
 	childs.c\
@@ -90,7 +91,7 @@ all:	$(NAME)
 $(NAME):	$(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 debug: clean_local
-	make CFLAGS='-DDEBUG'
+	make CFLAGS='-DDEBUG -g -fsanitize=address'
 
 $(OBJ_DIR)/%.o:	%.c
 	@mkdir -p $(OBJ_DIR)

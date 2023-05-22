@@ -61,6 +61,8 @@ static int	_parse_exec(const char *str, const char *envp[])
 	i = 0;
 	while (i < arr.len)
 		pipe_fork_exec(cparr, i++, arr.len);
+	close(cparr->fd_stdin_save);
+	close(cparr->fd_stdout_save);
 	i = 0;
 	while (i < arr.len)
 		waitpid(cparr[i++].pid, &cpstat, 0);

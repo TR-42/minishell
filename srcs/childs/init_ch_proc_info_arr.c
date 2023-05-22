@@ -6,11 +6,15 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 23:43:45 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 01:13:32 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/19 22:01:56 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+// - malloc
 #include <stdlib.h>
+
+// - dup
+#include <unistd.h>
 
 #include "childs.h"
 #include "_env_util.h"
@@ -27,6 +31,11 @@ static t_cprocinf	_init_ch_proc_info(t_cmdarr *cmdarr, size_t i,
 	info.envp = envp;
 	info.fd_to_this = STDIN_FILENO;
 	info.fd_from_this = STDOUT_FILENO;
+	if (i == 0)
+	{
+		info.fd_stdin_save = dup(STDIN_FILENO);
+		info.fd_stdout_save = dup(STDOUT_FILENO);
+	}
 	return (info);
 }
 
@@ -50,6 +59,8 @@ t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 	while (i < cmdarr->len)
 	{
 		arr[i] = _init_ch_proc_info(cmdarr, i, envp, path_arr);
+		arr[i].fd_stdin_save = arr->fd_stdin_save;
+		arr[i].fd_stdout_save = arr->fd_stdout_save;
 		i++;
 	}
 	return (arr);
