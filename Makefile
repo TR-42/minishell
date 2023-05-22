@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/19 01:13:18 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/21 16:33:10 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ all:	$(NAME)
 $(NAME):	$(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
 debug: clean_local
-	make CFLAGS='-DDEBUG'
+	make CFLAGS='-DDEBUG -g -fsanitize=address'
 
 $(OBJ_DIR)/%.o:	%.c
 	@mkdir -p $(OBJ_DIR)
