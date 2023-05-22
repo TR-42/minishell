@@ -50,4 +50,6 @@ int			_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 int			_parse_exec(const char *str, char *const envp[])
 			__attribute__((nonnull));
 
+int			_parse_exec(const char *str, const char *envp[]);
+
 #endif

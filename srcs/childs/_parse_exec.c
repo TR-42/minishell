@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "heredoc.h"
+#include <sys/wait.h>
 
+#include "heredoc.h"
 #include "childs.h"
 
 #include "validator.h"
