@@ -4,6 +4,7 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     "error_utils.h": "c",
-    "stdbool.h": "c"
+    "stdbool.h": "c",
+    "sstream": "c"
   }
 }

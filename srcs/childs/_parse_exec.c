@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/wait.h>
-
 #include "heredoc.h"
 #include "childs.h"
 
@@ -27,21 +25,21 @@ int	_parse_exec(const char *str, char *const envp[])
 {
 	t_cmdarr		arr;
 	t_cprocinf		*cparr;
-	int				cpstat;
+	int				exit_stat;
 
 	if (*str == '\0')
 		return (0);
 	arr = serialize(str);
-	if (!_validate_input(&arr, &cpstat))
-		return (cpstat);
+	if (!_validate_input(&arr, &exit_stat))
+		return (exit_stat);
 	if (!chk_do_heredoc(&arr, envp))
 		return (dispose_t_cmdarr(&arr) + 1);
 	cparr = init_ch_proc_info_arr(&arr, (char **)envp);
-	cpstat = 1;
+	exit_stat = 1;
 	if (cparr != NULL)
-		cpstat = _exec_ch_proc_info_arr(cparr, arr.len);
+		exit_stat = _exec_ch_proc_info_arr(cparr, arr.len);
 	rm_tmpfile(&arr);
 	dispose_t_cmdarr(&arr);
 	dispose_proc_info_arr(cparr);
-	return (cpstat);
+	return (exit_stat);
 }
