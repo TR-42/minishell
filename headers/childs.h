@@ -43,4 +43,6 @@ void		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 // バリデーション実行後にこの関数を呼ぶ
 t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp);
 
+int			_parse_exec(const char *str, char *const envp[]);
+
 #endif
