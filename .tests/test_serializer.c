@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/17 09:16:21 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/22 00:34:01 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ static const char	*_cmdelmtyp_to_string(t_cmd_elem_type type)
 		return (COLOR_BOLD_CYAN STR(CMDTYP_RED_APPEND) COLOR_DEFAULT);
 	else if (type == CMDTYP_PIPE)
 		return (COLOR_BOLD_YELLOW STR(CMDTYP_PIPE) COLOR_DEFAULT);
+	else if (type == CMDTYP_OP_AND)
+		return (COLOR_BOLD_YELLOW STR(CMDTYP_OP_AND) COLOR_DEFAULT);
+	else if (type == CMDTYP_OP_OR)
+		return (COLOR_BOLD_YELLOW STR(CMDTYP_OP_OR) COLOR_DEFAULT);
 	return (NULL);
 }
 
