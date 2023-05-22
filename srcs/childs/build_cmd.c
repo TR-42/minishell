@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/20 23:51:09 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:31:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
 	while (i < len)
 		str_len += _get_elem_str_len(elem + i++, envp);
 	if (0 < len)
-		str = (char *)malloc(len + 1);
+		str = (char *)malloc(str_len + 1);
 	if (str == NULL)
 		return (NULL);
-	str[len] = 0;
+	str[str_len] = 0;
 	i = 0;
 	str_len = 0;
 	while (i < len)
