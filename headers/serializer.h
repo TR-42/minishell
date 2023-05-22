@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 01:10:59 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/22 08:59:26 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef enum e_cmd_elem_type
 	CMDTYP_OP_AND,
 }	t_cmd_elem_type;
 
+typedef t_cmd_elem_type	t_cetyp;
+
 // type		: その範囲が担う役割
 // elem_top	: その範囲の先頭
 // len		: その範囲の長さ
@@ -58,5 +60,8 @@ int			dispose_t_cmdarr(t_cmdarr *cmd);
 bool		is_cetyp_redirect(t_cmd_elem_type t);
 bool		is_cetyp_var_or_normal(t_cmd_elem_type t);
 bool		is_cetyp_terminator(t_cmd_elem_type t);
+
+bool		is_cmdterm(const t_cmdelmarr *elems, t_cmd_elem_type type);
+t_cetyp		get_cmdterm(const t_cmdelmarr *elems);
 
 #endif

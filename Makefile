@@ -45,6 +45,7 @@ SRCS_SERIALIZER	:= \
 	_serializer_var.c \
 	dispose_t_cmd.c \
 	is_cetyp.c \
+	is_cmdterm_typ.c \
 	serializer.c \
 
 SRCS_SIGNAL =\
