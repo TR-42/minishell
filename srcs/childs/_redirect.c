@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 01:03:57 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 14:14:21 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/22 19:52:12 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 {
 	int	fd;
 
-	if (type == CMDTYP_RED_APPEND || type == CMDTYP_RED_HEREDOC_SAVED)
+	if (type == CMDTYP_RED_IN || type == CMDTYP_RED_HEREDOC_SAVED)
 		fd = open(fname, O_RDONLY | O_CLOEXEC);
 	else if (type == CMDTYP_RED_OUT)
 		fd = open(fname, O_WRONLY | O_CREAT | O_TRUNC, 0644);
