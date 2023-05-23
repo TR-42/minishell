@@ -78,8 +78,9 @@ LIB_LINK	:=	-lreadline
 # os switch ref: https://qiita.com/y-vectorfield/items/5e117e090ed38422de6b
 OS_TYPE	:= $(shell uname -s)
 ifeq ($(OS_TYPE),Darwin)
-	INCLUDES += -I$(shell brew --prefix readline)/include
-	LIB_LINK += -L$(shell brew --prefix readline)/lib
+	GNU_READLINE_DIR := $(shell brew --prefix readline)
+	INCLUDES += -I$(GNU_READLINE_DIR)/include
+	LIB_LINK += -L$(GNU_READLINE_DIR)/lib
 endif
 
 CC		:=	cc
