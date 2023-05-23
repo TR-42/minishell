@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/21 17:19:47 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/22 23:00:11 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS_MAIN	= \
 	main.c \
 
 SRCS_CHILDS	=\
+	_exec_ch_proc_info_arr.c\
 	_get_argc.c\
 	_one_elem_count.c\
 	_redirect.c\
