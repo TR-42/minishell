@@ -71,7 +71,7 @@ int	main(int argc, const char *argv[], char *const envp[])
 			ret = 1;
 		else if (line == NULL)
 			return (ret);
-		else
+		else if (*line != '\0')
 		{
 			ret = _parse_exec(line, envp);
 			if (*line != '\0')
