@@ -6,16 +6,16 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/23 23:44:25 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/23 23:47:47 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	minishell
+NAME	:=	minishell
 
-SRCS_MAIN	= \
+SRCS_MAIN	:= \
 	main.c \
 
-SRCS_CHILDS	=\
+SRCS_CHILDS	:=\
 	_exec_ch_proc_info_arr.c\
 	_get_argc.c\
 	_one_elem_count.c\
@@ -29,12 +29,12 @@ SRCS_CHILDS	=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
-SRCS_HEREDOC =\
+SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
 	create_tmpfile.c\
 	rm_tmpfile.c\
 
-SRCS_SERIALIZER	= \
+SRCS_SERIALIZER	:= \
 	_serializer_dquote.c \
 	_serializer_pipe_red.c \
 	_serializer_squote.c \
@@ -43,37 +43,37 @@ SRCS_SERIALIZER	= \
 	is_cetyp.c \
 	serializer.c \
 
-SRCS_VALIDATOR =\
+SRCS_VALIDATOR :=\
 	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
 
-SRCS_NOMAIN	= \
+SRCS_NOMAIN	:= \
 	$(addprefix childs/, $(SRCS_CHILDS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
 	$(addprefix validator/, $(SRCS_VALIDATOR))\
 
-HEADERS_DIR		=	./headers
+HEADERS_DIR		:=	./headers
 
-SRCS_BASE_DIR	=	./srcs
+SRCS_BASE_DIR	:=	./srcs
 
-OBJ_DIR	=	./obj
-OBJS_NOMAIN	=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
-OBJS	=	$(OBJS_NOMAIN) $(addprefix $(OBJ_DIR)/, $(SRCS_MAIN:.c=.o))
-DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
+OBJ_DIR	:=	./obj
+OBJS_NOMAIN	:=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
+OBJS	:=	$(OBJS_NOMAIN) $(addprefix $(OBJ_DIR)/, $(SRCS_MAIN:.c=.o))
+DEPS	:=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 
-TEST_DIR	=	.tests
-TEST_SERIALIZER	=	test_serializer
-TEST_BUILD_CMD	=	test_build_cmd
+TEST_DIR	:=	.tests
+TEST_SERIALIZER	:=	test_serializer
+TEST_BUILD_CMD	:=	test_build_cmd
 
-LIBFT_DIR	=	./libft
-LIBFT	=	$(LIBFT_DIR)/libft.a
-LIBFT_MAKE	=	make -C $(LIBFT_DIR)
+LIBFT_DIR	:=	./libft
+LIBFT	:=	$(LIBFT_DIR)/libft.a
+LIBFT_MAKE	:=	make -C $(LIBFT_DIR)
 
 override CFLAGS	+=	-Wall -Wextra -Werror -MMD -MP
-INCLUDES	=	-I $(HEADERS_DIR) -I $(LIBFT_DIR)
-LIB_LINK	=	-lreadline
+INCLUDES	:=	-I $(HEADERS_DIR) -I $(LIBFT_DIR)
+LIB_LINK	:=	-lreadline
 
 # os switch ref: https://qiita.com/y-vectorfield/items/5e117e090ed38422de6b
 OS_TYPE	:= $(shell uname -s)
@@ -82,7 +82,7 @@ ifeq ($(OS_TYPE),Darwin)
 	LIB_LINK += -L$(shell brew --prefix readline)/lib
 endif
 
-CC		=	cc
+CC		:=	cc
 
 all:	$(NAME)
 
