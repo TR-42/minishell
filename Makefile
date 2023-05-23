@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/23 23:47:47 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/23 23:51:13 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,8 +87,8 @@ CC		:=	cc
 
 all:	$(NAME)
 
-$(NAME):	$(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
+$(NAME):	$(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIB_LINK)
 debug: clean_local
 	make CFLAGS='-DDEBUG -g -fsanitize=address'
 
