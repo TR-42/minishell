@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 20:29:09 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 20:52:48 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/20 20:05:43 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	_print_argv(const char **argv)
 	}
 }
 
-static void	print_cmdarr(const t_cmdarr *cmdarr, const char **envp)
+static void	print_cmdarr(const t_cmdarr *cmdarr, char *const *envp)
 {
 	char		**v;
 	size_t		i;
@@ -63,7 +63,7 @@ static void	print_cmdarr(const t_cmdarr *cmdarr, const char **envp)
 }
 
 
-int	main(int argc, char **argv, const char **envp)
+int	main(int argc, char **argv, char *const *envp)
 {
 	t_cmdarr	arr;
 	size_t		i;

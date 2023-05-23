@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 21:53:38 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 14:42:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #include "ft_printf/ft_printf.h"
 
 #include "childs.h"
+#include "heredoc.h"
 #include "serializer.h"
 #include "validator.h"
 
@@ -72,7 +73,7 @@ static bool	_validate_input(t_cmdarr *arr, int *ret)
 
 // TODO: serialize後のバリデーション/エラー処理
 // TODO: init_ch_...後のエラー処理
-static int	_parse_exec(const char *str, const char *envp[])
+static int	_parse_exec(const char *str, char *const envp[])
 {
 	t_cmdarr		arr;
 	t_cprocinf		*cparr;
@@ -82,6 +83,8 @@ static int	_parse_exec(const char *str, const char *envp[])
 	arr = serialize(str);
 	if (!_validate_input(&arr, &cpstat))
 		return (cpstat);
+	if (!chk_do_heredoc(&arr, envp))
+		return (dispose_t_cmdarr(&arr) + 1);
 	cparr = init_ch_proc_info_arr(&arr, (char **)envp);
 	i = 0;
 	while (i < arr.len)
@@ -91,7 +94,7 @@ static int	_parse_exec(const char *str, const char *envp[])
 	i = 0;
 	while (i < arr.len)
 		waitpid(cparr[i++].pid, &cpstat, 0);
-	dispose_t_cmdarr(&arr);
+	(void)(rm_tmpfile(&arr) + dispose_t_cmdarr(&arr));
 	dispose_proc_info_arr(cparr);
 	if (WIFEXITED(cpstat))
 		return (WEXITSTATUS(cpstat));
@@ -99,7 +102,7 @@ static int	_parse_exec(const char *str, const char *envp[])
 		return (130);
 }
 
-static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
+static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
 {
 	if (argc < 2 || ft_strncmp(argv[1], "-c", 3) != 0)
 		return ;
@@ -111,7 +114,7 @@ static void	_chk_do_c_opt(int argc, const char *argv[], const char *envp[])
 	exit(_parse_exec(argv[2], envp));
 }
 
-int	main(int argc, const char *argv[], const char *envp[])
+int	main(int argc, const char *argv[], char *const envp[])
 {
 	_chk_do_c_opt(argc, argv, envp);
 	return (0);
