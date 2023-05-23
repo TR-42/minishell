@@ -27,6 +27,11 @@ SRCS_CHILDS	=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
+SRCS_HEREDOC =\
+	chk_do_heredoc.c\
+	create_tmpfile.c\
+	rm_tmpfile.c\
+
 SRCS_SERIALIZER	= \
 	_serializer_dquote.c \
 	_serializer_pipe_red.c \
@@ -43,6 +48,7 @@ SRCS_VALIDATOR =\
 
 SRCS_NOMAIN	= \
 	$(SRCS_CHILDS)\
+	$(SRCS_HEREDOC)\
 	$(SRCS_SERIALIZER)\
 	$(SRCS_VALIDATOR)\
 
@@ -51,6 +57,7 @@ HEADERS_DIR		=	./headers
 SRCS_BASE_DIR	=	./srcs
 SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
 SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
+SRCS_HEREDOC_DIR	=	$(SRCS_BASE_DIR)/heredoc
 SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
 SRCS_VALIDATOR_DIR	=	$(SRCS_BASE_DIR)/validator
 
@@ -62,6 +69,7 @@ DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 VPATH	=	\
 	$(SRCS_MAIN_DIR)\
 	:$(SRCS_CHILDS_DIR)\
+	:$(SRCS_HEREDOC_DIR)\
 	:$(SRCS_SERIALIZER_DIR)\
 	:$(SRCS_VALIDATOR_DIR)\
 
@@ -126,6 +134,7 @@ norm:
 t: test
 test:\
 	$(OBJ_DIR)/$(TEST_SERIALIZER)\
+	$(OBJ_DIR)/$(TEST_BUILD_CMD)\
 
 	@echo '~~~~~~~~~~ TEST ~~~~~~~~~~~~'
 	@./$(TEST_DIR)/$(TEST_SERIALIZER).sh $(OBJ_DIR)/$(TEST_SERIALIZER)
