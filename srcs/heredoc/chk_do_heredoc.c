@@ -24,10 +24,10 @@
 
 #include "ft_put/ft_put.h"
 #include "ft_string/ft_string.h"
-#include "gnl/get_next_line.h"
 
 #include "../childs/_build_cmd.h"
 #include "heredoc.h"
+#include "signal_handling.h"
 
 #define PROMPT_STR "> "
 
@@ -61,13 +61,14 @@ static bool	_read_write(const char *term, int fd)
 	while (true)
 	{
 		gnl_result = readline(PROMPT_STR);
-		if (gnl_result == NULL || is_same_line(term, gnl_result))
+		if (gnl_result == NULL || get_is_interrupted()
+			|| is_same_line(term, gnl_result))
 			break ;
 		ft_putendl_fd(gnl_result, fd);
 		free(gnl_result);
 	}
 	free(gnl_result);
-	return (true);
+	return (!get_is_interrupted());
 }
 
 static bool	_do_heredoc(const t_cmdelmarr *elems, size_t *i, int fd)
