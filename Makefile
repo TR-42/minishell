@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/22 23:00:11 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/23 23:44:25 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,31 +49,19 @@ SRCS_VALIDATOR =\
 	is_valid_input.c\
 
 SRCS_NOMAIN	= \
-	$(SRCS_CHILDS)\
-	$(SRCS_HEREDOC)\
-	$(SRCS_SERIALIZER)\
-	$(SRCS_VALIDATOR)\
+	$(addprefix childs/, $(SRCS_CHILDS))\
+	$(addprefix heredoc/, $(SRCS_HEREDOC))\
+	$(addprefix serializer/, $(SRCS_SERIALIZER))\
+	$(addprefix validator/, $(SRCS_VALIDATOR))\
 
 HEADERS_DIR		=	./headers
 
 SRCS_BASE_DIR	=	./srcs
-SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
-SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
-SRCS_HEREDOC_DIR	=	$(SRCS_BASE_DIR)/heredoc
-SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
-SRCS_VALIDATOR_DIR	=	$(SRCS_BASE_DIR)/validator
 
 OBJ_DIR	=	./obj
 OBJS_NOMAIN	=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
 OBJS	=	$(OBJS_NOMAIN) $(addprefix $(OBJ_DIR)/, $(SRCS_MAIN:.c=.o))
 DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
-
-VPATH	=	\
-	$(SRCS_MAIN_DIR)\
-	:$(SRCS_CHILDS_DIR)\
-	:$(SRCS_HEREDOC_DIR)\
-	:$(SRCS_SERIALIZER_DIR)\
-	:$(SRCS_VALIDATOR_DIR)\
 
 TEST_DIR	=	.tests
 TEST_SERIALIZER	=	test_serializer
@@ -103,8 +91,8 @@ $(NAME):	$(LIBFT) $(OBJS)
 debug: clean_local
 	make CFLAGS='-DDEBUG -g -fsanitize=address'
 
-$(OBJ_DIR)/%.o:	%.c
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o:	$(SRCS_BASE_DIR)/%.c
+	@test -d '$(dir $@)' || mkdir -p '$(dir $@)'
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(LIBFT):
