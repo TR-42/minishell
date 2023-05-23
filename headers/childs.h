@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 00:52:31 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/22 23:08:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,8 @@ void		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 
 // バリデーション実行後にこの関数を呼ぶ
 t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp);
+
+int			_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len);
+int			_parse_exec(const char *str, char *const envp[]);
 
 #endif

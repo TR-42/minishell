@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:02:37 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/16 23:24:47 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 15:58:49 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_cmd_i_inval
 	size_t			index;
 	t_cmd_inval_typ	type;
 }	t_cmd_i_inval;
+
+bool			_validate_input(t_cmdarr *arr, int *ret);
 
 t_cmd_i_inval	is_valid_input(const t_cmdarr *cmdarr);
 t_cmd_inval_typ	is_valid_cmd(const t_cmdelmarr *cmdelemarr, bool is_last_cmd);

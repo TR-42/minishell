@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/21 16:33:10 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/22 23:00:11 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,11 @@ SRCS_MAIN	= \
 	main.c \
 
 SRCS_CHILDS	=\
+	_exec_ch_proc_info_arr.c\
 	_get_argc.c\
 	_one_elem_count.c\
 	_redirect.c\
+	_parse_exec.c\
 	build_cmd.c\
 	childs_dispose.c\
 	childs.c\
@@ -42,6 +44,7 @@ SRCS_SERIALIZER	= \
 	serializer.c \
 
 SRCS_VALIDATOR =\
+	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
 
@@ -82,13 +85,21 @@ LIBFT_MAKE	=	make -C $(LIBFT_DIR)
 
 override CFLAGS	+=	-Wall -Wextra -Werror -MMD -MP
 INCLUDES	=	-I $(HEADERS_DIR) -I $(LIBFT_DIR)
+LIB_LINK	=	-lreadline
+
+# os switch ref: https://qiita.com/y-vectorfield/items/5e117e090ed38422de6b
+OS_TYPE	:= $(shell uname -s)
+ifeq ($(OS_TYPE),Darwin)
+	INCLUDES += -I$(shell brew --prefix readline)/include
+	LIB_LINK += -L$(shell brew --prefix readline)/lib
+endif
 
 CC		=	cc
 
 all:	$(NAME)
 
 $(NAME):	$(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 debug: clean_local
 	make CFLAGS='-DDEBUG -g -fsanitize=address'
 
@@ -134,7 +145,7 @@ test:\
 
 
 $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJS_NOMAIN)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_NOMAIN)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
