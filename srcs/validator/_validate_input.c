@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:58:32 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 16:00:29 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/24 22:48:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <unistd.h>
 
 #include "ft_printf/ft_printf.h"
+
+#include "error_utils.h"
 
 #include "validator.h"
 
@@ -32,6 +34,7 @@ bool	_validate_input(t_cmdarr *arr, int *ret)
 	*ret = 0;
 	if (arr->p == NULL || arr->len <= 0)
 	{
+		strerr_ret_false("validator/malloc");
 		vect_dispose(arr);
 		return (false);
 	}
