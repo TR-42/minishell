@@ -37,7 +37,7 @@ void		dispose_proc_info_arr(t_ch_proc_info *info_arr);
 
 // バリデーション後、そのままの状態で渡す。
 // 変数展開等はfork後に子プロセス側で実行する
-void		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
+bool		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 				size_t count);
 
 // バリデーション実行後にこの関数を呼ぶ
