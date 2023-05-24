@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 23:27:10 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 09:20:53 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/24 12:55:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,16 @@ bool	perr_ret_false(const char *str)
 
 bool	strerr_ret_false(const char *str)
 {
-	const char	*err_msg;
-
-	err_msg = strerror(errno);
-	ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", str, err_msg);
-	return (false);
+	return (strerr_errno_ret_false(str, errno));
 }
 
 bool	strerr_errno_ret_false(const char *str, int _errno)
 {
-	const char	*err_msg;
+	return (errstr_ret_false(str, strerror(_errno)));
+}
 
-	err_msg = strerror(_errno);
-	ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", str, err_msg);
+bool	errstr_ret_false(const char *str1, const char *str2)
+{
+	ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", str1, str2);
 	return (false);
 }
