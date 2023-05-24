@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:18:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 08:49:17 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/24 12:58:05 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 // - malloc
 #include <stdlib.h>
 
-// - perror
-#include <stdio.h>
+// - strerror
+#include <string.h>
 
 // - access
 // - X_OK
@@ -25,15 +25,16 @@
 #include "ft_mem/ft_mem.h"
 #include "ft_printf/ft_printf.h"
 
+#include "error_utils.h"
+
 #include "_filectrl_tools.h"
 
 static bool	_print_err(const char *argv_0, int mode)
 {
 	if (mode == CHK_GET_PATH_ERR_NOCMD)
-		ft_dprintf(STDERR_FILENO, "%s: Command not found\n", argv_0);
+		return (errstr_ret_false(argv_0, "Command not found"));
 	else
-		perror(argv_0);
-	return (false);
+		return (strerr_ret_false(argv_0));
 }
 
 static char	*join_path(const char *path1, const char *path2)
