@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/23 23:51:13 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/24 09:18:00 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ SRCS_CHILDS	:=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
+SRCS_ERR_UTILS :=\
+	err_ret_false.c\
+
 SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
 	create_tmpfile.c\
@@ -50,6 +53,7 @@ SRCS_VALIDATOR :=\
 
 SRCS_NOMAIN	:= \
 	$(addprefix childs/, $(SRCS_CHILDS))\
+	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
 	$(addprefix validator/, $(SRCS_VALIDATOR))\
