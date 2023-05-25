@@ -17,6 +17,7 @@
 #include "error_utils.h"
 #include "_build_cmd.h"
 
+// !! NO_ERROR
 // TODO: 環境変数を用いた形に書き換える
 __attribute__((nonnull(1)))
 static size_t	_get_elem_str_len(const t_cmd_elem *elem, char *const*envp)
@@ -31,6 +32,7 @@ static size_t	_get_elem_str_len(const t_cmd_elem *elem, char *const*envp)
 		return (elem->len);
 }
 
+// !! NO_ERROR
 // TODO: 環境変数を用いた形に書き換える
 __attribute__((nonnull(1, 2)))
 static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
@@ -54,6 +56,7 @@ static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
 	}
 }
 
+// !! MUST_PRINT_ERROR_IN_CALLER (malloc error)
 __attribute__((nonnull(1)))
 static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
 	char *const *envp)
@@ -79,6 +82,9 @@ static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
 	return (str);
 }
 
+// !! ERR_PRINTED
+// -> (root) for _gen_argv_one_str
+// -> (len <= i の場合にNULLが返る -> バリデーション済みのため到達しない)
 __attribute__((nonnull(1, 2)))
 char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 	char *const *envp)
@@ -105,6 +111,10 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 // ここに来る段階では、既にバリデーションが完了していると期待する
 //   - 0 < argcは確定している
 //   - リダイレクトの引数は正常に設定されている
+// !! ERR_PRINTED
+// -> (root) for _get_argc
+// -> (root) for malloc
+// -> <inherit> _get_argv_one
 __attribute__((nonnull(1)))
 char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 {

@@ -27,6 +27,8 @@
 // returns
 // - true: It is valid input -> continue processing
 // - false: It is NOT valid input
+// !! ERR_PRINTED (バリデーション結果の出力)
+// -> `arr`変数自体がinvalidの場合、serializer側でエラー出力済み
 __attribute__((nonnull))
 bool	_validate_input(t_cmdarr *arr, int *ret)
 {

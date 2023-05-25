@@ -21,6 +21,8 @@
 #include "error_utils.h"
 #include "heredoc.h"
 
+// !! ERR_PRINTED
+// -> (root) for unlink (実行は中断しない)
 __attribute__((nonnull))
 static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 {
@@ -39,6 +41,8 @@ static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 	return (0);
 }
 
+// !! ERR_PRINTED
+// -> <inherit> _rm_tmpfile_from_elems (エラーは出力するものの、dispose段のため処理を続行する)
 __attribute__((nonnull))
 int	rm_tmpfile(t_cmdarr *cmdarr)
 {

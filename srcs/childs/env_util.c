@@ -25,6 +25,7 @@
 
 static const char	*is_this_requested_env(char *const envp, const char *name);
 
+// !! NO_ERROR (指定の環境変数が見つからなかったときはNULLが返る)
 __attribute__((nonnull))
 const char	*get_env_value(char *const envp[], const char *name)
 {
@@ -39,6 +40,7 @@ const char	*get_env_value(char *const envp[], const char *name)
 	return (p_value);
 }
 
+// !! NO_ERROR
 __attribute__((nonnull))
 static const char	*is_this_requested_env(char *envp, const char *name)
 {
@@ -55,6 +57,9 @@ static const char	*is_this_requested_env(char *envp, const char *name)
 		return (NULL);
 }
 
+// !! MUST_PRINT_ERROR_IN_CALLER
+// -> EINVAL: 指定の環境変数が見つからなかった
+// -> *: ft_splitでのmalloc失敗
 __attribute__((nonnull))
 char	**get_path_in_env(char *const envp[])
 {

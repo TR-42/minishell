@@ -16,8 +16,11 @@
 
 #include "validator.h"
 
-// TODO: serialize後のバリデーション/エラー処理
-// TODO: init_ch_...後のエラー処理
+// !! ERR_PRINTED
+// -> <inherit> serialize
+// -> <inherit> _validate_input (バリデーション結果の出力)
+// -> <inherit> chk_do_heredoc
+// -> <inherit> init_ch_proc_info_arr
 __attribute__((nonnull))
 int	_parse_exec(const char *str, char *const envp[])
 {

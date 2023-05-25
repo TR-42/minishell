@@ -14,6 +14,8 @@
 
 #include "_build_cmd.h"
 
+// !! MUST_PRINT_ERROR_IN_CALLER
+// -> argcがINT_MAXを超過した場合、argcの生成に失敗するため、`-1`が返る
 __attribute__((nonnull))
 int	_get_argc(const t_cmdelmarr *elemarr)
 {

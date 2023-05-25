@@ -14,6 +14,7 @@
 
 #include "../childs/_build_cmd.h"
 
+// !! NO_ERROR
 __attribute__((nonnull))
 static t_cmd_inval_typ	_is_valid_elem(
 	const t_cmdelmarr *cmdelemarr,
@@ -47,6 +48,7 @@ static t_cmd_inval_typ	_is_valid_elem(
 	return (CMD_INVAL_NO_ERR);
 }
 
+// !! NO_ERROR
 __attribute__((nonnull))
 t_cmd_inval_typ	is_valid_cmd(const t_cmdelmarr *cmdelemarr, bool is_last_cmd)
 {

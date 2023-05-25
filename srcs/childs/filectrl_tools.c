@@ -29,6 +29,7 @@
 
 #include "_filectrl_tools.h"
 
+// !! NO_ERROR
 static bool	_print_err(const char *argv_0, int mode)
 {
 	if (mode == CHK_GET_PATH_ERR_NOCMD)
@@ -37,6 +38,7 @@ static bool	_print_err(const char *argv_0, int mode)
 		return (strerr_ret_false(argv_0));
 }
 
+// !! MUST_PRINT_ERR_IN_CALLER (malloc failure)
 __attribute__((nonnull))
 static char	*join_path(const char *path1, const char *path2)
 {
@@ -62,6 +64,9 @@ static char	*join_path(const char *path1, const char *path2)
 	return (ret);
 }
 
+// !! ERR_PRINTED
+// -> (root) for join_path (malloc failure)
+// -> (root) for Command not found
 __attribute__((nonnull))
 static bool	_search_executable(const char *given_path, char *const *env_path,
 	char **dst)
@@ -79,6 +84,12 @@ static bool	_search_executable(const char *given_path, char *const *env_path,
 	return (_print_err(given_path, CHK_GET_PATH_ERR_NOCMD));
 }
 
+// !! ERR_PRINTED
+// -> (root) for arg `given_path` is NULL (= Command not found)
+// -> (root) for file(given_path) is not executable (access X_OK)
+// -> (root) for strdup (malloc failure)
+// -> (root) for arg `envp` is NULL (= Command not found)
+// -> <inherit> _search_executable
 __attribute__((nonnull(3)))
 bool	chk_and_get_fpath(const char *given_path, char *const *env_path,
 	char **dst)

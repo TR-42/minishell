@@ -37,6 +37,9 @@
 #include "_filectrl_tools.h"
 #include "_redirect.h"
 
+// !! PRINT_ERROR
+// -> (root) for dup2 function
+// (close関数は失敗しない前提。失敗したとしても、リトライしようがないため無視する)
 __attribute__((nonnull))
 static bool	_dup2_and_set_inval(int *p_fd, int target_fd, const char *err_msg)
 {
@@ -52,7 +55,7 @@ static bool	_dup2_and_set_inval(int *p_fd, int target_fd, const char *err_msg)
 	return (is_success);
 }
 
-// !PRINT_ERROR
+// !! PRINT_ERROR
 // -> <inherit> _dup2_and_set_inval
 static bool	dup2_and_close(t_ch_proc_info *info)
 {
@@ -73,6 +76,7 @@ static bool	dup2_and_close(t_ch_proc_info *info)
 	return (!_dup2_and_set_inval(p_fd, STDOUT_FILENO, "dup2 OUT"));
 }
 
+// !! NO_ERROR
 static void	free_2darr(void ***argv)
 {
 	size_t	i;
@@ -86,6 +90,9 @@ static void	free_2darr(void ***argv)
 	*argv = NULL;
 }
 
+// !! NO_ERROR
+// (dup2でエラーの可能性はあるけど、この関数はエラールートで実行されるため、改めてエラーを吐くことはしない。)
+// (そもそも、dup2でエラーが起きる可能性自体低いし。)
 static noreturn void	_revert_stdio_dispose_arr(
 	const t_ch_proc_info *info,
 	t_ch_proc_info *info_arr,
@@ -114,7 +121,11 @@ static noreturn void	_revert_stdio_dispose_arr(
 	exit(1);
 }
 
-// TODO: エラー時にFDを閉じる?
+// !! ERR_PRINTED
+// -> <inherit> _proc_redirect
+// -> <inherit> build_cmd
+// -> <inherit> chk_and_get_fpath
+// -> (root) for execve
 __attribute__((nonnull))
 noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 {

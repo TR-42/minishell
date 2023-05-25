@@ -40,6 +40,9 @@
 
 #define E_OPT_LESS_ARG "%s: %s: \n"
 
+// !! ERR_PRINTED
+// -> (root) too few args
+// -> <inherit> _parse_exec
 __attribute__((nonnull))
 static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
 {

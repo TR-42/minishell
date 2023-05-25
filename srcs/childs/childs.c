@@ -26,6 +26,8 @@
 
 #include "_childs.h"
 
+// !! ERR_PRINTED
+// -> (root) for pipe function
 // TODO: パイプを含む場合のみパイプを繋ぐようにする
 static bool	create_pipe(t_ch_proc_info *info_arr, size_t index, size_t count)
 {
@@ -48,6 +50,9 @@ static bool	create_pipe(t_ch_proc_info *info_arr, size_t index, size_t count)
 	return (true);
 }
 
+// !! ERR_PRINTED
+// -> <inherit> create_pipe
+// -> (root) for fork function
 bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
 {
 	int	_errno;

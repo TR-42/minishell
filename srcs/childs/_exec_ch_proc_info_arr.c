@@ -20,6 +20,9 @@
 
 #include "childs.h"
 
+// !! ERR_PRINTED
+// -> <inherit> pipe_fork_exec
+// (pipe_fork_execでエラー発生の場合、return 1)
 __attribute__((nonnull))
 int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 {

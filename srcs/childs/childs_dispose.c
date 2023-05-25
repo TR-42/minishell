@@ -14,6 +14,7 @@
 
 #include "childs.h"
 
+// !! NO_ERR
 // TODO: きちんと一つ一つdisposeする
 void	dispose_proc_info_arr(t_ch_proc_info *info_arr)
 {
