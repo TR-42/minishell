@@ -34,7 +34,6 @@ bool	_validate_input(t_cmdarr *arr, int *ret)
 	*ret = 0;
 	if (arr->p == NULL || arr->len <= 0)
 	{
-		strerr_ret_false("validator/malloc");
 		vect_dispose(arr);
 		return (false);
 	}
