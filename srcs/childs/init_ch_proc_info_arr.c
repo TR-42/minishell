@@ -17,6 +17,7 @@
 #include <unistd.h>
 
 #include "childs.h"
+#include "error_utils.h"
 #include "_env_util.h"
 
 static t_cprocinf	_init_ch_proc_info(t_cmdarr *cmdarr, size_t i,
@@ -48,7 +49,10 @@ t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 
 	arr = malloc(cmdarr->len * sizeof(t_ch_proc_info));
 	if (arr == NULL)
+	{
+		strerr_ret_false("init_ch_proc_info_arr()/malloc");
 		return (arr);
+	}
 	path_arr = get_path_in_env(envp);
 	if (path_arr == NULL)
 	{
