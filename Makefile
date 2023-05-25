@@ -116,7 +116,7 @@ fclean:	fclean_local
 re:	fclean all
 
 norm:
-	norminette $(HEADERS_DIR) $(SRCS_MAIN_DIR)
+	norminette $(HEADERS_DIR) $(SRCS_BASE_DIR)
 
 -include $(DEPS)
 
