@@ -31,7 +31,7 @@
 
 #include "error_utils.h"
 
-#define EMSG_PATHJOIN "minishell: failed to generate path to tmp file"
+#define EMSG_PATHJOIN "failed to generate path to tmp file"
 
 #define TMPFN_HEAD "minish_heredoc_"
 #define TMPFN_MAXLEN 10
@@ -41,8 +41,6 @@ static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 	const char	*tmpdir;
 	size_t		tmpdir_len;
 
-	if (envp == NULL || fname_save == NULL)
-		return (0);
 	tmpdir = get_env_value(envp, "TMPDIR");
 	if (tmpdir == NULL || access(tmpdir, R_OK | W_OK) != 0)
 		tmpdir = "/tmp";

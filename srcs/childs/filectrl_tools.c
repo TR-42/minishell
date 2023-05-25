@@ -67,6 +67,8 @@ static bool	_search_executable(const char *given_path, char *const *env_path,
 	while (*env_path != NULL)
 	{
 		*dst = join_path(*env_path, given_path);
+		if (*dst == NULL)
+			return (strerr_ret_false("_search_executable()/malloc"));
 		if (access(*dst, X_OK) == 0)
 			return (true);
 		free(*dst);
@@ -86,6 +88,8 @@ bool	chk_and_get_fpath(const char *given_path, char *const *env_path,
 		if (access(given_path, X_OK) != 0)
 			return (_print_err(given_path, CHK_GET_PATH_ERR_NOFILE));
 		*dst = ft_strdup(given_path);
+		if (*dst == NULL)
+			return (strerr_ret_false(given_path));
 		return (true);
 	}
 	else if (env_path == NULL)

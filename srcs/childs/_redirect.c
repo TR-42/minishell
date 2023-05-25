@@ -33,14 +33,10 @@
 
 #include "ft_printf/ft_printf.h"
 
+#include "error_utils.h"
+
 #include "_build_cmd.h"
 #include "_redirect.h"
-
-static bool	_perror_ret_false(const char *str)
-{
-	perror(str);
-	return (false);
-}
 
 static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 	const char *fname)
@@ -57,8 +53,7 @@ static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 		return (ft_dprintf(STDERR_FILENO,
 				"minishell: redirect: unknown cmdtype: %d\n", type) * 0);
 	if (fd < 0)
-		return (ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n",
-				fname, strerror(errno)) * 0);
+		return (strerr_ret_false(fname));
 	if (type == CMDTYP_RED_IN || type == CMDTYP_RED_HEREDOC_SAVED)
 	{
 		if (info->fd_to_this != STDIN_FILENO)
@@ -75,8 +70,16 @@ static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 static char	*_get_red_fname(const t_ch_proc_info *info, size_t *i,
 	t_cmd_elem_type type)
 {
+	char	*tmp;
+
 	if (type == CMDTYP_RED_HEREDOC_SAVED)
-		return ((char *)(((t_cmd_elem *)info->cmd->p)[*i - 1].elem_top));
+	{
+		tmp = ((char *)(((t_cmd_elem *)info->cmd->p)[*i - 1].elem_top));
+		if (tmp == NULL)
+			errstr_ret_false("_get_red_fname()",
+				"file path for heredoc cache was NULL");
+		return (tmp);
+	}
 	else
 		return (_get_argv_one(info->cmd, i, info->envp));
 }
@@ -96,7 +99,7 @@ bool	_proc_redirect(t_ch_proc_info *info)
 			continue ;
 		fname = _get_red_fname(info, &i, type);
 		if (fname == NULL)
-			return (_perror_ret_false("minishell/_proc_redirect"));
+			return (false);
 		result = _open_set_close_fd(info, type, fname);
 		free(fname);
 		if (type == CMDTYP_RED_HEREDOC_SAVED)

@@ -48,7 +48,7 @@ static t_cmd_inval_typ	_is_valid_elem(
 
 t_cmd_inval_typ	is_valid_cmd(const t_cmdelmarr *cmdelemarr, bool is_last_cmd)
 {
-	if (cmdelemarr == NULL || cmdelemarr->len <= 0)
+	if (cmdelemarr->len <= 0)
 		return (CMD_INVAL_NOCMD);
 	return (_is_valid_elem(
 			cmdelemarr,

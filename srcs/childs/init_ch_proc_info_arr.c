@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+
 // - malloc
 #include <stdlib.h>
 
@@ -40,6 +42,14 @@ static t_cprocinf	_init_ch_proc_info(t_cmdarr *cmdarr, size_t i,
 	return (info);
 }
 
+static void	*_err_free_retnull(void *p, const char *str)
+{
+	strerr_ret_false(str);
+	if (p != NULL)
+		free(p);
+	return (NULL);
+}
+
 // HEREDOCの処理もここでやる
 t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 {
@@ -49,14 +59,13 @@ t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 
 	arr = malloc(cmdarr->len * sizeof(t_ch_proc_info));
 	if (arr == NULL)
-	{
-		strerr_ret_false("init_ch_proc_info_arr()/malloc");
-		return (arr);
-	}
+		return (_err_free_retnull(arr, "init_ch_proc_info_arr()/malloc"));
 	path_arr = get_path_in_env(envp);
-	if (path_arr == NULL)
+	if (path_arr == NULL && errno == EINVAL)
 		errstr_ret_false("init_ch_proc_info_arr()",
 			"\e[43mWARN: env `PATH` not found\e[m");
+	else if (path_arr == NULL)
+		return (_err_free_retnull(arr, "get_path_in_env()/malloc"));
 	i = 0;
 	while (i < cmdarr->len)
 	{

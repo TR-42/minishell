@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// - errno
+#include <errno.h>
+
 // - bool
 #include <stdbool.h>
 
@@ -27,8 +30,6 @@ const char	*get_env_value(char *const envp[], const char *name)
 	const char	*p_value;
 
 	p_value = NULL;
-	if (envp == NULL || name == NULL)
-		return (NULL);
 	while (*envp != NULL && p_value == NULL)
 	{
 		p_value = is_this_requested_env(*envp, name);
@@ -39,8 +40,6 @@ const char	*get_env_value(char *const envp[], const char *name)
 
 static const char	*is_this_requested_env(char *envp, const char *name)
 {
-	if (envp == NULL)
-		return (NULL);
 	while (*envp != '=')
 	{
 		if (*envp == '\0' || *envp != *name)
@@ -60,6 +59,9 @@ char	**get_path_in_env(char *const envp[])
 
 	path = get_env_value(envp, "PATH");
 	if (path == NULL)
+	{
+		errno = EINVAL;
 		return (NULL);
+	}
 	return (ft_split(path, ':'));
 }

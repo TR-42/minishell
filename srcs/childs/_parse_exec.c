@@ -24,7 +24,7 @@ int	_parse_exec(const char *str, char *const envp[])
 	t_cprocinf		*cparr;
 	int				cpstat;
 
-	if (str == NULL || *str == '\0')
+	if (*str == '\0')
 		return (0);
 	arr = serialize(str);
 	if (!_validate_input(&arr, &cpstat))
@@ -32,7 +32,9 @@ int	_parse_exec(const char *str, char *const envp[])
 	if (!chk_do_heredoc(&arr, envp))
 		return (dispose_t_cmdarr(&arr) + 1);
 	cparr = init_ch_proc_info_arr(&arr, (char **)envp);
-	cpstat = _exec_ch_proc_info_arr(cparr, arr.len);
+	cpstat = 1;
+	if (cparr != NULL)
+		cpstat = _exec_ch_proc_info_arr(cparr, arr.len);
 	rm_tmpfile(&arr);
 	dispose_t_cmdarr(&arr);
 	dispose_proc_info_arr(cparr);

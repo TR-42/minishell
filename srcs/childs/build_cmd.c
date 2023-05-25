@@ -14,6 +14,7 @@
 
 #include "ft_mem/ft_mem.h"
 
+#include "error_utils.h"
 #include "_build_cmd.h"
 
 // TODO: 環境変数を用いた形に書き換える
@@ -80,6 +81,7 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 {
 	size_t		current_seg_len;
 	t_cmd_elem	*elem;
+	char		*tmp;
 
 	while (*i_start < elemarr->len)
 	{
@@ -88,7 +90,10 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 		*i_start += current_seg_len;
 		if (!is_cetyp_var_or_normal(elem->type))
 			continue ;
-		return (_gen_argv_one_str(elem, current_seg_len, envp));
+		tmp = _gen_argv_one_str(elem, current_seg_len, envp);
+		if (tmp == NULL)
+			strerr_ret_false("_get_argv_one()/malloc");
+		return (tmp);
 	}
 	return (NULL);
 }
@@ -105,10 +110,16 @@ char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 
 	argc = _get_argc(elemarr);
 	if (argc <= 0)
+	{
+		errstr_ret_false("build_cmd()/_get_argc()", "too many args");
 		return (NULL);
+	}
 	argv = (char **)malloc(sizeof(char **) * ((size_t)argc + 1));
 	if (argv == NULL)
+	{
+		strerr_ret_false("build_cmd()/malloc");
 		return (NULL);
+	}
 	argv[argc] = NULL;
 	i_argv = 0;
 	i_elemarr = 0;

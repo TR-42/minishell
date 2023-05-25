@@ -31,36 +31,45 @@
 
 #include "ft_printf/ft_printf.h"
 
+#include "error_utils.h"
 #include "_build_cmd.h"
 #include "_childs.h"
 #include "_filectrl_tools.h"
 #include "_redirect.h"
 
-// TODO: エラー処理
-static void	dup2_and_close(t_ch_proc_info *info)
+static bool	_dup2_and_set_inval(int *p_fd, int target_fd, const char *err_msg)
 {
+	bool	is_success;
+
+	is_success = false;
+	if (*p_fd != target_fd)
+		is_success = 0 <= dup2(*p_fd, target_fd);
+	if (!is_success)
+		strerr_ret_false(err_msg);
+	close(*p_fd);
+	*p_fd = -1;
+	return (is_success);
+}
+
+// !PRINT_ERROR
+// -> <inherit> _dup2_and_set_inval
+static bool	dup2_and_close(t_ch_proc_info *info)
+{
+	int		*p_fd;
+	bool	is_success;
+
 	if (info->fd_to_this != STDIN_FILENO)
-	{
-		dup2(info->fd_to_this, STDIN_FILENO);
-		close(info->fd_to_this);
-		info->fd_to_this = -1;
-	}
+		p_fd = &(info->fd_to_this);
 	else
-	{
-		close(info->fd_stdin_save);
-		info->fd_stdin_save = -1;
-	}
+		p_fd = &(info->fd_stdin_save);
+	is_success = _dup2_and_set_inval(p_fd, STDIN_FILENO, "dup2 IN");
 	if (info->fd_from_this != STDOUT_FILENO)
-	{
-		dup2(info->fd_from_this, STDOUT_FILENO);
-		close(info->fd_from_this);
-		info->fd_from_this = -1;
-	}
+		p_fd = &(info->fd_from_this);
 	else
-	{
-		close(info->fd_stdout_save);
-		info->fd_stdout_save = -1;
-	}
+		p_fd = &(info->fd_stdout_save);
+	if (!is_success)
+		return (close(*p_fd) * 0);
+	return (!_dup2_and_set_inval(p_fd, STDOUT_FILENO, "dup2 OUT"));
 }
 
 static void	free_2darr(void ***argv)
@@ -76,7 +85,7 @@ static void	free_2darr(void ***argv)
 	*argv = NULL;
 }
 
-static void	_revert_stdio_dispose_arr(
+static noreturn void	_revert_stdio_dispose_arr(
 	const t_ch_proc_info *info,
 	t_ch_proc_info *info_arr,
 	char ***argv)
@@ -101,6 +110,7 @@ static void	_revert_stdio_dispose_arr(
 		dispose_proc_info_arr(info_arr);
 	if (argv != NULL)
 		free_2darr((void ***)argv);
+	exit(1);
 }
 
 // TODO: エラー時にFDを閉じる?
@@ -113,12 +123,11 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
-	{
 		_revert_stdio_dispose_arr(&info, info_arr, NULL);
-		exit(1);
-	}
 	exec_path = NULL;
 	argv = build_cmd(info.cmd, info.envp);
+	if (argv == NULL)
+		_revert_stdio_dispose_arr(&info, info_arr, NULL);
 	ret = chk_and_get_fpath(argv[0], info.path_arr, &exec_path);
 	if (ret == true)
 		dup2_and_close(&info);
@@ -126,8 +135,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	if (ret == true)
 		execve(exec_path, argv, info.envp);
 	if (ret == true)
-		ft_dprintf(STDERR_FILENO,
-			"minishell: %s: %s\n", argv[0], strerror(errno));
+		strerr_ret_false(argv[0]);
 	_revert_stdio_dispose_arr(&info, NULL, &argv);
 	exit(1);
 }
