@@ -55,10 +55,8 @@ t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 	}
 	path_arr = get_path_in_env(envp);
 	if (path_arr == NULL)
-	{
-		free(arr);
-		return (NULL);
-	}
+		errstr_ret_false("init_ch_proc_info_arr()",
+			"\e[43mWARN: env `PATH` not found\e[m");
 	i = 0;
 	while (i < cmdarr->len)
 	{
