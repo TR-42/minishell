@@ -13,7 +13,9 @@
 #ifndef _ENV_UTIL_H
 # define _ENV_UTIL_H
 
-const char	*get_env_value(char *const envp[], const char *name);
-char		**get_path_in_env(char *const envp[]);
+const char	*get_env_value(char *const envp[], const char *name)
+			__attribute__((nonnull));
+char		**get_path_in_env(char *const envp[])
+			__attribute__((nonnull));
 
 #endif

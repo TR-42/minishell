@@ -27,6 +27,7 @@
 // returns
 // - true: It is valid input -> continue processing
 // - false: It is NOT valid input
+__attribute__((nonnull))
 bool	_validate_input(t_cmdarr *arr, int *ret)
 {
 	t_cmd_i_inval	inval;

@@ -40,6 +40,7 @@
 
 #define E_OPT_LESS_ARG "%s: %s: \n"
 
+__attribute__((nonnull))
 static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
 {
 	if (argc < 2 || ft_strncmp(argv[1], "-c", 3) != 0)

@@ -20,6 +20,7 @@
 
 #include "childs.h"
 
+__attribute__((nonnull))
 int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 {
 	int		cpstat;

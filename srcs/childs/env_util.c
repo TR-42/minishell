@@ -25,6 +25,7 @@
 
 static const char	*is_this_requested_env(char *const envp, const char *name);
 
+__attribute__((nonnull))
 const char	*get_env_value(char *const envp[], const char *name)
 {
 	const char	*p_value;
@@ -38,6 +39,7 @@ const char	*get_env_value(char *const envp[], const char *name)
 	return (p_value);
 }
 
+__attribute__((nonnull))
 static const char	*is_this_requested_env(char *envp, const char *name)
 {
 	while (*envp != '=')
@@ -53,6 +55,7 @@ static const char	*is_this_requested_env(char *envp, const char *name)
 		return (NULL);
 }
 
+__attribute__((nonnull))
 char	**get_path_in_env(char *const envp[])
 {
 	const char	*path;

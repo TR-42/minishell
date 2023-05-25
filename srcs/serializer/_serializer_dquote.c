@@ -14,6 +14,7 @@
 
 #include "_serializer.h"
 
+__attribute__((nonnull))
 static bool	_when_mode_is_not_dquote(const char **input, t_pars_mde *mode,
 	t_cmd_elem *v)
 {
@@ -26,6 +27,7 @@ static bool	_when_mode_is_not_dquote(const char **input, t_pars_mde *mode,
 }
 
 // return: Elementが終了するかどうか
+__attribute__((nonnull))
 bool	_serializer_dquote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 {
 	if (*mode != M_DQUOTE)

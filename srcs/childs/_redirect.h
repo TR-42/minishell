@@ -17,6 +17,7 @@
 
 # include "childs.h"
 
-bool	_proc_redirect(t_ch_proc_info *info);
+bool	_proc_redirect(t_ch_proc_info *info)
+		__attribute__((nonnull));
 
 #endif

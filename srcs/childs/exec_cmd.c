@@ -37,6 +37,7 @@
 #include "_filectrl_tools.h"
 #include "_redirect.h"
 
+__attribute__((nonnull))
 static bool	_dup2_and_set_inval(int *p_fd, int target_fd, const char *err_msg)
 {
 	bool	is_success;
@@ -114,6 +115,7 @@ static noreturn void	_revert_stdio_dispose_arr(
 }
 
 // TODO: エラー時にFDを閉じる?
+__attribute__((nonnull))
 noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 {
 	t_ch_proc_info	info;

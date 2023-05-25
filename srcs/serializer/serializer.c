@@ -20,6 +20,7 @@
 #include "_serializer.h"
 
 // input: 実行後、次の要素の先頭が入る
+__attribute__((nonnull))
 static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 {
 	t_cmd_elem	v;
@@ -45,6 +46,7 @@ static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 	return (v);
 }
 
+__attribute__((nonnull))
 static bool	_take_elems(t_cmdelmarr *elmarr, const char **input)
 {
 	t_pars_mde	mode;
@@ -72,6 +74,7 @@ static bool	_take_elems(t_cmdelmarr *elmarr, const char **input)
 	return (true);
 }
 
+__attribute__((nonnull))
 static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 {
 	t_cmdelmarr	cmd;
@@ -89,6 +92,7 @@ static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 	return (vect_push_back(v, &cmd, NULL));
 }
 
+__attribute__((nonnull))
 t_cmdarr	serialize(const char *input)
 {
 	t_cmdarr	v;

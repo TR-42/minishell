@@ -12,6 +12,7 @@
 
 #include "validator.h"
 
+__attribute__((nonnull))
 t_cmd_i_inval	is_valid_input(const t_cmdarr *cmdarr)
 {
 	t_cmd_i_inval	v;

@@ -22,6 +22,7 @@
 #include "error_utils.h"
 #include "_env_util.h"
 
+__attribute__((nonnull(1, 3)))
 static t_cprocinf	_init_ch_proc_info(t_cmdarr *cmdarr, size_t i,
 	char **envp, char **path_arr)
 {
@@ -51,6 +52,7 @@ static void	*_err_free_retnull(void *p, const char *str)
 }
 
 // HEREDOCの処理もここでやる
+__attribute__((nonnull))
 t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 {
 	size_t		i;

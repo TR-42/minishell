@@ -13,6 +13,7 @@
 #include "_serializer.h"
 
 // return: Elementが終了するかどうか
+__attribute__((nonnull))
 bool	_serializer_redirect(const char **input, t_pars_mde *mode,
 	t_cmd_elem *v)
 {
@@ -36,6 +37,7 @@ bool	_serializer_redirect(const char **input, t_pars_mde *mode,
 }
 
 // return: Elementが終了するかどうか
+__attribute__((nonnull))
 bool	_serializer_pipe(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 {
 	if (*mode != M_NORMAL || **input != '|')

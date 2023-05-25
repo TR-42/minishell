@@ -18,6 +18,7 @@
 
 // TODO: serialize後のバリデーション/エラー処理
 // TODO: init_ch_...後のエラー処理
+__attribute__((nonnull))
 int	_parse_exec(const char *str, char *const envp[])
 {
 	t_cmdarr		arr;

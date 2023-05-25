@@ -37,6 +37,7 @@ static bool	_print_err(const char *argv_0, int mode)
 		return (strerr_ret_false(argv_0));
 }
 
+__attribute__((nonnull))
 static char	*join_path(const char *path1, const char *path2)
 {
 	size_t	path1_len;
@@ -61,6 +62,7 @@ static char	*join_path(const char *path1, const char *path2)
 	return (ret);
 }
 
+__attribute__((nonnull))
 static bool	_search_executable(const char *given_path, char *const *env_path,
 	char **dst)
 {
@@ -77,6 +79,7 @@ static bool	_search_executable(const char *given_path, char *const *env_path,
 	return (_print_err(given_path, CHK_GET_PATH_ERR_NOCMD));
 }
 
+__attribute__((nonnull(3)))
 bool	chk_and_get_fpath(const char *given_path, char *const *env_path,
 	char **dst)
 {

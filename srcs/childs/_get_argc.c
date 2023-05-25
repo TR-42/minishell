@@ -14,6 +14,7 @@
 
 #include "_build_cmd.h"
 
+__attribute__((nonnull))
 int	_get_argc(const t_cmdelmarr *elemarr)
 {
 	size_t			argc;

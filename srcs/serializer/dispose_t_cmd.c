@@ -14,6 +14,7 @@
 
 #include "serializer.h"
 
+__attribute__((nonnull))
 static void	_vect_dispose(void *vect)
 {
 	t_cmdelmarr	*elems;

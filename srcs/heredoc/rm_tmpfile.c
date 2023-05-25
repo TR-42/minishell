@@ -21,6 +21,7 @@
 #include "error_utils.h"
 #include "heredoc.h"
 
+__attribute__((nonnull))
 static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 {
 	size_t	i;
@@ -38,6 +39,7 @@ static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 	return (0);
 }
 
+__attribute__((nonnull))
 int	rm_tmpfile(t_cmdarr *cmdarr)
 {
 	t_cmdelmarr	*elems;

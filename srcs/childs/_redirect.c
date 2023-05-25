@@ -38,6 +38,7 @@
 #include "_build_cmd.h"
 #include "_redirect.h"
 
+__attribute__((nonnull))
 static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 	const char *fname)
 {
@@ -67,6 +68,7 @@ static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 	return (true);
 }
 
+__attribute__((nonnull))
 static char	*_get_red_fname(const t_ch_proc_info *info, size_t *i,
 	t_cmd_elem_type type)
 {
@@ -84,6 +86,7 @@ static char	*_get_red_fname(const t_ch_proc_info *info, size_t *i,
 		return (_get_argv_one(info->cmd, i, info->envp));
 }
 
+__attribute__((nonnull))
 bool	_proc_redirect(t_ch_proc_info *info)
 {
 	size_t			i;

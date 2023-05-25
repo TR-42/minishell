@@ -36,6 +36,7 @@
 #define TMPFN_HEAD "minish_heredoc_"
 #define TMPFN_MAXLEN 10
 
+__attribute__((nonnull))
 static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 {
 	const char	*tmpdir;
@@ -59,6 +60,7 @@ static size_t	_get_tmpfile_path_buf(char *const *envp, char **fname_save)
 // (internal)
 // - false: char change needed
 // - true: char already changed
+__attribute__((nonnull))
 static bool	_set_next_fname(char *fname_btm)
 {
 	if (*fname_btm == '_')
@@ -83,6 +85,7 @@ static bool	_set_next_fname(char *fname_btm)
 
 // tmpファイルを作成する。書き込み専用で作成し、基本的に呼び出し元で責任をもって削除する。
 // `fname_save`にはファイルパスが記録される。
+__attribute__((nonnull))
 int	create_tmpfile(char *const *envp, char **fname_save)
 {
 	int		fd;
