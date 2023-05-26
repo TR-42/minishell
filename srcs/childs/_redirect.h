@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _build_cmd.h                                       :+:      :+:    :+:   */
+/*   _redirect.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 23:41:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 19:40:35 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/19 01:03:38 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/19 01:12:49 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _BUILD_CMD_H
-# define _BUILD_CMD_H
+#ifndef _REDIRECT_H
+# define _REDIRECT_H
 
-# include "serializer.h"
+# include <stdbool.h>
 
-int		_get_argc(const t_cmdelmarr *elmarr);
-size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start);
+# include "childs.h"
 
-char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
-			char *const *envp);
-
-char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp);
+bool	_proc_redirect(t_ch_proc_info *info);
 
 #endif

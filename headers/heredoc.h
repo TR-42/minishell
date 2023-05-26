@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validator.h                                        :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 21:02:37 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 15:58:49 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/20 14:58:43 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/21 14:37:24 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VALIDATOR_H
-# define VALIDATOR_H
+#ifndef HEREDOC_H
+# define HEREDOC_H
 
 // - bool
 # include <stdbool.h>
 
 # include "serializer.h"
 
-typedef enum e_cmd_inval_typ
-{
-	CMD_INVAL_NO_ERR,
-	CMD_INVAL_NOCMD,
-	CMD_INVAL_PIPE_NOPAIR,
-	CMD_INVAL_REDIRECT_NOARG,
-}	t_cmd_inval_typ;
+int		create_tmpfile(char *const *envp, char **fname_save);
 
-typedef struct s_cmd_i_inval
-{
-	size_t			index;
-	t_cmd_inval_typ	type;
-}	t_cmd_i_inval;
+bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp);
 
-bool			_validate_input(t_cmdarr *arr, int *ret);
-
-t_cmd_i_inval	is_valid_input(const t_cmdarr *cmdarr);
-t_cmd_inval_typ	is_valid_cmd(const t_cmdelmarr *cmdelemarr, bool is_last_cmd);
+int		rm_tmpfile(t_cmdarr *cmdarr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 00:50:20 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:31:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static size_t	_get_elem_str_len(const t_cmd_elem *elem, char *const*envp)
 {
 	if (elem->type == CMDTYP_VARIABLE || elem->type == CMDTYP_QUOTE_VAR)
 	{
-		(void)envp;
+		if (envp == NULL)
+			return (elem->len + 1);
 		return (elem->len);
 	}
 	else
@@ -34,6 +35,11 @@ static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
 {
 	if (elem->type == CMDTYP_VARIABLE || elem->type == CMDTYP_QUOTE_VAR)
 	{
+		if (envp == NULL)
+		{
+			ft_memcpy(dst, elem->elem_top - 1, elem->len + 1);
+			return (elem->len + 1);
+		}
 		(void)envp;
 		ft_memcpy(dst, elem->elem_top, elem->len);
 		return (elem->len);
@@ -58,10 +64,10 @@ static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
 	while (i < len)
 		str_len += _get_elem_str_len(elem + i++, envp);
 	if (0 < len)
-		str = (char *)malloc(len + 1);
+		str = (char *)malloc(str_len + 1);
 	if (str == NULL)
 		return (NULL);
-	str[len] = 0;
+	str[str_len] = 0;
 	i = 0;
 	str_len = 0;
 	while (i < len)
@@ -69,7 +75,7 @@ static char	*_gen_argv_one_str(const t_cmd_elem *elem, size_t len,
 	return (str);
 }
 
-static char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
+char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 	char *const *envp)
 {
 	size_t		current_seg_len;
