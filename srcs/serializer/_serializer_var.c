@@ -16,7 +16,8 @@
 
 bool	_is_valid_var_char(char c)
 {
-	return (ft_isalnum(c));
+	return (ft_isalnum(c)
+		|| c == '_');
 }
 
 static bool	_when_pars_mde_normal(const char **input, t_pars_mde *mode,
