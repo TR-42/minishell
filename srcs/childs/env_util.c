@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 06:42:05 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/08 00:24:30 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 00:07:55 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,27 @@
 
 #include "_env_util.h"
 
-static const char	*is_this_requested_env(char *const envp, const char *name);
+static const char	*is_this_requested_env(const char *envp, const char *name,
+						size_t name_len);
 
 // !! NO_ERROR (指定の環境変数が見つからなかったときはNULLが返る)
 __attribute__((nonnull))
 const char	*get_env_value(char *const envp[], const char *name)
+{
+	return (get_env_value_nlen(envp, name, ft_strlen(name)));
+}
+
+// !! NO_ERROR (指定の環境変数が見つからなかったときはNULLが返る)
+__attribute__((nonnull))
+const char	*get_env_value_nlen(char *const envp[], const char *name,
+	size_t name_len)
 {
 	const char	*p_value;
 
 	p_value = NULL;
 	while (*envp != NULL && p_value == NULL)
 	{
-		p_value = is_this_requested_env(*envp, name);
+		p_value = is_this_requested_env(*envp, name, name_len);
 		envp++;
 	}
 	return (p_value);
@@ -42,16 +51,19 @@ const char	*get_env_value(char *const envp[], const char *name)
 
 // !! NO_ERROR
 __attribute__((nonnull))
-static const char	*is_this_requested_env(char *envp, const char *name)
+static const char	*is_this_requested_env(const char *envp, const char *name,
+	size_t name_len)
 {
-	while (*envp != '=')
+	size_t	i;
+
+	i = 0;
+	while (envp[i] != '=')
 	{
-		if (*envp == '\0' || *envp != *name)
+		if (envp[i] == '\0' || i == name_len || envp[i] != name[i])
 			return (NULL);
-		envp++;
-		name++;
+		i++;
 	}
-	if (*name == '\0')
+	if (i == name_len)
 		return (envp + 1);
 	else
 		return (NULL);
