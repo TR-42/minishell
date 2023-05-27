@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 23:41:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 19:40:35 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 00:18:39 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 
 char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 		__attribute__((nonnull(1)));
+
+bool	set_var_values(t_cmdelmarr *elemarr, char *const *envp)
+		__attribute__((nonnull));
 
 char	**ft_split_fp(char const *s, int (*is_spc)(int))
 		__attribute__((nonnull));
