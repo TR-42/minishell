@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 01:03:57 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/22 19:52:12 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/27 22:33:08 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char	*_get_red_fname(const t_ch_proc_info *info, size_t *i,
 
 	if (type == CMDTYP_RED_HEREDOC_SAVED)
 	{
-		tmp = ((char *)(((t_cmd_elem *)info->cmd->p)[*i - 1].elem_top));
+		tmp = ((char *)(((t_cmd_elem *)info->cmd->p)[*i - 1].p_malloced));
 		if (tmp == NULL)
 			errstr_ret_false("_get_red_fname()",
 				"file path for heredoc cache was NULL");
@@ -115,7 +115,7 @@ bool	_proc_redirect(t_ch_proc_info *info)
 		result = _open_set_close_fd(info, type, fname);
 		free(fname);
 		if (type == CMDTYP_RED_HEREDOC_SAVED)
-			((t_cmd_elem *)info->cmd->p)[i - 1].elem_top = NULL;
+			((t_cmd_elem *)info->cmd->p)[i - 1].p_malloced = NULL;
 		if (!result)
 			return (false);
 	}

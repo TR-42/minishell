@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:18:43 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 22:51:43 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/27 22:29:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 	{
 		if (elemarr[i++].type != CMDTYP_RED_HEREDOC_SAVED)
 			continue ;
-		if (unlink(elemarr[i - 1].elem_top) != 0)
-			strerr_ret_false(elemarr[i - 1].elem_top);
-		free((char *)(elemarr[i - 1].elem_top));
-		elemarr[i - 1].elem_top = NULL;
+		if (unlink(elemarr[i - 1].p_malloced) != 0)
+			strerr_ret_false(elemarr[i - 1].p_malloced);
+		free((char *)(elemarr[i - 1].p_malloced));
+		elemarr[i - 1].p_malloced = NULL;
 	}
 	return (0);
 }

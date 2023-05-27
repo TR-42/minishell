@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:57:31 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 14:41:05 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/27 22:31:01 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr, char *const *envp)
 		if (elems[i_elem++].type == CMDTYP_RED_HEREDOC)
 		{
 			elems[i_elem - 1].type = CMDTYP_RED_HEREDOC_SAVED;
-			fd = create_tmpfile(envp, (char **)&(elems[i_elem - 1].elem_top));
+			fd = create_tmpfile(envp, &(elems[i_elem - 1].p_malloced));
 			if (fd < 0)
 				return (false);
 			result = _do_heredoc(elemarr, &i_elem, fd);
