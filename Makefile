@@ -15,13 +15,15 @@ NAME	:=	minishell
 SRCS_MAIN	:= \
 	main.c \
 
-SRCS_CHILDS	:=\
-	_exec_ch_proc_info_arr.c\
+SRCS_BUILD_CMD	:=\
 	_get_argc.c\
 	_one_elem_count.c\
+	build_cmd.c\
+
+SRCS_CHILDS	:=\
+	_exec_ch_proc_info_arr.c\
 	_redirect.c\
 	_parse_exec.c\
-	build_cmd.c\
 	childs_dispose.c\
 	childs.c\
 	env_util.c\
@@ -52,6 +54,7 @@ SRCS_VALIDATOR :=\
 	is_valid_input.c\
 
 SRCS_NOMAIN	:= \
+	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\
 	$(addprefix childs/, $(SRCS_CHILDS))\
 	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\

@@ -23,7 +23,7 @@
 #include "ft_string/ft_string.h"
 #include "gnl/get_next_line.h"
 
-#include "../childs/_build_cmd.h"
+#include "_build_cmd.h"
 #include "heredoc.h"
 
 #define PROMPT_STR "> "
