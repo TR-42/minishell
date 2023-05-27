@@ -28,4 +28,7 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 		__attribute__((nonnull(1)));
 
+char	**ft_split_fp(char const *s, int (*is_spc)(int))
+		__attribute__((nonnull));
+
 #endif

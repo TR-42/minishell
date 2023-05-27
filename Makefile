@@ -19,6 +19,7 @@ SRCS_BUILD_CMD	:=\
 	_get_argc.c\
 	_one_elem_count.c\
 	build_cmd.c\
+	ft_split_fp.c\
 
 SRCS_CHILDS	:=\
 	_exec_ch_proc_info_arr.c\
