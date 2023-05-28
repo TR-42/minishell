@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// - errno
+#include <errno.h>
+
 // - bool
 #include <stdbool.h>
 
@@ -22,13 +25,13 @@
 
 static const char	*is_this_requested_env(char *const envp, const char *name);
 
+// !! NO_ERROR (指定の環境変数が見つからなかったときはNULLが返る)
+__attribute__((nonnull))
 const char	*get_env_value(char *const envp[], const char *name)
 {
 	const char	*p_value;
 
 	p_value = NULL;
-	if (envp == NULL || name == NULL)
-		return (NULL);
 	while (*envp != NULL && p_value == NULL)
 	{
 		p_value = is_this_requested_env(*envp, name);
@@ -37,10 +40,10 @@ const char	*get_env_value(char *const envp[], const char *name)
 	return (p_value);
 }
 
+// !! NO_ERROR
+__attribute__((nonnull))
 static const char	*is_this_requested_env(char *envp, const char *name)
 {
-	if (envp == NULL)
-		return (NULL);
 	while (*envp != '=')
 	{
 		if (*envp == '\0' || *envp != *name)
@@ -54,12 +57,19 @@ static const char	*is_this_requested_env(char *envp, const char *name)
 		return (NULL);
 }
 
+// !! MUST_PRINT_ERROR_IN_CALLER
+// -> EINVAL: 指定の環境変数が見つからなかった
+// -> *: ft_splitでのmalloc失敗
+__attribute__((nonnull))
 char	**get_path_in_env(char *const envp[])
 {
 	const char	*path;
 
 	path = get_env_value(envp, "PATH");
 	if (path == NULL)
+	{
+		errno = EINVAL;
 		return (NULL);
+	}
 	return (ft_split(path, ':'));
 }

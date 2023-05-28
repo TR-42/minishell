@@ -12,6 +12,7 @@
 
 #include "serializer.h"
 
+// !! NO_ERROR
 bool	is_cetyp_redirect(t_cmd_elem_type t)
 {
 	return (t == CMDTYP_RED_APPEND
@@ -21,6 +22,7 @@ bool	is_cetyp_redirect(t_cmd_elem_type t)
 		|| t == CMDTYP_RED_OUT);
 }
 
+// !! NO_ERROR
 bool	is_cetyp_var_or_normal(t_cmd_elem_type t)
 {
 	return (t == CMDTYP_NORMAL
@@ -28,6 +30,7 @@ bool	is_cetyp_var_or_normal(t_cmd_elem_type t)
 		|| t == CMDTYP_VARIABLE);
 }
 
+// !! NO_ERROR
 bool	is_cetyp_terminator(t_cmd_elem_type t)
 {
 	return (t == CMDTYP_PIPE);

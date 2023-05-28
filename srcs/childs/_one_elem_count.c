@@ -12,6 +12,8 @@
 
 #include "_build_cmd.h"
 
+// !! NO_ERR
+__attribute__((nonnull))
 size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
 {
 	size_t		i;

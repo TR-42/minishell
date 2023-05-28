@@ -15,12 +15,17 @@
 
 # include "serializer.h"
 
-int		_get_argc(const t_cmdelmarr *elmarr);
-size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start);
+int		_get_argc(const t_cmdelmarr *elmarr)
+		__attribute__((nonnull));
+
+size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
+		__attribute__((nonnull));
 
 char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
-			char *const *envp);
+			char *const *envp)
+		__attribute__((nonnull(1, 2)));
 
-char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp);
+char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
+		__attribute__((nonnull(1)));
 
 #endif

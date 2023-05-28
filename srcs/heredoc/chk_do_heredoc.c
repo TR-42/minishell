@@ -31,6 +31,7 @@
 
 #define PROMPT_STR "> "
 
+// !! NO_ERR
 static bool	is_same_line(const char *a, const char *b)
 {
 	if (a == NULL && b == NULL)
@@ -53,6 +54,7 @@ static bool	is_same_line(const char *a, const char *b)
 	}
 }
 
+// !! NO_ERR (readlineを使用することによりエラーは発生しなくなる)
 static bool	_read_write(const char *term, int fd)
 {
 	char	*gnl_result;
@@ -71,6 +73,8 @@ static bool	_read_write(const char *term, int fd)
 	return (!get_is_interrupted());
 }
 
+// !! ERR_PRINTED
+// -> <inherit> _get_argv_one
 static bool	_do_heredoc(const t_cmdelmarr *elems, size_t *i, int fd)
 {
 	char	*term;
@@ -84,6 +88,9 @@ static bool	_do_heredoc(const t_cmdelmarr *elems, size_t *i, int fd)
 	return (result);
 }
 
+// !! ERR_PRINTED
+// -> <inherit> create_tmpfile
+// -> <inherit> _do_heredoc
 static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr, char *const *envp)
 {
 	int			fd;
@@ -109,6 +116,8 @@ static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr, char *const *envp)
 	return (result);
 }
 
+// !! ERR_PRINTED
+// -> <inherit> _chk_do_heredoc_elemarr
 bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp)
 {
 	size_t		i_cmd;
