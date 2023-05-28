@@ -77,6 +77,7 @@ DEPS	:=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 TEST_DIR	:=	.tests
 TEST_SERIALIZER	:=	test_serializer
 TEST_BUILD_CMD	:=	test_build_cmd
+TOOL_PRINT_ENVP	:=	tool_print_envp
 
 LIBFT_DIR	:=	./libft
 LIBFT	:=	$(LIBFT_DIR)/libft.a
@@ -148,4 +149,7 @@ $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJ
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
+
+$(OBJ_DIR)/$(TOOL_PRINT_ENVP): ./$(TEST_DIR)/$(TOOL_PRINT_ENVP).c
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
