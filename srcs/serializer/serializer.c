@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:01 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 22:51:54 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/26 23:11:39 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static bool	_take_elems(t_cmdelmarr *elmarr, const char **input)
 	mode = M_NORMAL;
 	while (**input != '\0')
 	{
-		if (ft_isspace(**input))
+		if (mode == M_NORMAL && ft_isspace(**input))
 			*input += 1;
 		else
 		{
