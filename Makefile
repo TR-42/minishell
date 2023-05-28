@@ -91,6 +91,10 @@ $(NAME):	$(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIB_LINK)
 debug: clean_local_obj
 	make CFLAGS='-DDEBUG -g -fsanitize=address'
+faddr: clean_local_obj
+	make CFLAGS='-g -fsanitize=address'
+fleak: clean_local_obj
+	make CFLAGS='-g -fsanitize=leak'
 
 $(OBJ_DIR)/%.o:	$(SRCS_BASE_DIR)/%.c
 	@test -d '$(dir $@)' || mkdir -p '$(dir $@)'
