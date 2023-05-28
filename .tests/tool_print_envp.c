@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _env_util.h                                        :+:      :+:    :+:   */
+/*   tool_print_envp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 06:39:47 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 00:07:09 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/28 14:58:37 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/28 15:11:53 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _ENV_UTIL_H
-# define _ENV_UTIL_H
+#include <stdio.h>
 
-const char	*get_env_value(char *const envp[], const char *name)
-			__attribute__((nonnull));
-char		**get_path_in_env(char *const envp[])
-			__attribute__((nonnull));
-const char	*get_env_value_nlen(char *const envp[], const char *name,
-				size_t name_len)
-			__attribute__((nonnull));
-
-#endif
+int	main(int argc, const char *argv[], const char *envp[])
+{
+	(void)argc;
+	(void)argv;
+	while (*envp != NULL)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
+	return (0);
+}

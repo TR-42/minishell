@@ -12,7 +12,7 @@
 
 #include "validator.h"
 
-#include "../childs/_build_cmd.h"
+#include "_build_cmd.h"
 
 // !! NO_ERROR
 __attribute__((nonnull))

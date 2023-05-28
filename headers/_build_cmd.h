@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 23:41:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 19:40:35 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 18:17:49 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,22 @@ int		_get_argc(const t_cmdelmarr *elmarr)
 size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
 		__attribute__((nonnull));
 
-char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
-			char *const *envp)
+char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start)
 		__attribute__((nonnull(1, 2)));
 
 char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 		__attribute__((nonnull(1)));
+
+bool	set_var_values(t_cmdelmarr *elemarr, char *const *envp)
+		__attribute__((nonnull));
+
+char	**ft_split_fp(char const *s, int (*is_spc)(int))
+		__attribute__((nonnull));
+
+bool	vect_insert_range(t_vect *vect, size_t index, void *d, size_t len)
+		__attribute__((nonnull(1)));
+
+bool	elems_make_flat(t_cmdelmarr *elemarr)
+		__attribute__((nonnull));
 
 #endif

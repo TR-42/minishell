@@ -27,4 +27,6 @@ bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp)
 int		rm_tmpfile(t_cmdarr *cmdarr)
 		__attribute__((nonnull));
 
+void	ignore_var_in_delimiter(t_cmdelmarr *elemarr);
+
 #endif
