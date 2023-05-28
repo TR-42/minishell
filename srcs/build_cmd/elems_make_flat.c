@@ -32,7 +32,7 @@ static size_t	_make_flat(t_cmd_elem *dst, t_cmd_elem elem, size_t len)
 		if ((i + 1) != len)
 			elem_to_set.nospace = false;
 		ft_memcpy(dst + i, &elem_to_set, sizeof(t_cmd_elem));
-
+		i++;
 	}
 	free(elem.p_malloced);
 	return (len);
