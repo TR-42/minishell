@@ -89,7 +89,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIB_LINK)
-debug: clean_local
+debug: clean_local_obj
 	make CFLAGS='-DDEBUG -g -fsanitize=address'
 
 $(OBJ_DIR)/%.o:	$(SRCS_BASE_DIR)/%.c
@@ -100,6 +100,9 @@ $(LIBFT):
 	$(LIBFT_MAKE)
 
 bonus:	$(NAME)
+
+clean_local_obj:
+	rm -f $(OBJS)
 
 clean_local:
 	rm -rf $(OBJ_DIR)
