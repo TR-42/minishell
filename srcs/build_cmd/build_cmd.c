@@ -6,13 +6,14 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 16:31:48 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 14:48:25 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "ft_mem/ft_mem.h"
+#include "ft_string/ft_string.h"
 
 #include "error_utils.h"
 #include "_build_cmd.h"
@@ -26,7 +27,9 @@ static size_t	_get_elem_str_len(const t_cmd_elem *elem, char *const*envp)
 	{
 		if (envp == NULL)
 			return (elem->len + 1);
-		return (elem->len);
+		if (elem->p_malloced == NULL)
+			return (0);
+		return (ft_strlen(elem->p_malloced));
 	}
 	else
 		return (elem->len);
@@ -46,7 +49,7 @@ static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
 			return (elem->len + 1);
 		}
 		(void)envp;
-		ft_memcpy(dst, elem->elem_top, elem->len);
+		ft_memcpy(dst, elem->p_malloced, ft_strlen(elem->p_malloced));
 		return (elem->len);
 	}
 	else
