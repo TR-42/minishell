@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/23 23:51:13 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/28 19:49:16 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ all:	$(NAME)
 $(NAME):	$(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIB_LINK)
 debug: clean_local_obj
-	make CFLAGS='-DDEBUG -g -fsanitize=address'
+	make CFLAGS='-DDEBUG -g'
 faddr: clean_local_obj
 	make CFLAGS='-g -fsanitize=address'
 fleak: clean_local_obj
