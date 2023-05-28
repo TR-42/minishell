@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 05:36:53 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/27 23:49:59 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 14:43:40 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**ft_split_fp(char const *s, int (*is_spc)(int))
 	while (p_p_ret != NULL && *s != '\0')
 	{
 		p_top_to_dup = s;
-		while (*s != '\0' && is_spc(*s))
+		while (*s != '\0' && !is_spc(*s))
 			s++;
 		p_p_ret[p_p_ret_index]
 			= ft_substr(p_top_to_dup, 0, (size_t)s - (size_t)p_top_to_dup);
