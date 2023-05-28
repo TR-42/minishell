@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 02:08:46 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 16:06:05 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 19:25:40 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	**search_environ(const char *name)
 	size = ft_strlen(name);
 	while (*env != NULL)
 	{
-		if (ft_strncmp(*env, name, size) == 0 && *(*env + size) == '=')
+		if (ft_strncmp(*env, name, size) == 0
+			&& (*(*env + size) == '=' || *(*env + size) == '\0'))
 			return (env);
 		env++;
 	}
@@ -100,7 +101,7 @@ bool	remove_environ(char *name)
 	tmp = envs;
 	while (*src_envs != NULL)
 	{
-		if (*src_envs != target)
+		if (*src_envs != *target)
 			*(tmp++) = *src_envs;
 		src_envs++;
 	}

@@ -6,10 +6,13 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 02:09:14 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 15:20:20 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 19:40:03 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "_util_commands.h"
+#include "ft_string/ft_string.h"
+#include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
 
@@ -62,8 +65,6 @@ bool	init_environs(char **src)
 
 static char	*strdup_or_create_oldpwd(char *src)
 {
-	char	*out;
-
 	if (ft_strncmp(src, "OLDPWD=", 7) == 0)
 		return (ft_strdup("OLDPWD"));
 	return (ft_strdup(src));

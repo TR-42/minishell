@@ -6,13 +6,13 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:36:10 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 18:34:33 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 20:06:29 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "_environ.h"
 #include "ft_string/ft_string.h"
-#include "_util_command.h"
+#include "_util_commands.h"
 #include "ft_is/ft_is.h"
 #include <unistd.h>
 
@@ -60,7 +60,7 @@ static int	print_envs_with_declare(void)
 		if (tmp == NULL)
 			continue ;
 		flag &= ft_putstr_fd_with_err("=\"", STDOUT_FILENO) != 0;
-		flag &= ft_putstr_fd_with_err(*(tmp + 1), STDOUT_FILENO) != 0;
+		flag &= ft_putstr_fd_with_err(tmp + 1, STDOUT_FILENO) != 0;
 		flag &= ft_putstr_fd_with_err("\"", STDOUT_FILENO) != 0;
 		*tmp = '=';
 	}

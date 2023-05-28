@@ -6,10 +6,11 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:16:51 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 16:37:31 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 19:35:54 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "_util_commands.h"
 #include "ft_printf/ft_printf.h"
 #include "ft_mem/ft_mem.h"
 #include <sys/param.h>
@@ -24,7 +25,7 @@
 #endif
 #define COMMAND "pwd"
 
-int	builtin_pwd(char **argv)
+int	builtin_pwd(void)
 {
 	char	path[PATH_MAX + 1];
 

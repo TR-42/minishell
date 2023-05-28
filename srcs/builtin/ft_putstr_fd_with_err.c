@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 07:57:56 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 15:10:31 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 19:33:42 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 size_t	ft_putstr_fd_with_err(char *s, int fd)
 {
-	size_t	length;
+	ssize_t	length;
 	ssize_t	out;
 
 	if (s == NULL)

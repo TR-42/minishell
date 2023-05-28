@@ -6,16 +6,19 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 20:53:59 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 18:34:23 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 20:03:24 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "_environ.h"
 #include "_util_commands.h"
 #include "ft_printf/ft_printf.h"
+#include "ft_is/ft_is.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
+
+#define COMMAND "unset"
 
 static bool	check_is_invalid(char *arg);
 

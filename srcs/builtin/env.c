@@ -6,14 +6,15 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 20:53:24 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 16:29:19 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 20:05:34 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "_environ.h"
 #include "ft_printf/ft_printf.h"
 #include "ft_string/ft_string.h"
-#include "_util_command.h"
+#include "_util_commands.h"
+#include <unistd.h>
 
 #define COMMAND "env"
 
