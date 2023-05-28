@@ -53,6 +53,7 @@ t_cmdarr	serialize(const char *input);
 int			dispose_t_cmdarr(t_cmdarr *cmd);
 
 bool		is_cetyp_redirect(t_cmd_elem_type t);
+bool		is_cetyp_var(t_cmd_elem_type t);
 bool		is_cetyp_var_or_normal(t_cmd_elem_type t);
 bool		is_cetyp_terminator(t_cmd_elem_type t);
 
