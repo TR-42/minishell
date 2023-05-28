@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:24:11 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 15:26:41 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 17:28:05 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 #include "_build_cmd.h"
 
+// !! MUST_PRINT_ERROR_IN_CALLER
 __attribute__((nonnull(1)))
 bool	vect_insert_range(t_vect *vect, size_t index, void *d, size_t len)
 {

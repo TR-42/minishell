@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:39:09 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 16:05:35 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 17:28:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "childs.h"
 #include "_build_cmd.h"
 
+// !! NO_ERROR
 void	ignore_var_in_delimiter(t_cmdelmarr *elemarr)
 {
 	size_t		i;
