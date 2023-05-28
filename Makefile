@@ -32,6 +32,7 @@ SRCS_CHILDS	=\
 SRCS_HEREDOC =\
 	chk_do_heredoc.c\
 	create_tmpfile.c\
+	ignore_var_in_delimiter.c\
 	rm_tmpfile.c\
 
 SRCS_SERIALIZER	= \
