@@ -12,7 +12,7 @@
 
 #include "serializer.h"
 #include "childs.h"
-#include "../childs/_build_cmd.h"
+#include "_build_cmd.h"
 
 void	ignore_var_in_delimiter(t_cmdelmarr *elemarr)
 {
