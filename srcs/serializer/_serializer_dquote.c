@@ -14,6 +14,8 @@
 
 #include "_serializer.h"
 
+// !! NO_ERROR
+__attribute__((nonnull))
 static bool	_when_mode_is_not_dquote(const char **input, t_pars_mde *mode,
 	t_cmd_elem *v)
 {
@@ -31,6 +33,8 @@ static bool	_when_mode_is_not_dquote(const char **input, t_pars_mde *mode,
 }
 
 // return: Elementが終了するかどうか
+// !! NO_ERROR
+__attribute__((nonnull))
 bool	_serializer_dquote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 {
 	if (*mode != M_DQUOTE)
@@ -41,14 +45,15 @@ bool	_serializer_dquote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 		v->nospace = !ft_isspace(*(++(*input)));
 		return (0 < v->len || *((*input) - 2) == '\"');
 	}
-	if (**input == '$' && _is_valid_var_char((*input)[1]))
+	if (**input == '$' && _is_valid_var_char((*input)[1], true))
 	{
 		*mode = M_DQUOTE_VAR;
 		v->nospace = !ft_isspace(*(++(*input)));
 		if (0 < v->len)
 			return (true);
 		v->elem_top = *input;
-		return (false);
+		v->type = CMDTYP_QUOTE_VAR;
+		return (_is_special_var_chk(input, mode, v));
 	}
 	v->len += 1;
 	*input += 1;

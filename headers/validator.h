@@ -32,9 +32,12 @@ typedef struct s_cmd_i_inval
 	t_cmd_inval_typ	type;
 }	t_cmd_i_inval;
 
-bool			_validate_input(t_cmdarr *arr, int *ret);
+bool			_validate_input(t_cmdarr *arr, int *ret)
+				__attribute__((nonnull));
 
-t_cmd_i_inval	is_valid_input(const t_cmdarr *cmdarr);
-t_cmd_inval_typ	is_valid_cmd(const t_cmdelmarr *cmdelemarr, bool is_last_cmd);
+t_cmd_i_inval	is_valid_input(const t_cmdarr *cmdarr)
+				__attribute__((nonnull));
+t_cmd_inval_typ	is_valid_cmd(const t_cmdelmarr *cmdelemarr, bool is_last_cmd)
+				__attribute__((nonnull));
 
 #endif

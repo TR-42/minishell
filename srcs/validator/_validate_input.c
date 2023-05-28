@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:58:32 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 16:00:29 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/24 22:48:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 // returns
 // - true: It is valid input -> continue processing
 // - false: It is NOT valid input
+// !! ERR_PRINTED (バリデーション結果の出力)
+// -> `arr`変数自体がinvalidの場合、serializer側でエラー出力済み
+__attribute__((nonnull))
 bool	_validate_input(t_cmdarr *arr, int *ret)
 {
 	t_cmd_i_inval	inval;

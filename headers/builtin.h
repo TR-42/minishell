@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _env_util.h                                        :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 06:39:47 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/08 00:13:43 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/21 14:37:32 by kitsuki           #+#    #+#             */
+/*   Updated: 2023/05/28 18:39:55 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _ENV_UTIL_H
-# define _ENV_UTIL_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-const char	*get_env_value(char *const envp[], const char *name)
-			__attribute__((nonnull));
-char		**get_path_in_env(char *const envp[])
-			__attribute__((nonnull));
+# include <stdbool.h>
+
+char	**get_environs(void);
+bool	init_environs(char **envs);
+void	dispose_environs(void);
+
+int		exec_builtin(const char **argv, int *exit_status);
 
 #endif
