@@ -46,7 +46,6 @@ static bool	_set_var_value(t_cmd_elem *elem, char *const *envp)
 	return (true);
 }
 
-
 // !! ERR_PRINTED
 // -> (root) for malloc failed
 __attribute__((nonnull))
