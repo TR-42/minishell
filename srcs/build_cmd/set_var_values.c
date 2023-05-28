@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 23:39:39 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 00:17:14 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 14:44:35 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static bool	_set_var_value(t_cmd_elem *elem, char *const *envp)
 	bool		contains_spc;
 
 	value = get_env_value_nlen(envp, elem->elem_top, elem->len);
+	if (value == NULL)
+		return (true);
 	i = 0;
 	contains_spc = false;
 	while (elem->type == CMDTYP_VARIABLE && !contains_spc && value[i] != '\0')
