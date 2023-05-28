@@ -36,6 +36,7 @@
 #include "ft_printf/ft_printf.h"
 
 #include "childs.h"
+#include "signal_handling.h"
 
 #define PROMPT_STR "minishell> "
 
@@ -59,15 +60,22 @@ int	main(int argc, const char *argv[], char *const envp[])
 	int		ret;
 
 	_chk_do_c_opt(argc, argv, envp);
+	if (!init_sig_handler())
+		return (1);
 	ret = 0;
 	while (true)
 	{
+		register_rl_ev_hook_handler();
 		line = readline(PROMPT_STR);
-		if (line == NULL)
+		if (get_is_interrupted())
+			ret = 1;
+		else if (line == NULL)
 			return (ret);
-		ret = _parse_exec(line, envp);
-		if (*line != '\0')
+		else if (*line != '\0')
+		{
 			add_history(line);
+			ret = _parse_exec(line, envp);
+		}
 		free(line);
 		rl_on_new_line();
 	}

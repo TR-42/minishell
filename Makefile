@@ -43,6 +43,9 @@ SRCS_SERIALIZER	= \
 	is_cetyp.c \
 	serializer.c \
 
+SRCS_SIGNAL =\
+	init_sig_handler.c\
+
 SRCS_VALIDATOR =\
 	_validate_input.c\
 	is_valid_cmd.c\
@@ -52,6 +55,7 @@ SRCS_NOMAIN	= \
 	$(SRCS_CHILDS)\
 	$(SRCS_HEREDOC)\
 	$(SRCS_SERIALIZER)\
+	$(SRCS_SIGNAL)\
 	$(SRCS_VALIDATOR)\
 
 HEADERS_DIR		=	./headers
@@ -61,6 +65,7 @@ SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
 SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
 SRCS_HEREDOC_DIR	=	$(SRCS_BASE_DIR)/heredoc
 SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
+SRCS_SIGNAL_DIR	=	$(SRCS_BASE_DIR)/signal_handling
 SRCS_VALIDATOR_DIR	=	$(SRCS_BASE_DIR)/validator
 
 OBJ_DIR	=	./obj
@@ -73,6 +78,7 @@ VPATH	=	\
 	:$(SRCS_CHILDS_DIR)\
 	:$(SRCS_HEREDOC_DIR)\
 	:$(SRCS_SERIALIZER_DIR)\
+	:$(SRCS_SIGNAL_DIR)\
 	:$(SRCS_VALIDATOR_DIR)\
 
 TEST_DIR	=	.tests
