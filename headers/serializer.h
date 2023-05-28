@@ -48,7 +48,8 @@ typedef struct s_cmd_elem
 
 // エラー発生時は、メッセージを出力したうえで (t_vect){0} を返す
 // return: t_vect<t_cmdelmarr>
-t_cmdarr	serialize(const char *input);
+t_cmdarr	serialize(const char *input)
+			__attribute__((nonnull));
 
 int			dispose_t_cmdarr(t_cmdarr *cmd);
 

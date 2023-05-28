@@ -11,14 +11,17 @@
 /* ************************************************************************** */
 
 #include <stdbool.h>
-#include <stdio.h>
 
 #include "ft_is/ft_is.h"
+
+#include "error_utils.h"
 
 #include "serializer.h"
 #include "_serializer.h"
 
 // input: 実行後、次の要素の先頭が入る
+// !! NO_ERROR
+__attribute__((nonnull))
 static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 {
 	t_cmd_elem	v;
@@ -44,6 +47,8 @@ static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 	return (v);
 }
 
+// !! MUST_PRINT_ERROR_IN_CALLER
+__attribute__((nonnull))
 static bool	_take_elems(t_cmdelmarr *elmarr, const char **input)
 {
 	t_pars_mde	mode;
@@ -71,6 +76,8 @@ static bool	_take_elems(t_cmdelmarr *elmarr, const char **input)
 	return (true);
 }
 
+// !! MUST_PRINT_ERROR_IN_CALLER
+__attribute__((nonnull))
 static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 {
 	t_cmdelmarr	cmd;
@@ -88,6 +95,10 @@ static bool	_take_one_cmd(t_cmdarr *v, const char **input)
 	return (vect_push_back(v, &cmd, NULL));
 }
 
+// !! ERR_PRINTED
+// -> (root) for vect_init
+// -> (root) for _take_one_cmd
+__attribute__((nonnull))
 t_cmdarr	serialize(const char *input)
 {
 	t_cmdarr	v;
@@ -95,14 +106,14 @@ t_cmdarr	serialize(const char *input)
 	v = vect_init(16, sizeof(t_cmdelmarr));
 	if (v.p == NULL)
 	{
-		perror("serializer init");
+		strerr_ret_false("serializer init");
 		return (v);
 	}
 	while (*input != '\0')
 	{
 		if (!_take_one_cmd(&v, &input))
 		{
-			perror("serializer push_back");
+			strerr_ret_false("serializer push_back");
 			dispose_t_cmdarr(&v);
 			return (v);
 		}

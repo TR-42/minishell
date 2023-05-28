@@ -31,19 +31,24 @@ bool	_is_special_var_chk(const char **input, t_pars_mde *mode,
 
 // ダブルクォーテーションまわりの処理を行う。
 // return: Elementが終了するかどうか
-bool	_serializer_dquote(const char **input, t_pars_mde *mode, t_cmd_elem *v);
+bool	_serializer_dquote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
+		__attribute__((nonnull));
 
 // return: Elementが終了するかどうか
 bool	_serializer_redirect(const char **input, t_pars_mde *mode,
-			t_cmd_elem *v);
+			t_cmd_elem *v)
+		__attribute__((nonnull));
 
 // return: Elementが終了するかどうか
-bool	_serializer_pipe(const char **input, t_pars_mde *mode, t_cmd_elem *v);
+bool	_serializer_pipe(const char **input, t_pars_mde *mode, t_cmd_elem *v)
+		__attribute__((nonnull));
 
 // return: Elementが終了するかどうか
-bool	_serializer_squote(const char **input, t_pars_mde *mode, t_cmd_elem *v);
+bool	_serializer_squote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
+		__attribute__((nonnull));
 
 // return: Elementが終了するかどうか
-bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v);
+bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
+		__attribute__((nonnull));
 
 #endif

@@ -14,6 +14,8 @@
 
 #include "serializer.h"
 
+// !! NO_ERROR
+__attribute__((nonnull))
 static void	_vect_dispose(void *vect)
 {
 	t_cmdelmarr	*elems;
@@ -35,6 +37,7 @@ static void	_vect_dispose(void *vect)
 }
 
 // return: always 0
+// !! NO_ERROR
 int	dispose_t_cmdarr(t_cmdarr *cmd)
 {
 	if (cmd == NULL)
