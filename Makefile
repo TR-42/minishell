@@ -80,6 +80,7 @@ TEST_SERIALIZER	:=	test_serializer
 TEST_BUILD_CMD	:=	test_build_cmd
 TEST_BUILD_CMD_FLAT	:=	test_build_cmd_flat
 TOOL_PRINT_ENVP	:=	tool_print_envp
+TOOL_PRINT_ARGV	:=	tool_print_argv
 
 LIBFT_DIR	:=	./libft
 LIBFT	:=	$(LIBFT_DIR)/libft.a
@@ -154,6 +155,9 @@ $(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TEST_BUILD_CMD_FLAT): ./$(TEST_DIR)/$(TEST_BUILD_CMD_FLAT).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
+
+$(OBJ_DIR)/$(TOOL_PRINT_ARGV): ./$(TEST_DIR)/$(TOOL_PRINT_ARGV).c
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TOOL_PRINT_ENVP): ./$(TEST_DIR)/$(TOOL_PRINT_ENVP).c
