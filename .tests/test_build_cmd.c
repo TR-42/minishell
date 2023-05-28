@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 20:29:09 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/20 20:05:43 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 14:21:19 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "../srcs/childs/_build_cmd.h"
+#include "_build_cmd.h"
 
 #include "serializer.h"
 
