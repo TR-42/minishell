@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/26 23:03:04 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 16:39:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ static bool	_when_mode_is_not_dquote(const char **input, t_pars_mde *mode,
 		return (false);
 	*mode = M_DQUOTE;
 	*input += 1;
+	if (0 < v->len)
+	{
+		v->nospace = true;
+		return (true);
+	}
 	v->elem_top = *input;
 	return (false);
 }
