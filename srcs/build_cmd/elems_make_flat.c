@@ -6,12 +6,14 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:36:40 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 11:52:50 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 15:32:29 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // - free
 #include <stdlib.h>
+
+#include <stdio.h>
 
 #include "ft_mem/ft_mem.h"
 
@@ -52,7 +54,8 @@ bool	elems_make_flat(t_cmdelmarr *elemarr)
 		{
 			if (!vect_insert_range(elemarr, i, NULL, elem.p_mlc_len - 1))
 				return (false);
-			i += _make_flat((t_cmd_elem *)(elemarr->p), elem, elem.p_mlc_len);
+			i += _make_flat((t_cmd_elem *)(elemarr->p) + i,
+					elem, elem.p_mlc_len);
 		}
 		else
 			i++;
