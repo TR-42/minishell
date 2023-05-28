@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 23:41:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 11:52:23 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 18:17:49 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int		_get_argc(const t_cmdelmarr *elmarr)
 size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
 		__attribute__((nonnull));
 
-char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
-			char *const *envp)
+char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start)
 		__attribute__((nonnull(1, 2)));
 
 char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)

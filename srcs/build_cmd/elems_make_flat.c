@@ -33,6 +33,7 @@ static size_t	_make_flat(t_cmd_elem *dst, t_cmd_elem elem, size_t len)
 		elem_to_set = elem;
 		elem_to_set.p_malloced = ((char **)(elem.p_malloced))[i];
 		elem_to_set.p_mlc_len = 0;
+		elem_to_set.type = CMDTYP_NORMAL;
 		if ((i + 1) != len)
 			elem_to_set.nospace = false;
 		ft_memcpy(dst + i, &elem_to_set, sizeof(t_cmd_elem));
