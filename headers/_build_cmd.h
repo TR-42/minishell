@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 23:41:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 11:34:15 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 11:52:23 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,8 @@ char	**ft_split_fp(char const *s, int (*is_spc)(int))
 
 bool	vect_insert_range(t_vect *vect, size_t index, void *d, size_t len)
 		__attribute__((nonnull(1)));
+
+bool	elems_make_flat(t_cmdelmarr *elemarr)
+		__attribute__((nonnull));
 
 #endif

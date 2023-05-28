@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/28 11:34:31 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/28 11:51:31 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS_BUILD_CMD	:=\
 	_get_argc.c\
 	_one_elem_count.c\
 	build_cmd.c\
+	elems_make_flat.c\
 	ft_split_fp.c\
 	set_var_values.c\
 	vect_insert_range.c\
