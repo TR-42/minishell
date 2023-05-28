@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_cmd.c                                        :+:      :+:    :+:   */
+/*   error_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/08 00:34:59 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 19:32:27 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/23 23:27:32 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/24 12:53:54 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <limits.h>
+#ifndef ERROR_UTILS_H
+# define ERROR_UTILS_H
 
-#include "_build_cmd.h"
+// - bool
+# include <stdbool.h>
 
-int	_get_argc(const t_cmdelmarr *elemarr)
-{
-	size_t			argc;
-	size_t			i;
-	t_cmd_elem		*elem;
+bool	perr_ret_false(const char *str);
+bool	strerr_ret_false(const char *str);
+bool	strerr_errno_ret_false(const char *str, int _errno);
+bool	errstr_ret_false(const char *str1, const char *str2);
 
-	elem = (t_cmd_elem *)(elemarr->p);
-	i = 0;
-	argc = 0;
-	while (i < elemarr->len)
-	{
-		if (is_cetyp_var_or_normal(elem[i].type))
-			argc++;
-		if (INT_MAX <= argc)
-			return (-1);
-		i += _one_elem_count(elemarr, i);
-	}
-	return (argc);
-}
+#endif

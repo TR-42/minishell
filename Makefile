@@ -6,22 +6,28 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/22 23:00:11 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/28 15:11:26 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	minishell
+NAME	:=	minishell
 
-SRCS_MAIN	= \
+SRCS_MAIN	:= \
 	main.c \
 
-SRCS_CHILDS	=\
-	_exec_ch_proc_info_arr.c\
+SRCS_BUILD_CMD	:=\
 	_get_argc.c\
 	_one_elem_count.c\
+	build_cmd.c\
+	elems_make_flat.c\
+	ft_split_fp.c\
+	set_var_values.c\
+	vect_insert_range.c\
+
+SRCS_CHILDS	:=\
+	_exec_ch_proc_info_arr.c\
 	_redirect.c\
 	_parse_exec.c\
-	build_cmd.c\
 	childs_dispose.c\
 	childs.c\
 	env_util.c\
@@ -29,13 +35,16 @@ SRCS_CHILDS	=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
-SRCS_HEREDOC =\
+SRCS_ERR_UTILS :=\
+	err_ret_false.c\
+
+SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
 	create_tmpfile.c\
 	ignore_var_in_delimiter.c\
 	rm_tmpfile.c\
 
-SRCS_SERIALIZER	= \
+SRCS_SERIALIZER	:= \
 	_serializer_dquote.c \
 	_serializer_pipe_red.c \
 	_serializer_squote.c \
@@ -44,68 +53,61 @@ SRCS_SERIALIZER	= \
 	is_cetyp.c \
 	serializer.c \
 
-SRCS_VALIDATOR =\
+SRCS_VALIDATOR :=\
 	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
 
-SRCS_NOMAIN	= \
-	$(SRCS_CHILDS)\
-	$(SRCS_HEREDOC)\
-	$(SRCS_SERIALIZER)\
-	$(SRCS_VALIDATOR)\
+SRCS_NOMAIN	:= \
+	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\
+	$(addprefix childs/, $(SRCS_CHILDS))\
+	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
+	$(addprefix heredoc/, $(SRCS_HEREDOC))\
+	$(addprefix serializer/, $(SRCS_SERIALIZER))\
+	$(addprefix validator/, $(SRCS_VALIDATOR))\
 
-HEADERS_DIR		=	./headers
+HEADERS_DIR		:=	./headers
 
-SRCS_BASE_DIR	=	./srcs
-SRCS_MAIN_DIR	=	$(SRCS_BASE_DIR)
-SRCS_CHILDS_DIR	=	$(SRCS_BASE_DIR)/childs
-SRCS_HEREDOC_DIR	=	$(SRCS_BASE_DIR)/heredoc
-SRCS_SERIALIZER_DIR	=	$(SRCS_BASE_DIR)/serializer
-SRCS_VALIDATOR_DIR	=	$(SRCS_BASE_DIR)/validator
+SRCS_BASE_DIR	:=	./srcs
 
-OBJ_DIR	=	./obj
-OBJS_NOMAIN	=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
-OBJS	=	$(OBJS_NOMAIN) $(addprefix $(OBJ_DIR)/, $(SRCS_MAIN:.c=.o))
-DEPS	=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
+OBJ_DIR	:=	./obj
+OBJS_NOMAIN	:=	$(addprefix $(OBJ_DIR)/, $(SRCS_NOMAIN:.c=.o))
+OBJS	:=	$(OBJS_NOMAIN) $(addprefix $(OBJ_DIR)/, $(SRCS_MAIN:.c=.o))
+DEPS	:=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 
-VPATH	=	\
-	$(SRCS_MAIN_DIR)\
-	:$(SRCS_CHILDS_DIR)\
-	:$(SRCS_HEREDOC_DIR)\
-	:$(SRCS_SERIALIZER_DIR)\
-	:$(SRCS_VALIDATOR_DIR)\
+TEST_DIR	:=	.tests
+TEST_SERIALIZER	:=	test_serializer
+TEST_BUILD_CMD	:=	test_build_cmd
+TEST_BUILD_CMD_FLAT	:=	test_build_cmd_flat
+TOOL_PRINT_ENVP	:=	tool_print_envp
 
-TEST_DIR	=	.tests
-TEST_SERIALIZER	=	test_serializer
-TEST_BUILD_CMD	=	test_build_cmd
-
-LIBFT_DIR	=	./libft
-LIBFT	=	$(LIBFT_DIR)/libft.a
-LIBFT_MAKE	=	make -C $(LIBFT_DIR)
+LIBFT_DIR	:=	./libft
+LIBFT	:=	$(LIBFT_DIR)/libft.a
+LIBFT_MAKE	:=	make -C $(LIBFT_DIR)
 
 override CFLAGS	+=	-Wall -Wextra -Werror -MMD -MP
-INCLUDES	=	-I $(HEADERS_DIR) -I $(LIBFT_DIR)
-LIB_LINK	=	-lreadline
+INCLUDES	:=	-I $(HEADERS_DIR) -I $(LIBFT_DIR)
+LIB_LINK	:=	-lreadline
 
 # os switch ref: https://qiita.com/y-vectorfield/items/5e117e090ed38422de6b
 OS_TYPE	:= $(shell uname -s)
 ifeq ($(OS_TYPE),Darwin)
-	INCLUDES += -I$(shell brew --prefix readline)/include
-	LIB_LINK += -L$(shell brew --prefix readline)/lib
+	GNU_READLINE_DIR := $(shell brew --prefix readline)
+	INCLUDES += -I$(GNU_READLINE_DIR)/include
+	LIB_LINK += -L$(GNU_READLINE_DIR)/lib
 endif
 
-CC		=	cc
+CC		:=	cc
 
 all:	$(NAME)
 
-$(NAME):	$(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
+$(NAME):	$(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIB_LINK)
 debug: clean_local
 	make CFLAGS='-DDEBUG -g -fsanitize=address'
 
-$(OBJ_DIR)/%.o:	%.c
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o:	$(SRCS_BASE_DIR)/%.c
+	@test -d '$(dir $@)' || mkdir -p '$(dir $@)'
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 $(LIBFT):
@@ -149,4 +151,10 @@ $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJ
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
+
+$(OBJ_DIR)/$(TEST_BUILD_CMD_FLAT): ./$(TEST_DIR)/$(TEST_BUILD_CMD_FLAT).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
+
+$(OBJ_DIR)/$(TOOL_PRINT_ENVP): ./$(TEST_DIR)/$(TOOL_PRINT_ENVP).c
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^

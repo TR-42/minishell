@@ -6,27 +6,24 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:18:43 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 14:38:35 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/27 22:29:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// - errno
-#include <errno.h>
 
 // - free
 #include <stdlib.h>
 
-// - strerror
-#include <string.h>
-
-// - STDERR_FILENO
 // - unlink
 #include <unistd.h>
 
 #include "ft_printf/ft_printf.h"
 
+#include "error_utils.h"
 #include "heredoc.h"
 
+// !! ERR_PRINTED
+// -> (root) for unlink (実行は中断しない)
+__attribute__((nonnull))
 static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 {
 	size_t	i;
@@ -36,15 +33,17 @@ static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 	{
 		if (elemarr[i++].type != CMDTYP_RED_HEREDOC_SAVED)
 			continue ;
-		if (unlink(elemarr[i - 1].elem_top) != 0)
-			ft_dprintf(STDERR_FILENO, "minishell: rm_heredoc_tmpfile(%s): %s",
-				elemarr[i - 1].elem_top, strerror(errno));
-		free((char *)(elemarr[i - 1].elem_top));
-		elemarr[i - 1].elem_top = NULL;
+		if (unlink(elemarr[i - 1].p_malloced) != 0)
+			strerr_ret_false(elemarr[i - 1].p_malloced);
+		free((char *)(elemarr[i - 1].p_malloced));
+		elemarr[i - 1].p_malloced = NULL;
 	}
 	return (0);
 }
 
+// !! ERR_PRINTED
+// -> <inherit> _rm_tmpfile_from_elems (エラーは出力するものの、dispose段のため処理を続行する)
+__attribute__((nonnull))
 int	rm_tmpfile(t_cmdarr *cmdarr)
 {
 	t_cmdelmarr	*elems;

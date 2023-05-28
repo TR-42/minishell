@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 01:03:57 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/22 19:52:12 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/27 22:33:08 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@
 
 #include "ft_printf/ft_printf.h"
 
+#include "error_utils.h"
+
 #include "_build_cmd.h"
 #include "_redirect.h"
 
-static bool	_perror_ret_false(const char *str)
-{
-	perror(str);
-	return (false);
-}
-
+// !! ERR_PRINTED
+// -> (root) for open function
+// -> (root) for invalid elemtype (実装ミスでない限り到達しない…はず)
+__attribute__((nonnull))
 static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 	const char *fname)
 {
@@ -57,8 +57,7 @@ static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 		return (ft_dprintf(STDERR_FILENO,
 				"minishell: redirect: unknown cmdtype: %d\n", type) * 0);
 	if (fd < 0)
-		return (ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n",
-				fname, strerror(errno)) * 0);
+		return (strerr_ret_false(fname));
 	if (type == CMDTYP_RED_IN || type == CMDTYP_RED_HEREDOC_SAVED)
 	{
 		if (info->fd_to_this != STDIN_FILENO)
@@ -72,15 +71,31 @@ static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 	return (true);
 }
 
+// !! ERR_PRINTED
+// -> (root) for saved file name (バリデーション済みのため到達しない…はず)
+// -> <inherit> _get_argv_one
+__attribute__((nonnull))
 static char	*_get_red_fname(const t_ch_proc_info *info, size_t *i,
 	t_cmd_elem_type type)
 {
+	char	*tmp;
+
 	if (type == CMDTYP_RED_HEREDOC_SAVED)
-		return ((char *)(((t_cmd_elem *)info->cmd->p)[*i - 1].elem_top));
+	{
+		tmp = ((char *)(((t_cmd_elem *)info->cmd->p)[*i - 1].p_malloced));
+		if (tmp == NULL)
+			errstr_ret_false("_get_red_fname()",
+				"file path for heredoc cache was NULL");
+		return (tmp);
+	}
 	else
 		return (_get_argv_one(info->cmd, i, info->envp));
 }
 
+// !! ERR_PRINTED
+// -> <inherit> for _get_red_fname
+// -> <inherit> _open_set_close_fd
+__attribute__((nonnull))
 bool	_proc_redirect(t_ch_proc_info *info)
 {
 	size_t			i;
@@ -96,11 +111,11 @@ bool	_proc_redirect(t_ch_proc_info *info)
 			continue ;
 		fname = _get_red_fname(info, &i, type);
 		if (fname == NULL)
-			return (_perror_ret_false("minishell/_proc_redirect"));
+			return (false);
 		result = _open_set_close_fd(info, type, fname);
 		free(fname);
 		if (type == CMDTYP_RED_HEREDOC_SAVED)
-			((t_cmd_elem *)info->cmd->p)[i - 1].elem_top = NULL;
+			((t_cmd_elem *)info->cmd->p)[i - 1].p_malloced = NULL;
 		if (!result)
 			return (false);
 	}

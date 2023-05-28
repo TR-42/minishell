@@ -15,6 +15,8 @@
 #include "_serializer.h"
 
 // return: Elementが終了するかどうか
+// !! NO_ERROR
+__attribute__((nonnull))
 bool	_serializer_squote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 {
 	if (*mode != M_SQUOTE)

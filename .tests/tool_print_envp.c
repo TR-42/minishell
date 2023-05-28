@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _build_cmd.h                                       :+:      :+:    :+:   */
+/*   tool_print_envp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 23:41:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/19 19:40:35 by kfujita          ###   ########.fr       */
+/*   Created: 2023/05/28 14:58:37 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/28 15:11:53 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _BUILD_CMD_H
-# define _BUILD_CMD_H
+#include <stdio.h>
 
-# include "serializer.h"
-
-int		_get_argc(const t_cmdelmarr *elmarr);
-size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start);
-
-char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
-			char *const *envp);
-
-char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp);
-
-#endif
+int	main(int argc, const char *argv[], const char *envp[])
+{
+	(void)argc;
+	(void)argv;
+	while (*envp != NULL)
+	{
+		printf("%s\n", *envp);
+		envp++;
+	}
+	return (0);
+}

@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+
 // - malloc
 #include <stdlib.h>
 
@@ -17,8 +19,11 @@
 #include <unistd.h>
 
 #include "childs.h"
+#include "error_utils.h"
 #include "_env_util.h"
 
+// !! NO_ERR
+__attribute__((nonnull(1, 3)))
 static t_cprocinf	_init_ch_proc_info(t_cmdarr *cmdarr, size_t i,
 	char **envp, char **path_arr)
 {
@@ -39,7 +44,20 @@ static t_cprocinf	_init_ch_proc_info(t_cmdarr *cmdarr, size_t i,
 	return (info);
 }
 
+// !! NO_ERROR
+static void	*_err_free_retnull(void *p, const char *str)
+{
+	strerr_ret_false(str);
+	if (p != NULL)
+		free(p);
+	return (NULL);
+}
+
+// !! ERR_PRINTED
+// -> (root) for malloc
+// -> (root) for get_path_in_env
 // HEREDOCの処理もここでやる
+__attribute__((nonnull))
 t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 {
 	size_t		i;
@@ -48,13 +66,13 @@ t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 
 	arr = malloc(cmdarr->len * sizeof(t_ch_proc_info));
 	if (arr == NULL)
-		return (arr);
+		return (_err_free_retnull(arr, "init_ch_proc_info_arr()/malloc"));
 	path_arr = get_path_in_env(envp);
-	if (path_arr == NULL)
-	{
-		free(arr);
-		return (NULL);
-	}
+	if (path_arr == NULL && errno == EINVAL)
+		errstr_ret_false("init_ch_proc_info_arr()",
+			"\e[43mWARN: env `PATH` not found\e[m");
+	else if (path_arr == NULL)
+		return (_err_free_retnull(arr, "get_path_in_env()/malloc"));
 	i = 0;
 	while (i < cmdarr->len)
 	{

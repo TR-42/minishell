@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:18:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/15 08:49:17 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/24 12:58:05 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 // - malloc
 #include <stdlib.h>
 
-// - perror
-#include <stdio.h>
+// - strerror
+#include <string.h>
 
 // - access
 // - X_OK
@@ -25,17 +25,21 @@
 #include "ft_mem/ft_mem.h"
 #include "ft_printf/ft_printf.h"
 
+#include "error_utils.h"
+
 #include "_filectrl_tools.h"
 
+// !! NO_ERROR
 static bool	_print_err(const char *argv_0, int mode)
 {
 	if (mode == CHK_GET_PATH_ERR_NOCMD)
-		ft_dprintf(STDERR_FILENO, "%s: Command not found\n", argv_0);
+		return (errstr_ret_false(argv_0, "Command not found"));
 	else
-		perror(argv_0);
-	return (false);
+		return (strerr_ret_false(argv_0));
 }
 
+// !! MUST_PRINT_ERR_IN_CALLER (malloc failure)
+__attribute__((nonnull))
 static char	*join_path(const char *path1, const char *path2)
 {
 	size_t	path1_len;
@@ -60,12 +64,18 @@ static char	*join_path(const char *path1, const char *path2)
 	return (ret);
 }
 
+// !! ERR_PRINTED
+// -> (root) for join_path (malloc failure)
+// -> (root) for Command not found
+__attribute__((nonnull))
 static bool	_search_executable(const char *given_path, char *const *env_path,
 	char **dst)
 {
 	while (*env_path != NULL)
 	{
 		*dst = join_path(*env_path, given_path);
+		if (*dst == NULL)
+			return (strerr_ret_false("_search_executable()/malloc"));
 		if (access(*dst, X_OK) == 0)
 			return (true);
 		free(*dst);
@@ -74,6 +84,13 @@ static bool	_search_executable(const char *given_path, char *const *env_path,
 	return (_print_err(given_path, CHK_GET_PATH_ERR_NOCMD));
 }
 
+// !! ERR_PRINTED
+// -> (root) for arg `given_path` is NULL (= Command not found)
+// -> (root) for file(given_path) is not executable (access X_OK)
+// -> (root) for strdup (malloc failure)
+// -> (root) for arg `envp` is NULL (= Command not found)
+// -> <inherit> _search_executable
+__attribute__((nonnull(3)))
 bool	chk_and_get_fpath(const char *given_path, char *const *env_path,
 	char **dst)
 {
@@ -85,6 +102,8 @@ bool	chk_and_get_fpath(const char *given_path, char *const *env_path,
 		if (access(given_path, X_OK) != 0)
 			return (_print_err(given_path, CHK_GET_PATH_ERR_NOFILE));
 		*dst = ft_strdup(given_path);
+		if (*dst == NULL)
+			return (strerr_ret_false(given_path));
 		return (true);
 	}
 	else if (env_path == NULL)

@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 20:01:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/21 01:10:59 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/27 22:29:00 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ typedef struct s_cmd_elem
 	t_cmd_elem_type	type;
 	const char		*elem_top;
 	size_t			len;
+	char			*p_malloced;
+	size_t			p_mlc_len;
 	bool			nospace;
 }	t_cmd_elem;
 
 // エラー発生時は、メッセージを出力したうえで (t_vect){0} を返す
 // return: t_vect<t_cmdelmarr>
-t_cmdarr	serialize(const char *input);
+t_cmdarr	serialize(const char *input)
+			__attribute__((nonnull));
 
 int			dispose_t_cmdarr(t_cmdarr *cmd);
 

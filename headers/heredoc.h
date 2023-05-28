@@ -18,11 +18,14 @@
 
 # include "serializer.h"
 
-int		create_tmpfile(char *const *envp, char **fname_save);
+int		create_tmpfile(char *const *envp, char **fname_save)
+		__attribute__((nonnull));
 
-bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp);
+bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp)
+		__attribute__((nonnull));
 
-int		rm_tmpfile(t_cmdarr *cmdarr);
+int		rm_tmpfile(t_cmdarr *cmdarr)
+		__attribute__((nonnull));
 
 void	ignore_var_in_delimiter(t_cmdelmarr *elemarr);
 
