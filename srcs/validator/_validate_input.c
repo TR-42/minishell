@@ -15,8 +15,6 @@
 
 #include "ft_printf/ft_printf.h"
 
-#include "error_utils.h"
-
 #include "validator.h"
 
 #define E_INVAL_NO_CMD "minishell: no command was found at cmd[%d]\n"

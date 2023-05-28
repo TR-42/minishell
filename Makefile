@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/28 15:11:26 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/28 19:49:16 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,10 @@ SRCS_SERIALIZER	:= \
 	is_cetyp.c \
 	serializer.c \
 
-SRCS_VALIDATOR :=\
+SRCS_SIGNAL =\
+	init_sig_handler.c\
+
+SRCS_VALIDATOR =\
 	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
@@ -64,6 +67,7 @@ SRCS_NOMAIN	:= \
 	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
+	$(addprefix signal_handling/, $(SRCS_SIGNAL))\
 	$(addprefix validator/, $(SRCS_VALIDATOR))\
 
 HEADERS_DIR		:=	./headers
@@ -104,8 +108,12 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIB_LINK)
-debug: clean_local
-	make CFLAGS='-DDEBUG -g -fsanitize=address'
+debug: clean_local_obj
+	make CFLAGS='-DDEBUG -g'
+faddr: clean_local_obj
+	make CFLAGS='-g -fsanitize=address'
+fleak: clean_local_obj
+	make CFLAGS='-g -fsanitize=leak'
 
 $(OBJ_DIR)/%.o:	$(SRCS_BASE_DIR)/%.c
 	@test -d '$(dir $@)' || mkdir -p '$(dir $@)'
@@ -115,6 +123,9 @@ $(LIBFT):
 	$(LIBFT_MAKE)
 
 bonus:	$(NAME)
+
+clean_local_obj:
+	rm -f $(OBJS)
 
 clean_local:
 	rm -rf $(OBJ_DIR)
@@ -131,7 +142,7 @@ fclean:	fclean_local
 re:	fclean all
 
 norm:
-	norminette $(HEADERS_DIR) $(SRCS_MAIN_DIR)
+	norminette $(HEADERS_DIR) $(SRCS_BASE_DIR)
 
 -include $(DEPS)
 
