@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/28 11:51:31 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/28 15:11:26 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ DEPS	:=	$(addprefix $(OBJ_DIR)/, $(OBJS:.o=.d))
 TEST_DIR	:=	.tests
 TEST_SERIALIZER	:=	test_serializer
 TEST_BUILD_CMD	:=	test_build_cmd
+TEST_BUILD_CMD_FLAT	:=	test_build_cmd_flat
 TOOL_PRINT_ENVP	:=	tool_print_envp
 
 LIBFT_DIR	:=	./libft
@@ -149,6 +150,9 @@ $(OBJ_DIR)/$(TEST_SERIALIZER): ./$(TEST_DIR)/$(TEST_SERIALIZER).c $(LIBFT) $(OBJ
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TEST_BUILD_CMD): ./$(TEST_DIR)/$(TEST_BUILD_CMD).c $(LIBFT) $(OBJS_NOMAIN)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
+
+$(OBJ_DIR)/$(TEST_BUILD_CMD_FLAT): ./$(TEST_DIR)/$(TEST_BUILD_CMD_FLAT).c $(LIBFT) $(OBJS_NOMAIN)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB_LINK) -o $@ $^
 
 $(OBJ_DIR)/$(TOOL_PRINT_ENVP): ./$(TEST_DIR)/$(TOOL_PRINT_ENVP).c
