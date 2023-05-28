@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 11:24:11 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 11:37:15 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 15:26:41 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ bool	vect_insert_range(t_vect *vect, size_t index, void *d, size_t len)
 	ft_memmove(dst, dst + datasize, (vect->len - index) * vect->elemsize);
 	if (d != NULL)
 		ft_memmove(dst, d, datasize);
+	vect->len += len;
 	return (true);
 }
