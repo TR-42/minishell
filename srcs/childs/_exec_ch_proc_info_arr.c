@@ -55,7 +55,7 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 	while (i_exec < cparr_len)
 	{
 		cetype = get_cmdterm(cparr[i_exec].cmd);
-		pipe_fork_exec(cparr, i_exec++);
+		pipe_fork_exec(cparr, i_exec++, cparr_len);
 		if (cetype == CMDTYP_PIPE)
 			continue ;
 		while (i_wait < i_exec)

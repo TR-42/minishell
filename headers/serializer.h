@@ -15,8 +15,8 @@
 
 # include "ft_vect/ft_vect.h"
 
-typedef t_vect	t_cmdarr;
-typedef t_vect	t_cmdelmarr;
+typedef t_vect			t_cmdarr;
+typedef t_vect			t_cmdelmarr;
 
 // NORMAL	: 通常のコマンド部分。変数展開等は特に行わない
 // VARIABLE	: 変数展開を行う必要がある部分。

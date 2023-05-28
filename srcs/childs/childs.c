@@ -33,7 +33,7 @@ static bool	create_pipe(t_ch_proc_info *info_arr, size_t index)
 	int		pipefd[2];
 
 	if (get_cmdterm(info_arr[index].cmd) != CMDTYP_PIPE)
-		return ;
+		return (true);
 	if (pipe(pipefd) < 0)
 	{
 		perr_ret_false("minishell/pipe");
