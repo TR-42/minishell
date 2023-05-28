@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 14:48:25 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 17:29:48 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static size_t	_set_elem_str(char *dst, const t_cmd_elem *elem,
 			ft_memcpy(dst, elem->elem_top - 1, elem->len + 1);
 			return (elem->len + 1);
 		}
-		(void)envp;
+		if (elem->p_malloced == NULL)
+			return (0);
 		ft_memcpy(dst, elem->p_malloced, ft_strlen(elem->p_malloced));
 		return (elem->len);
 	}
