@@ -130,6 +130,7 @@ bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp)
 	cmds = (t_cmdelmarr *)(cmdarr->p);
 	while (i_cmd < cmdarr->len)
 	{
+		ignore_var_in_delimiter(cmds + i_cmd);
 		if (!_chk_do_heredoc_elemarr(cmds + i_cmd, envp))
 			return (false);
 		i_cmd += 1;
