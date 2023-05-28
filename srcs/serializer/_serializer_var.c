@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:00:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/14 21:20:51 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/26 23:32:52 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,32 @@
 #include "_serializer.h"
 
 // !! NO_ERROR
-bool	_is_valid_var_char(char c)
+bool	_is_valid_var_char(char c, bool is_first)
 {
-	return (ft_isalnum(c));
+	if (is_first && c == '?')
+		return (true);
+	return (ft_isalnum(c)
+		|| c == '_');
+}
+
+bool	_is_special_var_chk(const char **input, t_pars_mde *mode,
+	t_cmd_elem *v)
+{
+	if (**input == '?')
+	{
+		*input += 1;
+		v->len = 1;
+		v->nospace = !ft_isspcornil(**input);
+		if (*mode == M_DQUOTE_VAR && **input == '"')
+		{
+			*mode = M_NORMAL;
+			*input += 1;
+		}
+		else
+			*mode -= 1;
+		return (true);
+	}
+	return (false);
 }
 
 // !! NO_ERROR
@@ -25,7 +48,7 @@ __attribute__((nonnull))
 static bool	_when_pars_mde_normal(const char **input, t_pars_mde *mode,
 	t_cmd_elem *v)
 {
-	if (**input != '$' || !_is_valid_var_char((*input)[1]))
+	if (**input != '$' || !_is_valid_var_char((*input)[1], true))
 		return (false);
 	*input += 1;
 	*mode = M_VAR;
@@ -34,8 +57,9 @@ static bool	_when_pars_mde_normal(const char **input, t_pars_mde *mode,
 		v->nospace = true;
 		return (true);
 	}
+	v->type = CMDTYP_VARIABLE;
 	v->elem_top = *input;
-	return (false);
+	return (_is_special_var_chk(input, mode, v));
 }
 
 // return: Elementが終了するかどうか
@@ -50,7 +74,9 @@ bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 		v->type = CMDTYP_VARIABLE;
 		if (*mode == M_DQUOTE_VAR)
 			v->type = CMDTYP_QUOTE_VAR;
-		if (!_is_valid_var_char(**input))
+		if (v->len == 0 && _is_special_var_chk(input, mode, v))
+			return (true);
+		if (!_is_valid_var_char(**input, false))
 		{
 			if (*mode == M_DQUOTE_VAR && **input == '"')
 			{
