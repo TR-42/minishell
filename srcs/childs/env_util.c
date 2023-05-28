@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 06:42:05 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 00:07:55 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 15:21:34 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static const char	*is_this_requested_env(const char *envp, const char *name,
 		i++;
 	}
 	if (i == name_len)
-		return (envp + 1);
+		return (envp + i + 1);
 	else
 		return (NULL);
 }
