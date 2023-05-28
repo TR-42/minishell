@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 19:57:31 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/27 22:31:01 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 18:36:24 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static bool	_do_heredoc(const t_cmdelmarr *elems, size_t *i, int fd)
 	char	*term;
 	bool	result;
 
-	term = _get_argv_one(elems, i, NULL);
+	term = _get_argv_one(elems, i);
 	if (term == NULL)
 		return (false);
 	result = _read_write(term, fd);

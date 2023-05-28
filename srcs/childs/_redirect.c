@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 01:03:57 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/27 22:33:08 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 18:36:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char	*_get_red_fname(const t_ch_proc_info *info, size_t *i,
 		return (tmp);
 	}
 	else
-		return (_get_argv_one(info->cmd, i, info->envp));
+		return (_get_argv_one(info->cmd, i));
 }
 
 // !! ERR_PRINTED
