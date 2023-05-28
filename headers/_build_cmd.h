@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 23:41:13 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 00:18:39 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 11:34:15 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ bool	set_var_values(t_cmdelmarr *elemarr, char *const *envp)
 
 char	**ft_split_fp(char const *s, int (*is_spc)(int))
 		__attribute__((nonnull));
+
+bool	vect_insert_range(t_vect *vect, size_t index, void *d, size_t len)
+		__attribute__((nonnull(1)));
 
 #endif

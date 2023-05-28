@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/27 23:50:02 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/28 11:34:31 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS_BUILD_CMD	:=\
 	build_cmd.c\
 	ft_split_fp.c\
 	set_var_values.c\
+	vect_insert_range.c\
 
 SRCS_CHILDS	:=\
 	_exec_ch_proc_info_arr.c\
