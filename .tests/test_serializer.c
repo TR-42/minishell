@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 23:16:35 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/22 00:34:01 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 14:21:08 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "serializer.h"
 #include "validator.h"
 
-#include "../srcs/childs/_build_cmd.h"
+#include "_build_cmd.h"
 
 #define COLOR_DEFAULT "\033[0;0m"
 
