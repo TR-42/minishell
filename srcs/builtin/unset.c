@@ -31,5 +31,6 @@ bool	builtin_unset(char **args)
 			flag = true;
 			ft_dprintf(STDERR_FILENO, ERROR_MESSAGE, *args);
 		}
+		args ++;
 	}
 }

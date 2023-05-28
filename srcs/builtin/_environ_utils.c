@@ -22,9 +22,9 @@ char	**search_environ(const char *name)
 	env = *get_saved_environs();
 	if (env == NULL || name == NULL)
 		return (NULL);
+	size = ft_strlen(name);
 	while (*env != NULL)
 	{
-		size = ft_strlen(name);
 		if (ft_strncmp(*env, name, size) == 0 && *(*env + size) == '=')
 			return (env);
 		env++;
