@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 14:37:32 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 18:39:55 by kitsuki          ###   ########.fr       */
+/*   Created: 2022/04/19 07:57:56 by kfujita           #+#    #+#             */
+/*   Updated: 2023/05/28 15:10:31 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include <unistd.h>
+#include <limits.h>
+#include <sys/types.h>
+#include "ft_string/ft_string.h"
 
-# include <stdbool.h>
+size_t	ft_putstr_fd_with_err(char *s, int fd)
+{
+	size_t	length;
+	ssize_t	out;
 
-char	**get_environs(void);
-bool	init_environs(char **envs);
-void	dispose_environs(void);
-
-int		exec_builtin(const char **argv, int *exit_status);
-
-#endif
+	if (s == NULL)
+		return (0);
+	while (*s != '\0')
+	{
+		length = ft_strnlen(s, INT_MAX);
+		out = write(fd, s, length);
+		if (out != length)
+			return (0);
+		s += length;
+	}
+	return (length);
+}

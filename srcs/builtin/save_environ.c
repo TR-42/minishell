@@ -6,12 +6,14 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 02:09:14 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/22 02:09:14 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 15:20:20 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 #include <stdbool.h>
+
+static char	*strdup_or_create_oldpwd(char *src);
 
 char	***get_saved_environs(void)
 {
@@ -44,7 +46,7 @@ bool	init_environs(char **src)
 	tmp = dst;
 	while (*src != NULL)
 	{
-		*tmp = ft_strdup(*src);
+		*tmp = strdup_or_create_oldpwd(*src);
 		if (*tmp == NULL)
 		{
 			free_all(dst);
@@ -56,4 +58,13 @@ bool	init_environs(char **src)
 	*tmp = NULL;
 	*get_saved_environs() = dst;
 	return (true);
+}
+
+static char	*strdup_or_create_oldpwd(char *src)
+{
+	char	*out;
+
+	if (ft_strncmp(src, "OLDPWD=", 7) == 0)
+		return (ft_strdup("OLDPWD"));
+	return (ft_strdup(src));
 }

@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 02:08:46 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/22 02:08:46 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 16:06:05 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,18 @@ bool	set_environ(char *src)
 	char	**env;
 	char	*tmp;
 
-	tmp = ft_strchr(src, '=');
-	if (tmp == NULL || *get_saved_environs() == NULL)
+	if (*get_saved_environs() == NULL)
 		return (false);
-	*tmp = '\0';
-	env = search_environ(src);
-	*tmp = '=';
-	if (env == NULL)
+	tmp = ft_strchr(src, '=');
+	if (tmp == NULL && search_environ(src) != NULL)
+		return (false);
+	else if (tmp != NULL)
+	{
+		*tmp = '\0';
+		env = search_environ(src);
+		*tmp = '=';
+	}
+	if (tmp == NULL || env == NULL)
 		return (add_environ(src));
 	tmp = ft_strdup(src);
 	if (tmp == NULL)

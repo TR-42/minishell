@@ -6,40 +6,29 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:36:33 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/21 14:36:33 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 17:22:21 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "_environ.h"
+#include "ft_printf/ft_printf.h"
 #include "ft_is/ft_is.h"
 #include "ft_string/ft_string.h"
-#include <stdlib.h>
-#include <errno.h>
 
-static bool	is_all_digits(char *src);
+#define COMMAND "exit"
 
-int	builtin_exit(char *arg)
+int	builtin_exit(char **argv, int status)
 {
-	int	status;
+	char	*tmp;
 
-	if (arg == NULL)
-		status = errno;
-	else if (!is_all_digits(arg))
-		status = 1;
-	else
-		status = ft_atoi(arg);
-	return (status);
-}
-
-static bool	is_all_digits(char *src)
-{
-	if (src == NULL)
-		return (false);
-	while (*src != '\0')
+	ft_printf("%s\n", COMMAND);
+	if (*(++argv) != NULL)
 	{
-		if (!ft_isdigit(*src))
-			return (false);
-		src++;
+		status = ft_strtol(*argv, &tmp, 10);
+		if (**argv == '\0' || (*tmp != '\0' && ft_strncmp(*argv, "--", 3) != 0)
+			|| (*tmp == '\0' && !ft_isdigit(*(tmp - 1))))
+			return (print_error(COMMAND, *argv, NOTNUMERR, 255));
+		status &= 255;
 	}
-	return (true);
+	return (status);
 }

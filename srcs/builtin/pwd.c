@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:16:51 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/16 17:16:51 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/28 16:37:31 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,24 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <errno.h>
 
 #ifndef PATH_MAX
 # define PATH_MAX MAXPATHLEN
 #endif
+#define COMMAND "pwd"
 
-bool	builtin_pwd(void)
+int	builtin_pwd(char **argv)
 {
 	char	path[PATH_MAX + 1];
 
 	ft_bzero(path, PATH_MAX + 1);
 	if (getcwd(path, PATH_MAX) != NULL)
 	{
-		ft_printf("%s\n", path);
-		return (true);
+		if (ft_putstr_fd_with_err(path, STDOUT_FILENO) == 0
+			|| ft_putstr_fd_with_err("\n", STDOUT_FILENO) == 0)
+			return (print_error(COMMAND, NULL, PRINTFERR, 1));
+		return (0);
 	}
-	return (false);
+	return (print_error(COMMAND, NULL, NULL, errno));
 }
