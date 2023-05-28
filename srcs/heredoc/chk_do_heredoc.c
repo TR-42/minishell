@@ -16,18 +16,22 @@
 // - free
 #include <stdlib.h>
 
+// - readline etc.
+#include <readline/readline.h>
+
 // - STDIN_FILENO
 #include <unistd.h>
 
 #include "ft_put/ft_put.h"
 #include "ft_string/ft_string.h"
-#include "gnl/get_next_line.h"
 
 #include "../childs/_build_cmd.h"
 #include "heredoc.h"
+#include "signal_handling.h"
 
 #define PROMPT_STR "> "
 
+// !! NO_ERR
 static bool	is_same_line(const char *a, const char *b)
 {
 	if (a == NULL && b == NULL)
@@ -50,30 +54,27 @@ static bool	is_same_line(const char *a, const char *b)
 	}
 }
 
+// !! NO_ERR (readlineを使用することによりエラーは発生しなくなる)
 static bool	_read_write(const char *term, int fd)
 {
-	t_gnl_state	state;
-	char		*gnl_result;
+	char	*gnl_result;
 
-	state = gen_gnl_state(STDIN_FILENO, 256);
-	if (state.buf == NULL)
-		return (false);
 	gnl_result = NULL;
 	while (true)
 	{
-		write(STDOUT_FILENO, PROMPT_STR, sizeof(PROMPT_STR) - 1);
-		gnl_result = get_next_line(&state);
-		if (gnl_result == NULL || is_same_line(term, gnl_result))
+		gnl_result = readline(PROMPT_STR);
+		if (gnl_result == NULL || get_is_interrupted()
+			|| is_same_line(term, gnl_result))
 			break ;
-		ft_putstr_fd(gnl_result, fd);
+		ft_putendl_fd(gnl_result, fd);
 		free(gnl_result);
 	}
 	free(gnl_result);
-	dispose_gnl_state(&state);
-	return (true);
+	return (!get_is_interrupted());
 }
 
-// TODO: readlineを使って書き直す
+// !! ERR_PRINTED
+// -> <inherit> _get_argv_one
 static bool	_do_heredoc(const t_cmdelmarr *elems, size_t *i, int fd)
 {
 	char	*term;
@@ -87,6 +88,9 @@ static bool	_do_heredoc(const t_cmdelmarr *elems, size_t *i, int fd)
 	return (result);
 }
 
+// !! ERR_PRINTED
+// -> <inherit> create_tmpfile
+// -> <inherit> _do_heredoc
 static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr, char *const *envp)
 {
 	int			fd;
@@ -112,6 +116,8 @@ static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr, char *const *envp)
 	return (result);
 }
 
+// !! ERR_PRINTED
+// -> <inherit> _chk_do_heredoc_elemarr
 bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp)
 {
 	size_t		i_cmd;
