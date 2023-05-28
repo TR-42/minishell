@@ -15,8 +15,9 @@
 
 # include <stdbool.h>
 
-// return pointer of environs
-char	***get_environs(void);
+char	**get_environs(void);
+bool	init_environs(char **envs);
+void	dispose_environs(void);
 
 bool	builtin_cd(char *arg);
 void	builtin_echo(bool is_option_n, char *arg);

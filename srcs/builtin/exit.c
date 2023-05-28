@@ -14,6 +14,9 @@
 #include "ft_is/ft_is.h"
 #include "ft_string/ft_string.h"
 #include <stdlib.h>
+#include <errno.h>
+
+static bool	is_all_digits(char *src);
 
 int	builtin_exit(char *arg)
 {
@@ -25,8 +28,6 @@ int	builtin_exit(char *arg)
 		status = 1;
 	else
 		status = ft_atoi(arg);
-	set_environs(NULL);
-	exit(status);
 	return (status);
 }
 

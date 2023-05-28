@@ -16,8 +16,7 @@
 # include <stdbool.h>
 # include <string.h>
 
-char	***get_environs(void);
-bool	set_environs(char **src);
+char	***get_saved_environs(void);
 bool	set_environ(char *src);
 bool	remove_environ(char *name);
 char	**search_environ(const char *name);

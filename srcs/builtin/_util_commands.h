@@ -13,10 +13,13 @@
 #ifndef _UTIL_COMMANDS_H
 # define _UTIL_COMMANDS_H
 
-# include <stdbool.h>
 # include <stdlib.h>
 
+#define ARGERR "too many or few arguments"
+#define PRINTFERR "an error happened in printf"
+
 size_t	get_strslen(char **src);
-bool	free_all(char ***dst);
+void	free_all(char **dst);
+int		print_error(char *command, char *name, char *message, int err);
 
 #endif

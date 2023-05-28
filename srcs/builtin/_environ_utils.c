@@ -14,39 +14,12 @@
 #include "_environ.h"
 #include "_util_commands.h"
 
-bool	set_environs(char **src)
-{
-	char	**tmp;
-	char	**dst;
-
-	dst = NULL;
-	if (src != NULL)
-	{
-		dst = (char **)malloc((get_strslen(src) + 1) * sizeof (char *));
-		if (dst == NULL)
-			return (false);
-		tmp = dst;
-		while (*src != NULL)
-		{
-			*tmp = ft_strdup(*src);
-			if (*tmp == NULL)
-				return (free_all(&dst));
-			tmp++;
-			src++;
-		}
-		*tmp = NULL;
-	}
-	free_all(*get_environs());
-	*get_environs() = dst;
-	return (true);
-}
-
 char	**search_environ(const char *name)
 {
 	char	**env;
 	size_t	size;
 
-	env = *get_environs();
+	env = *get_saved_environs();
 	if (env == NULL || name == NULL)
 		return (NULL);
 	while (*env != NULL)
@@ -65,7 +38,7 @@ static bool	add_environ(char *src)
 	char	**envs;
 	size_t	count;
 
-	src_envs = *get_environs();
+	src_envs = *get_saved_environs();
 	envs = (char **)malloc((get_strslen(src_envs) + 2) * sizeof (char *));
 	if (envs == NULL)
 		return (false);
@@ -79,7 +52,7 @@ static bool	add_environ(char *src)
 		return (false);
 	}
 	envs[count] = NULL;
-	*get_environs() = envs;
+	*get_saved_environs() = envs;
 	free(src_envs);
 	return (true);
 }
@@ -90,7 +63,7 @@ bool	set_environ(char *src)
 	char	*tmp;
 
 	tmp = ft_strchr(src, '=');
-	if (tmp == NULL || *get_environs() == NULL)
+	if (tmp == NULL || *get_saved_environs() == NULL)
 		return (false);
 	*tmp = '\0';
 	env = search_environ(src);
@@ -115,7 +88,7 @@ bool	remove_environ(char *name)
 	target = search_environ(name);
 	if (name == NULL || target == NULL)
 		return (false);
-	src_envs = *get_environs();
+	src_envs = *get_saved_environs();
 	envs = (char **)malloc(get_strslen(src_envs) * sizeof (char *));
 	if (envs == NULL)
 		return (false);
@@ -127,8 +100,8 @@ bool	remove_environ(char *name)
 		src_envs++;
 	}
 	*tmp = NULL;
-	free(*get_environs());
-	*get_environs() = envs;
+	free(*get_saved_environs());
+	*get_saved_environs() = envs;
 	free(target);
 	return (true);
 }

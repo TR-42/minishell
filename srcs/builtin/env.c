@@ -13,11 +13,11 @@
 #include "_environ.h"
 #include "ft_printf/ft_printf.h"
 
-void	builtin_env(void)
+int	builtin_env(void)
 {
 	char	**envs;
 
-	envs = *get_environs();
+	envs = *get_saved_environs();
 	if (envs == NULL)
 		return ;
 	while (*envs != NULL)

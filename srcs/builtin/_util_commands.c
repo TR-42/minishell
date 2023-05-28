@@ -11,7 +11,10 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdbool.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+#include "ft_printf/ft_printf.h"
 
 size_t	get_strslen(char **src)
 {
@@ -25,19 +28,29 @@ size_t	get_strslen(char **src)
 	return (count);
 }
 
-bool	free_all(char ***dst)
+void	free_all(char **dst)
 {
 	char	**tmp;
 
-	if (dst == NULL || *dst == NULL)
-		return (false);
-	tmp = *dst;
+	if (dst == NULL)
+		return ;
+	tmp = dst;
 	while (*tmp != NULL)
 	{
 		free(*tmp);
 		tmp ++;
 	}
-	free(*dst);
-	*dst = NULL;
-	return (false);
+	free(dst);
+}
+
+int	print_error(char *command, char *name, char *message, int err)
+{
+	if (command != NULL)
+		ft_dprintf(STDERR_FILENO, "%s: ", command);
+	if (name != NULL)
+		ft_dprintf(STDERR_FILENO, "%s: ", name);
+	if (message == NULL)
+		message = strerror(err);
+	ft_dprintf(STDERR_FILENO, "%s\n", message);
+	return (err);
 }

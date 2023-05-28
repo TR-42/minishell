@@ -13,6 +13,7 @@
 #include "_environ.h"
 #include "ft_printf/ft_printf.h"
 #include <stdio.h>
+#include <unistd.h>
 
 #define ERROR_MESSAGE "unset: %s: invalid parameter name\n"
 
