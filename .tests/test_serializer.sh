@@ -109,3 +109,13 @@ $1\
 	'a | b'\
 	'a<|$b'\
 	'abc $a|$b'\
+
+echo "Combination Tests"
+
+$1\
+	'abc"$def"'\
+	"abc'\$DEF'"\
+	'abc">$def"'\
+	"abc'<\$DEF'"\
+	'abc>"$def"'\
+	"abc<'\$DEF'"\
