@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 17:29:48 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/28 17:41:02 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start,
 //   - 0 < argcは確定している
 //   - リダイレクトの引数は正常に設定されている
 // !! ERR_PRINTED
+// -> <inherit> set_var_values
 // -> (root) for _get_argc
 // -> (root) for malloc
 // -> <inherit> _get_argv_one
@@ -127,6 +128,8 @@ char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 	int			i_argv;
 	size_t		i_elemarr;
 
+	if (!set_var_values(elemarr, envp) || !elems_make_flat(elemarr))
+		return (NULL);
 	argc = _get_argc(elemarr);
 	if (argc <= 0)
 	{
