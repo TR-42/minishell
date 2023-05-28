@@ -43,7 +43,10 @@ SRCS_SERIALIZER	:= \
 	is_cetyp.c \
 	serializer.c \
 
-SRCS_VALIDATOR :=\
+SRCS_SIGNAL =\
+	init_sig_handler.c\
+
+SRCS_VALIDATOR =\
 	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
@@ -52,6 +55,7 @@ SRCS_NOMAIN	:= \
 	$(addprefix childs/, $(SRCS_CHILDS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
+	$(addprefix signal_handling/, $(SRCS_SIGNAL))\
 	$(addprefix validator/, $(SRCS_VALIDATOR))\
 
 HEADERS_DIR		:=	./headers
