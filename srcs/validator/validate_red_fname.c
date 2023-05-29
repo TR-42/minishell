@@ -36,7 +36,8 @@ static bool	_validate_red_fname(const t_cmd_elem *elems, size_t *i,
 			is_val_set = true;
 		else if (1 < elems[*i + j].p_mlc_len)
 			return (false);
-		else if (elems[*i + j].p_malloced != NULL)
+		else if (elems[*i + j].p_malloced != NULL
+			&& elems[*i + j].p_malloced[0] != '\0')
 			is_val_set = true;
 		j++;
 	}
