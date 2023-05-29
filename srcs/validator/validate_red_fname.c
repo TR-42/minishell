@@ -61,7 +61,7 @@ static bool	_print_ref_fname_err(const t_cmd_elem *elems, size_t elems_len)
 	top = elems[i].elem_top - 1;
 	if (elems[i].type == CMDTYP_QUOTE_VAR)
 		top -= 1;
-	else if (*top != '\'' && *top != '\"')
+	else if (*top != '\'' && *top != '\"' && *top != '$')
 		top += 1;
 	str_len = (elems[elems_len - 1].elem_top + elems[elems_len - 1].len - top);
 	if (elems[elems_len - 1].type != CMDTYP_NORMAL
