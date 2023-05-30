@@ -62,6 +62,7 @@ SRCS_VALIDATOR =\
 	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
+	validate_red_fname.c\
 
 SRCS_NOMAIN	:= \
 	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\

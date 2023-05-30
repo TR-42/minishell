@@ -40,4 +40,7 @@ t_cmd_i_inval	is_valid_input(const t_cmdarr *cmdarr)
 t_cmd_inval_typ	is_valid_cmd(const t_cmdelmarr *cmdelemarr, bool is_last_cmd)
 				__attribute__((nonnull));
 
+bool			validate_red_fname(const t_cmdelmarr *elemarr)
+				__attribute__((nonnull(1)));
+
 #endif

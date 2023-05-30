@@ -17,12 +17,15 @@
 #include "_build_cmd.h"
 
 #include "serializer.h"
+#include "validator.h"
 
 static void	_free_argv(char **argv)
 {
 	size_t	i;
 
 	i = 0;
+	if (argv == NULL)
+		return ;
 	while (argv[i] != NULL)
 		free(argv[i++]);
 	free(argv);
