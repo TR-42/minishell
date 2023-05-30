@@ -123,32 +123,27 @@ static noreturn void	_revert_stdio_dispose_arr(
 
 // !! ERR_PRINTED
 // -> <inherit> _proc_redirect
-// -> <inherit> build_cmd
 // -> <inherit> chk_and_get_fpath
 // -> (root) for execve
 __attribute__((nonnull))
 noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 {
 	t_ch_proc_info	info;
-	char			**argv;
 	char			*exec_path;
 	bool			ret;
 
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
-		_revert_stdio_dispose_arr(&info, info_arr, NULL);
+		_revert_stdio_dispose_arr(&info, info_arr, &(info.argv));
 	exec_path = NULL;
-	argv = build_cmd(info.cmd, info.envp);
-	if (argv == NULL)
-		_revert_stdio_dispose_arr(&info, info_arr, NULL);
-	ret = chk_and_get_fpath(argv[0], info.path_arr, &exec_path);
+	ret = chk_and_get_fpath(info.argv[0], info.path_arr, &exec_path);
 	if (ret == true)
 		dup2_and_close(&info);
 	dispose_proc_info_arr(info_arr);
 	if (ret == true)
-		execve(exec_path, argv, info.envp);
+		execve(exec_path, info.argv, info.envp);
 	if (ret == true)
-		strerr_ret_false(argv[0]);
-	_revert_stdio_dispose_arr(&info, NULL, &argv);
+		strerr_ret_false(info.argv[0]);
+	_revert_stdio_dispose_arr(&info, NULL, &(info.argv));
 	exit(1);
 }
