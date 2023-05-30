@@ -40,7 +40,7 @@ static bool	_is_end_and_get_stat(int *cpstat, t_cetyp cetype, bool is_signaled)
 // -> <inherit> pipe_fork_exec
 // (pipe_fork_execでエラー発生の場合、return 1)
 __attribute__((nonnull))
-int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
+int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len, int exit_stat)
 {
 	int		cpstat;
 	size_t	i_exec;
@@ -55,7 +55,7 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 	while (i_exec < cparr_len)
 	{
 		cetype = get_cmdterm(cparr[i_exec].cmd);
-		pipe_fork_exec(cparr, i_exec++, cparr_len);
+		pipe_fork_exec(cparr, i_exec++, cparr_len, exit_stat);
 		if (cetype == CMDTYP_PIPE)
 			continue ;
 		while (i_wait < i_exec)

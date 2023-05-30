@@ -21,23 +21,22 @@
 // -> <inherit> chk_do_heredoc
 // -> <inherit> init_ch_proc_info_arr
 __attribute__((nonnull))
-int	_parse_exec(const char *str, char *const envp[])
+int	_parse_exec(const char *str, char *const envp[], int exit_stat)
 {
 	t_cmdarr		arr;
 	t_cprocinf		*cparr;
-	int				exit_stat;
+	int				validate_input_err;
 
 	if (*str == '\0')
 		return (0);
 	arr = serialize(str);
-	if (!_validate_input(&arr, &exit_stat))
-		return (exit_stat);
+	if (!_validate_input(&arr, &validate_input_err))
+		return (validate_input_err);
 	if (!chk_do_heredoc(&arr, envp))
 		return (dispose_t_cmdarr(&arr) + 1);
 	cparr = init_ch_proc_info_arr(&arr, (char **)envp);
-	exit_stat = 1;
 	if (cparr != NULL)
-		exit_stat = _exec_ch_proc_info_arr(cparr, arr.len);
+		exit_stat = _exec_ch_proc_info_arr(cparr, arr.len, exit_stat);
 	rm_tmpfile(&arr);
 	dispose_t_cmdarr(&arr);
 	dispose_proc_info_arr(cparr);

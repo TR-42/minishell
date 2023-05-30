@@ -55,7 +55,7 @@ static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
 		errstr_ret_false(argv[1], "option requires an argument");
 		exit(2);
 	}
-	exit(_parse_exec(argv[2], envp));
+	exit(_parse_exec(argv[2], envp, 0));
 }
 
 int	main(int argc, const char *argv[], char *const envp[])
@@ -78,7 +78,7 @@ int	main(int argc, const char *argv[], char *const envp[])
 		else if (*line != '\0')
 		{
 			add_history(line);
-			ret = _parse_exec(line, envp);
+			ret = _parse_exec(line, envp, 0);
 		}
 		free(line);
 		rl_on_new_line();

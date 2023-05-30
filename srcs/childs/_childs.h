@@ -24,7 +24,8 @@
 # define PIPEFD_FROM_PREV (PIPEFD_TO_THIS)
 # define PIPEFD_TO_NEXT (PIPEFD_FROM_THIS)
 
-noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
+noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index,
+					int exit_stat)
 				__attribute__((nonnull));
 
 #endif

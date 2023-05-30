@@ -38,16 +38,17 @@ void		dispose_proc_info_arr(t_ch_proc_info *info_arr);
 // バリデーション後、そのままの状態で渡す。
 // 変数展開等はfork後に子プロセス側で実行する
 bool		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
-				size_t count)
+				size_t count, int exit_stat)
 			__attribute__((nonnull));
 
 // バリデーション実行後にこの関数を呼ぶ
 t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
 			__attribute__((nonnull));
 
-int			_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
+int			_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len,
+				int exit_stat)
 			__attribute__((nonnull));
-int			_parse_exec(const char *str, char *const envp[])
+int			_parse_exec(const char *str, char *const envp[], int exit_stat)
 			__attribute__((nonnull));
 
 #endif

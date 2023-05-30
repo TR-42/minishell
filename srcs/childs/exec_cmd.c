@@ -127,7 +127,7 @@ static noreturn void	_revert_stdio_dispose_arr(
 // -> <inherit> chk_and_get_fpath
 // -> (root) for execve
 __attribute__((nonnull))
-noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
+noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index, int exit_stat)
 {
 	t_ch_proc_info	info;
 	char			**argv;
@@ -138,7 +138,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	if (!_proc_redirect(&info))
 		_revert_stdio_dispose_arr(&info, info_arr, NULL);
 	exec_path = NULL;
-	argv = build_cmd(info.cmd, info.envp);
+	argv = build_cmd(info.cmd, info.envp, exit_stat);
 	if (argv == NULL)
 		_revert_stdio_dispose_arr(&info, info_arr, NULL);
 	ret = chk_and_get_fpath(argv[0], info.path_arr, &exec_path);

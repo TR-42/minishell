@@ -49,7 +49,8 @@ static bool	create_pipe(t_ch_proc_info *info_arr, size_t index)
 // !! ERR_PRINTED
 // -> <inherit> create_pipe
 // -> (root) for fork function
-bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
+bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
+	size_t count, int exit_stat)
 {
 	int	_errno;
 
@@ -58,7 +59,7 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
 	info_arr[index].pid = fork();
 	_errno = errno;
 	if (info_arr[index].pid == PID_FORKED)
-		exec_command(info_arr, index);
+		exec_command(info_arr, index, exit_stat);
 	if (info_arr[index].fd_from_this != STDOUT_FILENO)
 		close(info_arr[index].fd_from_this);
 	if (info_arr[index].fd_to_this != STDIN_FILENO)
