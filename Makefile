@@ -40,6 +40,7 @@ SRCS_BUILD_CMD	:=\
 
 SRCS_CHILDS	:=\
 	_exec_ch_proc_info_arr.c\
+	_gen_envp.c\
 	_redirect.c\
 	_parse_exec.c\
 	childs_dispose.c\
