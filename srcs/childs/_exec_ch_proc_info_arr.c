@@ -96,7 +96,8 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &cetype);
 		while (i_wait < i_exec)
 		{
-			waitpid(cparr[i_wait++].pid, &cpstat, 0);
+			if (0 < cparr[i_wait++].pid)
+				waitpid(cparr[i_wait - 1].pid, &cpstat, 0);
 			is_signaled = (is_signaled || WIFSIGNALED(cpstat));
 		}
 		if (_is_end_and_get_stat(&cpstat, cetype, is_signaled))
