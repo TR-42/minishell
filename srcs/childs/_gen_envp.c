@@ -18,21 +18,20 @@
 #include "error_utils.h"
 #include "utils.h"
 
-__attribute__((nonnull))
 static char	**_malloc_envp_buf(const char **environs)
 {
 	size_t	i;
 	char	**envp;
 
 	i = 0;
-	while (environs[i] != NULL)
+	while (environs != NULL && environs[i] != NULL)
 	{
 		if (ft_strchr(environs[i++], '=') != NULL)
 			i++;
 	}
 	envp = ft_calloc(sizeof(char *), i + 1);
 	if (envp == NULL)
-		strerr_ret_false("");
+		strerr_ret_false("malloc_envp_buf()");
 	return (envp);
 }
 
@@ -67,12 +66,9 @@ char	**gen_envp(void)
 
 	environs = (const char **)get_environs();
 	if (environs == NULL)
-	{
-		errstr_ret_false("get_environs()", "environs was NULL");
-		return (NULL);
-	}
+		errstr_ret_false("get_environs()", "[WARN] environs was NULL");
 	envp = _malloc_envp_buf(environs);
-	if (envp == NULL)
-		return (NULL);
+	if (envp == NULL || environs == NULL)
+		return (envp);
 	return (_set_to_envp(environs, envp));
 }
