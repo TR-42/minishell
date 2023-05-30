@@ -15,8 +15,8 @@
 
 # include "ft_vect/ft_vect.h"
 
-typedef t_vect	t_cmdarr;
-typedef t_vect	t_cmdelmarr;
+typedef t_vect			t_cmdarr;
+typedef t_vect			t_cmdelmarr;
 
 // NORMAL	: 通常のコマンド部分。変数展開等は特に行わない
 // VARIABLE	: 変数展開を行う必要がある部分。
@@ -32,7 +32,11 @@ typedef enum e_cmd_elem_type
 	CMDTYP_RED_APPEND,
 	CMDTYP_PIPE,
 	CMDTYP_RED_HEREDOC_SAVED,
+	CMDTYP_OP_OR,
+	CMDTYP_OP_AND,
 }	t_cmd_elem_type;
+
+typedef t_cmd_elem_type	t_cetyp;
 
 // type		: その範囲が担う役割
 // elem_top	: その範囲の先頭
@@ -59,5 +63,8 @@ bool		is_cetyp_redirect(t_cmd_elem_type t);
 bool		is_cetyp_var(t_cmd_elem_type t);
 bool		is_cetyp_var_or_normal(t_cmd_elem_type t);
 bool		is_cetyp_terminator(t_cmd_elem_type t);
+
+bool		is_cmdterm(const t_cmdelmarr *elems, t_cmd_elem_type type);
+t_cetyp		get_cmdterm(const t_cmdelmarr *elems);
 
 #endif

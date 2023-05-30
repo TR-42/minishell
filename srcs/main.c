@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 22:52:21 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/22 23:01:13 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 #include "childs.h"
 #include "error_utils.h"
+#include "serializer.h"
 #include "signal_handling.h"
 
 #define PROMPT_STR "minishell> "

@@ -28,16 +28,12 @@
 
 // !! ERR_PRINTED
 // -> (root) for pipe function
-// TODO: パイプを含む場合のみパイプを繋ぐようにする
-static bool	create_pipe(t_ch_proc_info *info_arr, size_t index, size_t count)
+static bool	create_pipe(t_ch_proc_info *info_arr, size_t index)
 {
 	int		pipefd[2];
 
-	if ((index + 1) == count)
-	{
-		info_arr[index].fd_from_this = STDOUT_FILENO;
+	if (get_cmdterm(info_arr[index].cmd) != CMDTYP_PIPE)
 		return (true);
-	}
 	if (pipe(pipefd) < 0)
 	{
 		perr_ret_false("minishell/pipe");
@@ -57,7 +53,7 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
 {
 	int	_errno;
 
-	if (!create_pipe(info_arr, index, count))
+	if (!create_pipe(info_arr, index))
 		return (false);
 	info_arr[index].pid = fork();
 	_errno = errno;

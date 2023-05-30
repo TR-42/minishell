@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/28 19:49:16 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/22 23:00:11 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,11 +46,13 @@ SRCS_HEREDOC :=\
 
 SRCS_SERIALIZER	:= \
 	_serializer_dquote.c \
-	_serializer_pipe_red.c \
+	_serializer_redirect.c \
 	_serializer_squote.c \
+	_serializer_term.c \
 	_serializer_var.c \
 	dispose_t_cmd.c \
 	is_cetyp.c \
+	is_cmdterm_typ.c \
 	serializer.c \
 
 SRCS_SIGNAL =\
