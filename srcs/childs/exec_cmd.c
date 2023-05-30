@@ -36,6 +36,7 @@
 #include "_childs.h"
 #include "_filectrl_tools.h"
 #include "_redirect.h"
+#include "utils.h"
 
 // !! PRINT_ERROR
 // -> (root) for dup2 function
@@ -74,20 +75,6 @@ static bool	dup2_and_close(t_ch_proc_info *info)
 	if (!is_success)
 		return (close(*p_fd) * 0);
 	return (!_dup2_and_set_inval(p_fd, STDOUT_FILENO, "dup2 OUT"));
-}
-
-// !! NO_ERROR
-static void	free_2darr(void ***argv)
-{
-	size_t	i;
-
-	if (argv == NULL || *argv == NULL)
-		return ;
-	i = 0;
-	while ((*argv)[i] != NULL)
-		free((*argv)[i++]);
-	free(*argv);
-	*argv = NULL;
 }
 
 // !! NO_ERROR
