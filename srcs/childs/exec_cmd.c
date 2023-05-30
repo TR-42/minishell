@@ -123,7 +123,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	if (!_proc_redirect(&info))
 		_revert_stdio_dispose_arr(&info, info_arr, &(info.argv));
 	exec_path = NULL;
-	ret = chk_and_get_fpath(info.argv[0], info.path_arr, &exec_path);
+	ret = chk_and_get_fpath(info.argv[0], &exec_path, info.envp);
 	if (ret == true)
 		dup2_and_close(&info);
 	dispose_proc_info_arr(info_arr);

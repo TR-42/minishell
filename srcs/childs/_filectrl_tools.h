@@ -21,7 +21,7 @@
 # define CHK_GET_PATH_ERR_NOCMD (2)
 
 bool	chk_and_get_fpath(
-			const char *given_path, char *const *env_path, char **dst)
-		__attribute__((nonnull(3)));
+			const char *given_path, char **dst, char **envp)
+		__attribute__((nonnull(2)));
 
 #endif

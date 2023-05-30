@@ -34,6 +34,7 @@
 #include "ft_string/ft_string.h"
 
 #include "childs.h"
+#include "builtin.h"
 #include "error_utils.h"
 #include "serializer.h"
 #include "signal_handling.h"
@@ -46,7 +47,7 @@
 // -> (root) too few args
 // -> <inherit> _parse_exec
 __attribute__((nonnull))
-static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
+static void	_chk_do_c_opt(int argc, const char *argv[])
 {
 	if (argc < 2 || ft_strncmp(argv[1], "-c", 3) != 0)
 		return ;
@@ -55,17 +56,14 @@ static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
 		errstr_ret_false(argv[1], "option requires an argument");
 		exit(2);
 	}
-	exit(_parse_exec(argv[2], envp));
+	exit(_parse_exec(argv[2]));
 }
 
-int	main(int argc, const char *argv[], char *const envp[])
+static int	do_loop(void)
 {
 	char	*line;
 	int		ret;
 
-	_chk_do_c_opt(argc, argv, envp);
-	if (!init_sig_handler())
-		return (1);
 	ret = 0;
 	while (true)
 	{
@@ -78,12 +76,25 @@ int	main(int argc, const char *argv[], char *const envp[])
 		else if (*line != '\0')
 		{
 			add_history(line);
-			ret = _parse_exec(line, envp);
+			ret = _parse_exec(line);
 		}
 		free(line);
 		rl_on_new_line();
 	}
-	return (0);
+	return (ret);
+}
+
+int	main(int argc, const char *argv[], char **envp)
+{
+	int		ret;
+
+	init_environs(envp);
+	_chk_do_c_opt(argc, argv);
+	if (!init_sig_handler())
+		return (1);
+	ret = do_loop();
+	dispose_environs();
+	return (ret);
 }
 
 #if DEBUG

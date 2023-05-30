@@ -18,6 +18,7 @@
 
 #include "ft_printf/ft_printf.h"
 
+#include "_env_util.h"
 #include "childs.h"
 #include "_build_cmd.h"
 #include "utils.h"
@@ -39,6 +40,7 @@ static bool	_is_end_and_get_stat(int *cpstat, t_cetyp cetype, bool is_signaled)
 }
 
 // !! ERR_PRINTED
+// -> <inherit> gen_envp
 // -> <inherit> build_cmd
 // -> <inherit> pipe_fork_exec
 __attribute__((nonnull))
@@ -50,8 +52,10 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 	while (*i_exec < cparr_len)
 	{
 		*cetype = get_cmdterm(cparr[*i_exec].cmd);
+		cparr->envp = gen_envp();
 		cparr[*i_exec].argv = build_cmd(cparr[*i_exec].cmd, cparr->envp);
 		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
+		free_2darr((void ***)&(cparr->envp));
 		free_2darr((void ***)&(cparr[*i_exec].argv));
 		if (!is_pfe_success)
 			return (false);
