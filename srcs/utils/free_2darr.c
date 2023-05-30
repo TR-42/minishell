@@ -23,7 +23,7 @@ void	*free_2darr(void ***p_to_2darr)
 		return (NULL);
 	i = 0;
 	while ((*p_to_2darr)[i] != NULL)
-		free((*p_to_2darr)[i]);
+		free((*p_to_2darr)[i++]);
 	free(*p_to_2darr);
 	*p_to_2darr = NULL;
 	return (NULL);
