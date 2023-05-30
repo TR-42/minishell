@@ -49,7 +49,7 @@ SRCS_CHILDS	:=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
-SRCS_ERR_UTILS :=\
+SRCS_UTILS :=\
 	err_ret_false.c\
 
 SRCS_HEREDOC :=\
@@ -82,7 +82,7 @@ SRCS_NOMAIN	:= \
 	$(addprefix builtin/, $(SRCS_BUILDIN))\
 	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\
 	$(addprefix childs/, $(SRCS_CHILDS))\
-	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
+	$(addprefix utils/, $(SRCS_UTILS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
 	$(addprefix signal_handling/, $(SRCS_SIGNAL))\
