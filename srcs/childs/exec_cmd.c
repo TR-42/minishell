@@ -82,8 +82,7 @@ static bool	dup2_and_close(t_ch_proc_info *info)
 // (そもそも、dup2でエラーが起きる可能性自体低いし。)
 static noreturn void	_revert_stdio_dispose_arr(
 	const t_ch_proc_info *info,
-	t_ch_proc_info *info_arr,
-	char ***argv)
+	t_ch_proc_info *info_arr)
 {
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
@@ -103,8 +102,8 @@ static noreturn void	_revert_stdio_dispose_arr(
 		close(info->fd_from_this);
 	if (info_arr != NULL)
 		dispose_proc_info_arr(info_arr);
-	if (argv != NULL)
-		free_2darr((void ***)argv);
+	free_2darr((void ***)&(info->envp));
+	free_2darr((void ***)&(info->argv));
 	exit(1);
 }
 
@@ -121,7 +120,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
-		_revert_stdio_dispose_arr(&info, info_arr, &(info.argv));
+		_revert_stdio_dispose_arr(&info, info_arr);
 	exec_path = NULL;
 	ret = chk_and_get_fpath(info.argv[0], &exec_path, info.envp);
 	if (ret == true)
@@ -131,6 +130,6 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 		execve(exec_path, info.argv, info.envp);
 	if (ret == true)
 		strerr_ret_false(info.argv[0]);
-	_revert_stdio_dispose_arr(&info, NULL, &(info.argv));
+	_revert_stdio_dispose_arr(&info, NULL);
 	exit(1);
 }
