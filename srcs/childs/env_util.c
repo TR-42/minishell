@@ -72,11 +72,12 @@ static const char	*is_this_requested_env(const char *envp, const char *name,
 // !! MUST_PRINT_ERROR_IN_CALLER
 // -> EINVAL: 指定の環境変数が見つからなかった
 // -> *: ft_splitでのmalloc失敗
-__attribute__((nonnull))
 char	**get_path_in_env(char *const envp[])
 {
 	const char	*path;
 
+	if (envp == NULL)
+		return (NULL);
 	path = get_env_value(envp, "PATH");
 	if (path == NULL)
 	{
