@@ -56,9 +56,10 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 
 	if (!create_pipe(info_arr, index))
 		return (false);
-	info_arr[index].pid = fork();
+	if (info_arr[index].argv != NULL)
+		info_arr[index].pid = fork();
 	_errno = errno;
-	if (info_arr[index].pid == PID_FORKED)
+	if (info_arr[index].argv != NULL && info_arr[index].pid == PID_FORKED)
 		exec_command(info_arr, index, exit_stat);
 	if (info_arr[index].fd_from_this != STDOUT_FILENO)
 		close(info_arr[index].fd_from_this);

@@ -29,6 +29,7 @@ typedef struct s_ch_proc_info
 	pid_t		pid;
 	char		**path_arr;
 	char		**envp;
+	char		**argv;
 }	t_ch_proc_info;
 
 typedef t_ch_proc_info	t_cprocinf;
