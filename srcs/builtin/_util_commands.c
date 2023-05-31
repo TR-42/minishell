@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 02:05:53 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 20:04:39 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:59:48 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	print_error(char *command, char *name, char *message, int err)
 	if (command != NULL)
 		ft_dprintf(STDERR_FILENO, "%s: ", command);
 	if (name != NULL)
-		ft_dprintf(STDERR_FILENO, "%s: ", name);
+		ft_dprintf(STDERR_FILENO, "`%s': ", name);
 	if (message == NULL)
 		message = strerror(err);
 	ft_dprintf(STDERR_FILENO, "%s\n", message);
