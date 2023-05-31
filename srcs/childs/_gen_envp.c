@@ -21,15 +21,17 @@
 static char	**_malloc_envp_buf(const char **environs)
 {
 	size_t	i;
+	size_t	cnt;
 	char	**envp;
 
 	i = 0;
+	cnt = 0;
 	while (environs != NULL && environs[i] != NULL)
 	{
 		if (ft_strchr(environs[i++], '=') != NULL)
-			i++;
+			cnt++;
 	}
-	envp = ft_calloc(sizeof(char *), i + 1);
+	envp = ft_calloc(sizeof(char *), cnt + 1);
 	if (envp == NULL)
 		strerr_ret_false("malloc_envp_buf()");
 	return (envp);
