@@ -16,6 +16,7 @@
 #include "ft_string/ft_string.h"
 
 #include "error_utils.h"
+#include "validator.h"
 #include "_build_cmd.h"
 
 // !! NO_ERROR
@@ -106,6 +107,8 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start)
 //   - リダイレクトの引数は正常に設定されている
 // !! ERR_PRINTED
 // -> <inherit> set_var_values
+// -> <inherit> validate_red_fname (validation error)
+// -> <inherit> elems_make_flat
 // -> (root) for _get_argc
 // -> (root) for malloc
 // -> <inherit> _get_argv_one
@@ -117,7 +120,8 @@ char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 	int			i_argv;
 	size_t		i_elemarr;
 
-	if (!set_var_values(elemarr, envp) || !elems_make_flat(elemarr))
+	if (!set_var_values(elemarr, envp) || !validate_red_fname(elemarr)
+		|| !elems_make_flat(elemarr))
 		return (NULL);
 	argc = _get_argc(elemarr);
 	if (argc <= 0)
@@ -127,10 +131,7 @@ char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
 	}
 	argv = (char **)malloc(sizeof(char **) * ((size_t)argc + 1));
 	if (argv == NULL)
-	{
-		strerr_ret_false("build_cmd()/malloc");
-		return (NULL);
-	}
+		return ((void *)(strerr_ret_false("build_cmd()/malloc") * 0UL));
 	argv[argc] = NULL;
 	i_argv = 0;
 	i_elemarr = 0;

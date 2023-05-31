@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   childs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:56:28 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 09:27:46 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/30 23:44:19 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,17 @@
 #include <stdlib.h>
 
 #include "error_utils.h"
-
+#include "builtin.h"
 #include "_childs.h"
 
 // !! ERR_PRINTED
 // -> (root) for pipe function
-// TODO: パイプを含む場合のみパイプを繋ぐようにする
-static bool	create_pipe(t_ch_proc_info *info_arr, size_t index, size_t count)
+static bool	create_pipe(t_ch_proc_info *info_arr, size_t index)
 {
 	int		pipefd[2];
 
-	if ((index + 1) == count)
-	{
-		info_arr[index].fd_from_this = STDOUT_FILENO;
+	if (get_cmdterm(info_arr[index].cmd) != CMDTYP_PIPE)
 		return (true);
-	}
 	if (pipe(pipefd) < 0)
 	{
 		perr_ret_false("minishell/pipe");
@@ -57,11 +53,14 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
 {
 	int	_errno;
 
-	if (!create_pipe(info_arr, index, count))
+	if (!create_pipe(info_arr, index))
 		return (false);
-	info_arr[index].pid = fork();
 	_errno = errno;
-	if (info_arr[index].pid == PID_FORKED)
+	if (exec_builtin(info_arr[index].argv, &_errno) != 0)
+		return (true);
+	if (info_arr[index].argv != NULL)
+		info_arr[index].pid = fork();
+	if (info_arr[index].argv != NULL && info_arr[index].pid == PID_FORKED)
 		exec_command(info_arr, index);
 	if (info_arr[index].fd_from_this != STDOUT_FILENO)
 		close(info_arr[index].fd_from_this);

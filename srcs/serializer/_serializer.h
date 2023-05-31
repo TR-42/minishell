@@ -51,4 +51,7 @@ bool	_serializer_squote(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 		__attribute__((nonnull));
 
+bool	_serializer_term(const char **input, t_pars_mde *mode, t_cmd_elem *v)
+		__attribute__((nonnull));
+
 #endif

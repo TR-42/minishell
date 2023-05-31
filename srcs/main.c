@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 22:52:21 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/05/30 23:40:02 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@
 #include <readline/history.h>
 
 #include "ft_string/ft_string.h"
-
+#include "builtin.h"
 #include "childs.h"
 #include "error_utils.h"
+#include "serializer.h"
 #include "signal_handling.h"
 
 #define PROMPT_STR "minishell> "
@@ -57,11 +58,12 @@ static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
 	exit(_parse_exec(argv[2], envp));
 }
 
-int	main(int argc, const char *argv[], char *const envp[])
+int	main(int argc, const char *argv[], char **envp)
 {
 	char	*line;
 	int		ret;
 
+	init_environs(envp);
 	_chk_do_c_opt(argc, argv, envp);
 	if (!init_sig_handler())
 		return (1);
@@ -82,6 +84,7 @@ int	main(int argc, const char *argv[], char *const envp[])
 		free(line);
 		rl_on_new_line();
 	}
+	dispose_environs();
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 #    By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/28 21:34:53 by kitsuki          ###   ########.fr        #
+#    Updated: 2023/05/30 23:16:06 by kitsuki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,11 +60,13 @@ SRCS_HEREDOC :=\
 
 SRCS_SERIALIZER	:= \
 	_serializer_dquote.c \
-	_serializer_pipe_red.c \
+	_serializer_redirect.c \
 	_serializer_squote.c \
+	_serializer_term.c \
 	_serializer_var.c \
 	dispose_t_cmd.c \
 	is_cetyp.c \
+	is_cmdterm_typ.c \
 	serializer.c \
 
 SRCS_SIGNAL =\
@@ -74,6 +76,7 @@ SRCS_VALIDATOR =\
 	_validate_input.c\
 	is_valid_cmd.c\
 	is_valid_input.c\
+	validate_red_fname.c\
 
 SRCS_NOMAIN	:= \
 	$(addprefix builtin/, $(SRCS_BUILDIN))\
