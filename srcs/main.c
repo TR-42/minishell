@@ -78,7 +78,7 @@ int	main(int argc, const char *argv[], char *const envp[])
 		else if (*line != '\0')
 		{
 			add_history(line);
-			ret = _parse_exec(line, envp, 0);
+			ret = _parse_exec(line, envp, ret);
 		}
 		free(line);
 		rl_on_new_line();
