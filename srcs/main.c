@@ -47,16 +47,17 @@
 // -> (root) too few args
 // -> <inherit> _parse_exec
 __attribute__((nonnull))
-static void	_chk_do_c_opt(int argc, const char *argv[])
+static bool	_chk_do_c_opt(int argc, const char *argv[], int *ret)
 {
 	if (argc < 2 || ft_strncmp(argv[1], "-c", 3) != 0)
-		return ;
+		return (false);
 	if (argc == 2)
 	{
-		errstr_ret_false(argv[1], "option requires an argument");
-		exit(2);
+		*ret = 2;
+		return (!errstr_ret_false(argv[1], "option requires an argument"));
 	}
-	exit(_parse_exec(argv[2]));
+	*ret = _parse_exec(argv[2]);
+	return (true);
 }
 
 static int	do_loop(void)
@@ -93,7 +94,11 @@ int	main(int argc, const char *argv[], char **envp)
 		errstr_ret_false("init_environs()", "malloc failed");
 		return (1);
 	}
-	_chk_do_c_opt(argc, argv);
+	if (_chk_do_c_opt(argc, argv, &ret))
+	{
+		dispose_environs();
+		return (ret);
+	}
 	if (!init_sig_handler())
 		return (1);
 	ret = do_loop();
