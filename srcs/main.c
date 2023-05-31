@@ -88,7 +88,11 @@ int	main(int argc, const char *argv[], char **envp)
 {
 	int		ret;
 
-	init_environs(envp);
+	if (!init_environs(envp))
+	{
+		errstr_ret_false("init_environs()", "malloc failed");
+		return (1);
+	}
 	_chk_do_c_opt(argc, argv);
 	if (!init_sig_handler())
 		return (1);
