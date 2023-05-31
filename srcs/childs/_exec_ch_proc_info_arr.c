@@ -52,10 +52,11 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 	while (*i_exec < cparr_len)
 	{
 		*cetype = get_cmdterm(cparr[*i_exec].cmd);
-		cparr->envp = gen_envp();
-		cparr[*i_exec].argv = build_cmd(cparr[*i_exec].cmd, cparr->envp);
+		cparr[*i_exec].envp = gen_envp();
+		cparr[*i_exec].argv = build_cmd(cparr[*i_exec].cmd,
+				cparr[*i_exec].envp);
 		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
-		free_2darr((void ***)&(cparr->envp));
+		free_2darr((void ***)&(cparr[*i_exec].envp));
 		free_2darr((void ***)&(cparr[*i_exec].argv));
 		if (!is_pfe_success)
 			return (false);
