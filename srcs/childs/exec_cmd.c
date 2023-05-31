@@ -127,7 +127,8 @@ static noreturn void	_revert_stdio_dispose_arr(
 // -> <inherit> chk_and_get_fpath
 // -> (root) for execve
 __attribute__((nonnull))
-noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index, int exit_stat)
+noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index,
+	int exit_stat)
 {
 	t_ch_proc_info	info;
 	char			**argv;
