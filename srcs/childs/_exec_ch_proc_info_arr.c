@@ -22,16 +22,17 @@
 
 // !! NO_ERROR
 __attribute__((nonnull))
-static bool	_is_end_and_get_stat(int *cpstat, t_cetyp cetype, bool is_signaled)
+static bool	_is_end_and_get_stat(int cpstat, t_cetyp cetype, bool is_signaled,
+	int *exit_status)
 {
-	if (is_signaled || !WIFEXITED(*cpstat))
+	if (is_signaled || !WIFEXITED(cpstat))
 	{
-		*cpstat = 130;
+		*exit_status = 130;
 		return (true);
 	}
-	*cpstat = WEXITSTATUS(*cpstat);
-	if ((cetype == CMDTYP_OP_AND && *cpstat != EXIT_SUCCESS)
-		|| (cetype == CMDTYP_OP_OR && *cpstat == EXIT_SUCCESS))
+	*exit_status = WEXITSTATUS(cpstat);
+	if ((cetype == CMDTYP_OP_AND && *exit_status != EXIT_SUCCESS)
+		|| (cetype == CMDTYP_OP_OR && *exit_status == EXIT_SUCCESS))
 		return (true);
 	return (false);
 }
@@ -63,8 +64,8 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len, int exit_stat)
 			waitpid(cparr[i_wait++].pid, &cpstat, 0);
 			is_signaled = (is_signaled || WIFSIGNALED(cpstat));
 		}
-		if (_is_end_and_get_stat(&cpstat, cetype, is_signaled))
+		if (_is_end_and_get_stat(cpstat, cetype, is_signaled, &exit_stat))
 			break ;
 	}
-	return (cpstat);
+	return (exit_stat);
 }
