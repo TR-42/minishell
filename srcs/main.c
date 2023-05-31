@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// - errno
+#include <errno.h>
+
 // - bool
 #include <stdbool.h>
 
@@ -27,11 +30,15 @@
 // - sprintf
 #include <stdio.h>
 
+// - fstat
+#include <sys/stat.h>
+
 // - readline etc.
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #include "ft_string/ft_string.h"
+#include "gnl/get_next_line.h"
 
 #include "childs.h"
 #include "builtin.h"
@@ -57,6 +64,40 @@ static bool	_chk_do_c_opt(int argc, const char *argv[], int *ret)
 		return (!errstr_ret_false(argv[1], "option requires an argument"));
 	}
 	*ret = _parse_exec(argv[2]);
+	return (true);
+}
+
+// ref: https://syohex.hatenablog.com/entry/20130302/1362190989
+// !! ERR_PRINTED
+// -> (root) for fstat (エラーが出ても処理は続行する)
+// -> (root) for gen_gnl_state / malloc (エラーが出たらプログラム終了)
+// -> (root) for get_next_line / malloc (エラーが出たらプログラム終了)
+static bool	_chk_do_script(int *ret)
+{
+	struct stat	st;
+	t_gnl_state	gnl;
+	char		*line;
+
+	if (fstat(STDIN_FILENO, &st) != 0)
+		return (strerr_ret_false("_chk_do_script()/fstat"));
+	if (!S_ISFIFO(st.st_mode))
+		return (false);
+	gnl = gen_gnl_state(STDIN_FILENO, 256);
+	while (gnl.buf != NULL)
+	{
+		errno = 0;
+		line = get_next_line(&gnl);
+		if (line == NULL)
+			break ;
+		*ret = _parse_exec(line);
+		free(line);
+	}
+	if (errno != 0)
+	{
+		*ret = 1;
+		strerr_ret_false("_chk_do_script()");
+	}
+	dispose_gnl_state(&gnl);
 	return (true);
 }
 
@@ -95,6 +136,7 @@ int	main(int argc, const char *argv[], char **envp)
 		return (1);
 	}
 	if (_chk_do_c_opt(argc, argv, &ret)
+		|| _chk_do_script(&ret)
 		|| !init_sig_handler())
 	{
 		dispose_environs();
