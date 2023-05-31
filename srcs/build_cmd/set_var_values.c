@@ -17,18 +17,12 @@
 #include "_env_util.h"
 #include "error_utils.h"
 
-__attribute__((nonnull))
-static bool	_set_var_value(t_cmd_elem *elem, char *const *envp, int exit_stat)
+static bool	_set_var_value_and_split(t_cmd_elem *elem, const char *value)
 {
-	const char	*value;
 	char		**ret;
 	size_t		i;
 	bool		contains_spc;
 
-	(void)exit_stat;
-	value = get_env_value_nlen(envp, elem->elem_top, elem->len);
-	if (value == NULL)
-		return (true);
 	i = 0;
 	contains_spc = false;
 	while (elem->type == CMDTYP_VARIABLE && !contains_spc && value[i] != '\0')
@@ -45,6 +39,22 @@ static bool	_set_var_value(t_cmd_elem *elem, char *const *envp, int exit_stat)
 		elem->p_mlc_len += 1;
 	elem->p_malloced = (char *)ret;
 	return (true);
+}
+
+__attribute__((nonnull))
+static bool	_set_var_value(t_cmd_elem *elem, char *const *envp, int exit_stat)
+{
+	const char	*value;
+
+	if (*(elem->elem_top) == '?')
+	{
+		elem->p_malloced = ft_itoa(exit_stat);
+		return (elem->p_malloced != NULL);
+	}
+	value = get_env_value_nlen(envp, elem->elem_top, elem->len);
+	if (value == NULL)
+		return (true);
+	return (_set_var_value_and_split(elem, value));
 }
 
 // !! ERR_PRINTED
