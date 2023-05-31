@@ -94,13 +94,12 @@ int	main(int argc, const char *argv[], char **envp)
 		errstr_ret_false("init_environs()", "malloc failed");
 		return (1);
 	}
-	if (_chk_do_c_opt(argc, argv, &ret))
+	if (_chk_do_c_opt(argc, argv, &ret)
+		|| !init_sig_handler())
 	{
 		dispose_environs();
 		return (ret);
 	}
-	if (!init_sig_handler())
-		return (1);
 	ret = do_loop();
 	dispose_environs();
 	return (ret);
