@@ -67,7 +67,7 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 		cetype = get_cmdterm(cparr[*i_exec].cmd);
 		cparr[*i_exec].argv = build_cmd(cparr[*i_exec].cmd, cparr->envp,
 				exit_status);
-		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len, exit_status);
+		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
 		_free_argv(&(cparr[*i_exec].argv));
 		if (!is_pfe_success)
 			return (false);
