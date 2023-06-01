@@ -54,4 +54,9 @@ bool	_serializer_var(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 bool	_serializer_term(const char **input, t_pars_mde *mode, t_cmd_elem *v)
 		__attribute__((nonnull));
 
+// return: Elementが終了するかどうか
+bool	_serializer_wildcard(const char **input, t_pars_mde *mode,
+			t_cmd_elem *v)
+		__attribute__((nonnull));
+
 #endif

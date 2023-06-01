@@ -34,6 +34,7 @@ static t_cmd_elem	_take_one_elem(const char **input, t_pars_mde *mode)
 			|| _serializer_term(input, mode, &v)
 			|| _serializer_squote(input, mode, &v)
 			|| _serializer_dquote(input, mode, &v)
+			|| _serializer_wildcard(input, mode, &v)
 			|| _serializer_var(input, mode, &v))
 			return (v);
 		if (*mode == M_NORMAL)

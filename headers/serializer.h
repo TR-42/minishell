@@ -34,6 +34,7 @@ typedef enum e_cmd_elem_type
 	CMDTYP_RED_HEREDOC_SAVED,
 	CMDTYP_OP_OR,
 	CMDTYP_OP_AND,
+	CMDTYP_VAR_WILDCARD,
 }	t_cmd_elem_type;
 
 typedef t_cmd_elem_type	t_cetyp;

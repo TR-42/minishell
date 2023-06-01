@@ -67,6 +67,7 @@ SRCS_SERIALIZER	:= \
 	_serializer_squote.c \
 	_serializer_term.c \
 	_serializer_var.c \
+	_serializer_wildcard.c \
 	dispose_t_cmd.c \
 	is_cetyp.c \
 	is_cmdterm_typ.c \
