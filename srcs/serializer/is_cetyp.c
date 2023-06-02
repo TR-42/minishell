@@ -26,7 +26,8 @@ bool	is_cetyp_redirect(t_cmd_elem_type t)
 bool	is_cetyp_var(t_cmd_elem_type t)
 {
 	return (t == CMDTYP_QUOTE_VAR
-		|| t == CMDTYP_VARIABLE);
+		|| t == CMDTYP_VARIABLE
+		|| t == CMDTYP_VAR_WILDCARD);
 }
 
 // !! NO_ERROR
