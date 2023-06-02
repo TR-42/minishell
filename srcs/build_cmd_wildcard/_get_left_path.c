@@ -22,7 +22,6 @@ char	*get_left_path(
 	size_t i_wildcard
 )
 {
-	char		*path;
 	size_t		tmp;
 	t_cmdelmarr	elemarr;
 
@@ -33,8 +32,5 @@ char	*get_left_path(
 	elemarr.elemsize = sizeof(t_cmd_elem);
 	elemarr.p = (void *)elems;
 	tmp = 0;
-	path = _get_argv_one(&elemarr, &tmp);
-	if (path == NULL)
-		return (NULL);
-	return (ft_dirname(path));
+	return (_get_argv_one(&elemarr, &tmp));
 }
