@@ -39,6 +39,7 @@ SRCS_BUILD_CMD	:=\
 	vect_insert_range.c\
 
 SRCS_BUILD_CMD_WILDCARD	:=\
+	_get_left_path.c\
 
 SRCS_CHILDS	:=\
 	_exec_builtin_red.c\
