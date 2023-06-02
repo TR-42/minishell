@@ -27,4 +27,6 @@ bool	chk_and_get_fpath(
 char	*join_path(const char *path1, const char *path2)
 		__attribute__((nonnull));
 
+char	*ft_dirname(const char *path);
+
 #endif
