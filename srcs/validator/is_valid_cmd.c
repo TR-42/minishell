@@ -40,6 +40,34 @@ static bool	_is_term_inval_chk(
 
 // !! NO_ERROR
 __attribute__((nonnull))
+static bool	_is_invalid_wildcard(
+	const t_cmd_elem *elems,
+	size_t i,
+	size_t i_next_top,
+	t_cmd_inval_typ *inval_typ
+)
+{
+	size_t	wildcard_count;
+
+	if ((i_next_top - i) <= 1)
+		return (false);
+	wildcard_count = 0;
+	while (i < i_next_top)
+	{
+		if (elems[i].type == CMDTYP_VAR_WILDCARD)
+			wildcard_count += 1;
+		if (1 < wildcard_count)
+		{
+			*inval_typ = CMD_INVAL_TOO_MANY_WILDCARD;
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
+
+// !! NO_ERROR
+__attribute__((nonnull))
 static t_cmd_inval_typ	_is_valid_elem(
 	const t_cmdelmarr *cmdelemarr,
 	const t_cmd_elem *elems,
@@ -61,6 +89,8 @@ static t_cmd_inval_typ	_is_valid_elem(
 			is_cmd_shown = true;
 		else if (tmp == 1)
 			return (CMD_INVAL_REDIRECT_NOARG);
+		if (_is_invalid_wildcard(elems, i, i + tmp, &inval_typ))
+			return (inval_typ);
 		i += tmp;
 	}
 	if (!is_cmd_shown)

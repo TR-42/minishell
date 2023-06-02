@@ -76,6 +76,8 @@ static const char	*_cmd_inval_typ_to_string(t_cmd_inval_typ type)
 		return (COLOR_PURPLE STR(CMD_INVAL_OP_NOPAIR) COLOR_DEFAULT);
 	else if (type == CMD_INVAL_REDIRECT_NOARG)
 		return (COLOR_RED STR(CMD_INVAL_REDIRECT_NOARG) COLOR_DEFAULT);
+	else if (type == CMD_INVAL_TOO_MANY_WILDCARD)
+		return (COLOR_CYAN STR(CMD_INVAL_TOO_MANY_WILDCARD) COLOR_DEFAULT);
 	return (NULL);
 }
 

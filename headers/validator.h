@@ -24,6 +24,7 @@ typedef enum e_cmd_inval_typ
 	CMD_INVAL_NOCMD,
 	CMD_INVAL_OP_NOPAIR,
 	CMD_INVAL_REDIRECT_NOARG,
+	CMD_INVAL_TOO_MANY_WILDCARD,
 }	t_cmd_inval_typ;
 
 typedef struct s_cmd_i_inval
