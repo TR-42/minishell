@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+         #
+#    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/06/03 21:30:59 by kitsuki          ###   ########.fr        #
+#    Updated: 2023/06/04 01:47:36 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,12 +48,14 @@ SRCS_CHILDS	:=\
 	childs.c\
 	env_util.c\
 	exec_cmd.c\
-	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
 SRCS_UTILS :=\
 	err_ret_false.c\
 	free_2darr.c\
+
+SRCS_FILECTRL_TOOLS :=\
+	filectrl_tools.c\
 
 SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
@@ -87,6 +89,8 @@ SRCS_NOMAIN	:= \
 	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\
 	$(addprefix childs/, $(SRCS_CHILDS))\
 	$(addprefix utils/, $(SRCS_UTILS))\
+	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
+	$(addprefix filectrl_tools/, $(SRCS_FILECTRL_TOOLS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
 	$(addprefix signal_handling/, $(SRCS_SIGNAL))\
