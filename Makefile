@@ -38,6 +38,8 @@ SRCS_BUILD_CMD	:=\
 	set_var_values.c\
 	vect_insert_range.c\
 
+SRCS_BUILD_CMD_WILDCARD	:=\
+
 SRCS_CHILDS	:=\
 	_exec_builtin_red.c\
 	_exec_ch_proc_info_arr.c\
@@ -88,6 +90,7 @@ SRCS_VALIDATOR =\
 SRCS_NOMAIN	:= \
 	$(addprefix builtin/, $(SRCS_BUILDIN))\
 	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\
+	$(addprefix build_cmd_wildcard/, $(SRCS_BUILD_CMD_WILDCARD))\
 	$(addprefix childs/, $(SRCS_CHILDS))\
 	$(addprefix utils/, $(SRCS_UTILS))\
 	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
