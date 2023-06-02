@@ -42,7 +42,7 @@ static bool	_print_err(const char *argv_0, int mode)
 
 // !! MUST_PRINT_ERR_IN_CALLER (malloc failure)
 __attribute__((nonnull))
-static char	*join_path(const char *path1, const char *path2)
+char	*join_path(const char *path1, const char *path2)
 {
 	size_t	path1_len;
 	size_t	path2_len;

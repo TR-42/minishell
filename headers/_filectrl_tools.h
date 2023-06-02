@@ -24,4 +24,7 @@ bool	chk_and_get_fpath(
 			const char *given_path, char **dst, char **envp)
 		__attribute__((nonnull(2)));
 
+char	*join_path(const char *path1, const char *path2)
+		__attribute__((nonnull));
+
 #endif
