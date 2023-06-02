@@ -61,6 +61,8 @@ static const char	*_cmdelmtyp_to_string(t_cmd_elem_type type)
 		return (COLOR_BOLD_YELLOW STR(CMDTYP_OP_AND) COLOR_DEFAULT);
 	else if (type == CMDTYP_OP_OR)
 		return (COLOR_BOLD_YELLOW STR(CMDTYP_OP_OR) COLOR_DEFAULT);
+	else if (type == CMDTYP_VAR_WILDCARD)
+		return (COLOR_BOLD_PURPLE STR(CMDTYP_VAR_WILDCARD) COLOR_DEFAULT);
 	return (NULL);
 }
 
