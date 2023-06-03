@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:21:17 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 21:42:13 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:56:46 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	_exec_builtin_red(
 	if (!is_builtin(info->argv))
 		return (0);
 	if (!_proc_redirect(info))
+	{
+		*cpstat = 0x100;
 		return (1);
+	}
 	tf = _dup2_and_close(info);
 	status = 1;
 	if (tf)
