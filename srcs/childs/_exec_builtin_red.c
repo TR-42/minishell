@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 21:21:17 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 22:15:52 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 22:45:38 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ static bool	_dup2_and_close(const t_ch_proc_info *info)
 	return (0 <= status_in && 0 <= status_out);
 }
 
+static bool	_revert_stdio(
+	const t_ch_proc_info *info
+)
+{
+	bool	tf;
+
+	tf = true;
+	if (info->fd_to_this != STDIN_FILENO
+		&& dup2(info->fd_stdin_save, STDIN_FILENO) < 0)
+		tf = strerr_ret_false("dup2 revert IN");
+	if (info->fd_from_this != STDOUT_FILENO
+		&& dup2(info->fd_stdout_save, STDOUT_FILENO) < 0)
+		tf = strerr_ret_false("dup2 revert OUT");
+	return (tf);
+}
+
 // !! ERR_PRINTED
 // -> <inherit> _proc_redirect
 // -> <inherit> exec_builtin
@@ -63,12 +79,7 @@ int	_exec_builtin_red(
 	status = 1;
 	if (tf)
 		status = exec_builtin(info->argv, cpstat);
-	if (info->fd_to_this != STDIN_FILENO
-		&& dup2(info->fd_stdin_save, STDIN_FILENO) < 0)
-		tf = strerr_ret_false("dup2 revert IN");
-	if (info->fd_from_this != STDOUT_FILENO
-		&& dup2(info->fd_stdout_save, STDOUT_FILENO) < 0)
-		tf = strerr_ret_false("dup2 revert OUT");
+	tf = (_revert_stdio(info) && tf);
 	if (!tf && 0 < status)
 		*cpstat = 1;
 	*cpstat = (*cpstat & 0xFF) << 8;

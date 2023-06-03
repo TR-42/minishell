@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:55:33 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 22:22:38 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 22:44:12 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 		is_pfe_success = ((is_one_command && status != 0)
 				|| pipe_fork_exec(cparr, *i_exec, cparr_len, *exit_status));
 		free_2darr((void ***)&(cparr[*i_exec].envp));
-		free_2darr((void ***)&(cparr[*i_exec].argv));
-		*i_exec += 1;
+		free_2darr((void ***)&(cparr[(*i_exec)++].argv));
 		if (!is_pfe_success || (is_one_command && status < 0))
 			return (false);
 		if (cetype != CMDTYP_PIPE)
