@@ -24,8 +24,8 @@ bool	vect_append_ptr(t_vect *vect, const void *elem)
 	index = vect->len;
 	if (vect->p == NULL || vect->elemsize == 0)
 		return (false);
-	if (vect->cap == 0 || (vect->cap - 1) <= index
-		&& !vect_reserve(vect, index + FT_VECT_EXPAND_STEP))
+	if (vect->cap == 0 || ((vect->cap - 1) <= index
+			&& !vect_reserve(vect, index + FT_VECT_EXPAND_STEP)))
 		return (false);
 	p = vect->p;
 	ft_memmove(p + (index * vect->elemsize), &elem, vect->elemsize);
