@@ -6,11 +6,12 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:53:48 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/06/03 18:29:26 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 22:28:17 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "_exec_builtin.h"
+#include "_environ.h"
 #include "ft_string/ft_string.h"
 
 #define CD "cd"
@@ -44,6 +45,8 @@ int	exec_builtin(char **argv, int *exit_status)
 		*exit_status = builtin_unset(argv);
 	else
 		return (0);
+	if (*get_saved_environs() == NULL)
+		return (-1);
 	return (1);
 }
 

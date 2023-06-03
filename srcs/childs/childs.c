@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:56:28 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 21:45:48 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 22:35:19 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 
 	if (!create_pipe(info_arr, index))
 		return (false);
-	_errno = errno;
 	if (info_arr[index].argv != NULL)
 		info_arr[index].pid = fork();
+	_errno = errno;
 	if (info_arr[index].argv != NULL && info_arr[index].pid == PID_FORKED)
-		(info_arr, index, exit_status);
+		exec_command(info_arr, index, exit_status);
 	if (info_arr[index].fd_from_this != STDOUT_FILENO)
 		close(info_arr[index].fd_from_this);
 	if (info_arr[index].fd_to_this != STDIN_FILENO)

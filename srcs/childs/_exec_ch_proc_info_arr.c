@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:55:33 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 21:44:07 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 22:22:38 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "ft_printf/ft_printf.h"
 #include "builtin.h"
 #include "_env_util.h"
-#include "childs.h"
+#include "_childs.h"
 #include "_build_cmd.h"
 #include "utils.h"
 
@@ -28,8 +28,11 @@ __attribute__((nonnull))
 static bool	_is_end_and_get_stat(int cpstat, t_cetyp cetype, bool is_signaled,
 	int *exit_status)
 {
-	if (*exit_status >> 16 != 0)
+	if (cpstat >> 16 != 0)
+	{
+		*exit_status = cpstat;
 		return (true);
+	}
 	if (is_signaled || !WIFEXITED(cpstat))
 	{
 		*exit_status = 130;
@@ -64,19 +67,12 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 		cparr[*i_exec].argv = build_cmd(cparr[*i_exec].cmd,
 				cparr[*i_exec].envp, *exit_status);
 		if (is_one_command)
-		{
-			status = exec_builtin(cparr[*i_exec].argv, exit_status);
-			if (status < 0)
-				*exit_status += (1 << 16);
-			is_pfe_success = status != 0;
-		}
-		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
+			status = _exec_builtin_red(cparr + *i_exec, exit_status);
+		is_pfe_success = ((is_one_command && status != 0)
+				|| pipe_fork_exec(cparr, *i_exec, cparr_len, *exit_status));
 		free_2darr((void ***)&(cparr[*i_exec].envp));
 		free_2darr((void ***)&(cparr[*i_exec].argv));
 		*i_exec += 1;
-		if (!is_pfe_success)
-			is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len, exit_status);
-		_free_argv(&(cparr[*i_exec].argv));
 		if (!is_pfe_success || (is_one_command && status < 0))
 			return (false);
 		if (cetype != CMDTYP_PIPE)
@@ -99,11 +95,11 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len, int exit_stat)
 
 	i_exec = 0;
 	i_wait = 0;
-	cpstat = 0;
 	is_signaled = false;
 	while (i_exec < cparr_len)
 	{
-		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &exit_stat);
+		cpstat = exit_stat;
+		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &cpstat);
 		while (i_wait < i_exec)
 		{
 			if (0 < cparr[i_wait++].pid)
