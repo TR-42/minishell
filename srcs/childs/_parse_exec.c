@@ -35,8 +35,9 @@ int	_parse_exec(const char *str, int exit_stat)
 	if (!chk_do_heredoc(&arr))
 		return (dispose_t_cmdarr(&arr) + 1);
 	cparr = init_ch_proc_info_arr(&arr);
-	exit_stat = 1;
-	if (cparr != NULL)
+	if (cparr == NULL)
+		exit_stat = 1;
+	else
 		exit_stat = _exec_ch_proc_info_arr(cparr, arr.len, exit_stat);
 	rm_tmpfile(&arr);
 	dispose_t_cmdarr(&arr);
