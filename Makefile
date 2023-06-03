@@ -61,6 +61,7 @@ SRCS_UTILS :=\
 SRCS_FILECTRL_TOOLS :=\
 	filectrl_tools.c\
 	ft_dirname.c\
+	vect_append_ptr.c\
 
 SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
