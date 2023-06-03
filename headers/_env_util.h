@@ -13,12 +13,17 @@
 #ifndef _ENV_UTIL_H
 # define _ENV_UTIL_H
 
+# include <stddef.h>
+
 const char	*get_env_value(char *const envp[], const char *name)
 			__attribute__((nonnull));
-char		**get_path_in_env(char *const envp[])
-			__attribute__((nonnull));
+
+char		**get_path_in_env(char *const envp[]);
+
 const char	*get_env_value_nlen(char *const envp[], const char *name,
 				size_t name_len)
 			__attribute__((nonnull));
+
+char		**gen_envp(void);
 
 #endif

@@ -27,7 +27,6 @@ typedef struct s_ch_proc_info
 	int			fd_to_this;
 	int			fd_from_this;
 	pid_t		pid;
-	char		**path_arr;
 	char		**envp;
 	char		**argv;
 }	t_ch_proc_info;
@@ -43,12 +42,12 @@ bool		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 			__attribute__((nonnull));
 
 // バリデーション実行後にこの関数を呼ぶ
-t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
+t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr)
 			__attribute__((nonnull));
 
 int			_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 			__attribute__((nonnull));
-int			_parse_exec(const char *str, char *const envp[])
+int			_parse_exec(const char *str)
 			__attribute__((nonnull));
 
 #endif
