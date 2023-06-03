@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 20:53:24 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 20:05:34 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 18:58:38 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	builtin_env(char **argv)
 	char	**envs;
 
 	if (*(++argv) != NULL)
-		return (print_error(COMMAND, NULL, ARGERR, 1));
+		return (print_error(COMMAND, NULL, MANYARGERR, 1));
 	envs = *get_saved_environs();
 	if (envs == NULL)
 		return (0);

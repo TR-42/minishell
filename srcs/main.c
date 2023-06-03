@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 20:58:39 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:29:27 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static int	do_loop(void)
 	int		ret;
 
 	ret = 0;
-	while (true)
+	while (ret >> 16 == 0)
 	{
 		register_rl_ev_hook_handler();
 		line = readline(PROMPT_STR);
@@ -123,7 +123,7 @@ static int	do_loop(void)
 		free(line);
 		rl_on_new_line();
 	}
-	return (ret);
+	return (ret & 255);
 }
 
 int	main(int argc, const char *argv[], char **envp)

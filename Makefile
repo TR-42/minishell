@@ -6,7 +6,7 @@
 #    By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/28 21:34:53 by kitsuki          ###   ########.fr        #
+#    Updated: 2023/06/03 21:30:59 by kitsuki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS_BUILD_CMD	:=\
 	vect_insert_range.c\
 
 SRCS_CHILDS	:=\
+	_exec_builtin_red.c\
 	_exec_ch_proc_info_arr.c\
 	_gen_envp.c\
 	_redirect.c\

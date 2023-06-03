@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   childs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:56:28 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 09:27:46 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/03 22:35:19 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 #include <stdlib.h>
 
 #include "error_utils.h"
-
 #include "_childs.h"
 
 // !! ERR_PRINTED
@@ -50,7 +49,7 @@ static bool	create_pipe(t_ch_proc_info *info_arr, size_t index)
 // -> <inherit> create_pipe
 // -> (root) for fork function
 bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
-	size_t count)
+	size_t count, int exit_status)
 {
 	int	_errno;
 
@@ -60,7 +59,7 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 		info_arr[index].pid = fork();
 	_errno = errno;
 	if (info_arr[index].argv != NULL && info_arr[index].pid == PID_FORKED)
-		exec_command(info_arr, index);
+		exec_command(info_arr, index, exit_status);
 	if (info_arr[index].fd_from_this != STDOUT_FILENO)
 		close(info_arr[index].fd_from_this);
 	if (info_arr[index].fd_to_this != STDIN_FILENO)

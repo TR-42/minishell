@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 02:08:46 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 19:25:40 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:52:58 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,6 @@ bool	remove_environ(char *name)
 	*tmp = NULL;
 	free(*get_saved_environs());
 	*get_saved_environs() = envs;
-	free(target);
+	free(*target);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 20:53:59 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 20:03:24 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 18:49:47 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,16 @@ int	builtin_unset(char **argv)
 {
 	int	status;
 
-	if (*(++argv) == NULL)
-		return (print_error(COMMAND, NULL, ARGERR, 1));
 	status = 0;
-	while (*argv != NULL)
+	while (*(++argv) != NULL)
 	{
 		if (check_is_invalid(*argv))
 		{
 			if (status == 0)
-				status = print_error(COMMAND, *argv, PARAMERR, 1);
+				status = print_error(COMMAND, *argv, INVALIDERR, 1);
 		}
-		else if (!remove_environ(*argv))
+		else if (!remove_environ(*argv) && search_environ(*argv) != NULL)
 			status = print_error(COMMAND, *argv, RMENVERR, 1);
-		argv ++;
 	}
 	return (status);
 }
