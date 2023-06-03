@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:36:10 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/31 15:48:19 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:33:05 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	loop_print_envs(char **envs, size_t	size)
 	while (count < size)
 	{
 		if (envs[target_index] == NULL || (envs[count] != NULL
-			&& ft_strncmp(envs[target_index], envs[count], SIZE_MAX) > 0))
+				&& ft_strncmp(envs[target_index], envs[count], SIZE_MAX) > 0))
 			target_index = count;
 		count++;
 	}

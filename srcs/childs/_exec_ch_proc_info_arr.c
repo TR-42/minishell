@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:55:33 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 21:24:33 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:44:07 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ __attribute__((nonnull))
 static bool	_is_end_and_get_stat(int cpstat, t_cetyp cetype, bool is_signaled,
 	int *exit_status)
 {
-	if (cpstat >> 16 != 0)
+	if (*exit_status >> 16 != 0)
 		return (true);
 	if (is_signaled || !WIFEXITED(cpstat))
 	{
@@ -48,7 +48,7 @@ static bool	_is_end_and_get_stat(int cpstat, t_cetyp cetype, bool is_signaled,
 // -> <inherit> pipe_fork_exec
 __attribute__((nonnull))
 static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
-	size_t *i_exec, int exit_status)
+	size_t *i_exec, int *exit_status)
 {
 	bool	is_pfe_success;
 	t_cetyp	cetype;
@@ -62,12 +62,12 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 		cetype = get_cmdterm(cparr[*i_exec].cmd);
 		cparr[*i_exec].envp = gen_envp();
 		cparr[*i_exec].argv = build_cmd(cparr[*i_exec].cmd,
-				cparr[*i_exec].envp, exit_status);
+				cparr[*i_exec].envp, *exit_status);
 		if (is_one_command)
 		{
-			status = exec_builtin(cparr[*i_exec].argv, &exit_status);
+			status = exec_builtin(cparr[*i_exec].argv, exit_status);
 			if (status < 0)
-				exit_status += (1 << 16);
+				*exit_status += (1 << 16);
 			is_pfe_success = status != 0;
 		}
 		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
@@ -75,7 +75,7 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 		free_2darr((void ***)&(cparr[*i_exec].argv));
 		*i_exec += 1;
 		if (!is_pfe_success)
-			is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
+			is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len, exit_status);
 		_free_argv(&(cparr[*i_exec].argv));
 		if (!is_pfe_success || (is_one_command && status < 0))
 			return (false);
@@ -103,7 +103,7 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len, int exit_stat)
 	is_signaled = false;
 	while (i_exec < cparr_len)
 	{
-		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, exit_stat);
+		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &exit_stat);
 		while (i_wait < i_exec)
 		{
 			if (0 < cparr[i_wait++].pid)

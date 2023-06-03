@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:56:28 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 17:43:36 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:45:48 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static bool	create_pipe(t_ch_proc_info *info_arr, size_t index)
 // -> <inherit> create_pipe
 // -> (root) for fork function
 bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
-	size_t count)
+	size_t count, int exit_status)
 {
 	int	_errno;
 
@@ -59,7 +59,7 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
 	if (info_arr[index].argv != NULL)
 		info_arr[index].pid = fork();
 	if (info_arr[index].argv != NULL && info_arr[index].pid == PID_FORKED)
-		exec_command(info_arr, index);
+		(info_arr, index, exit_status);
 	if (info_arr[index].fd_from_this != STDOUT_FILENO)
 		close(info_arr[index].fd_from_this);
 	if (info_arr[index].fd_to_this != STDIN_FILENO)

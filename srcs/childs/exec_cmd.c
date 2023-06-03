@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 21:27:33 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:46:18 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,20 +115,18 @@ static noreturn void	_revert_stdio_dispose_arr(
 // -> <inherit> chk_and_get_fpath
 // -> (root) for execve
 __attribute__((nonnull))
-noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
+noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index, int status)
 {
 	t_ch_proc_info	info;
 	char			*exec_path;
 	bool			ret;
-	int				status;
 
-	status = 1;
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
-		_revert_stdio_dispose_arr(&info, info_arr, status);
+		_revert_stdio_dispose_arr(&info, info_arr, 1);
 	exec_path = NULL;
-	ret = is_builtin(info.argv)
-		|| chk_and_get_fpath(info.argv[0], &exec_path, info.envp);
+	ret = (is_builtin(info.argv)
+			|| chk_and_get_fpath(info.argv[0], &exec_path, info.envp));
 	if (ret == true)
 		dup2_and_close(&info);
 	dispose_proc_info_arr(info_arr);
