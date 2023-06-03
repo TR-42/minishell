@@ -113,15 +113,15 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start)
 // -> (root) for malloc
 // -> <inherit> _get_argv_one
 __attribute__((nonnull(1)))
-char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
+char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp, int exit_stat)
 {
 	int			argc;
 	char		**argv;
 	int			i_argv;
 	size_t		i_elemarr;
 
-	if (!set_var_values(elemarr, envp) || !validate_red_fname(elemarr)
-		|| !elems_make_flat(elemarr))
+	if (!set_var_values(elemarr, envp, exit_stat)
+		|| !validate_red_fname(elemarr) || !elems_make_flat(elemarr))
 		return (NULL);
 	argc = _get_argc(elemarr);
 	if (argc <= 0)

@@ -56,7 +56,7 @@ static void	_chk_do_c_opt(int argc, const char *argv[])
 		errstr_ret_false(argv[1], "option requires an argument");
 		exit(2);
 	}
-	exit(_parse_exec(argv[2]));
+	exit(_parse_exec(argv[2], 0));
 }
 
 static int	do_loop(void)
@@ -76,7 +76,7 @@ static int	do_loop(void)
 		else if (*line != '\0')
 		{
 			add_history(line);
-			ret = _parse_exec(line);
+			ret = _parse_exec(line, ret);
 		}
 		free(line);
 		rl_on_new_line();
