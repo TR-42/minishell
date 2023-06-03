@@ -60,9 +60,9 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
 		free_2darr((void ***)&(cparr[*i_exec].envp));
 		free_2darr((void ***)&(cparr[*i_exec].argv));
+		*i_exec += 1;
 		if (!is_pfe_success)
 			return (false);
-		*i_exec += 1;
 		if (cetype != CMDTYP_PIPE)
 			return (true);
 	}
