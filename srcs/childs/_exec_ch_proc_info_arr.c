@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:55:33 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 22:44:12 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/04 00:00:17 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	_is_end_and_get_stat(int cpstat, t_cetyp cetype, bool is_signaled,
 {
 	if (cpstat >> 16 != 0)
 	{
-		*exit_status = cpstat;
+		*exit_status = cpstat >> 8;
 		return (true);
 	}
 	if (is_signaled || !WIFEXITED(cpstat))

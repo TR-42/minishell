@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 21:29:27 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 23:57:29 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static int	do_loop(void)
 	int		ret;
 
 	ret = 0;
-	while (ret >> 16 == 0)
+	while (ret >> 8 == 0)
 	{
 		register_rl_ev_hook_handler();
 		line = readline(PROMPT_STR);
