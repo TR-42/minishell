@@ -92,7 +92,8 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len, int exit_stat)
 		{
 			if (0 < cparr[i_wait++].pid)
 				waitpid(cparr[i_wait - 1].pid, &cpstat, 0);
-			is_signaled = (is_signaled || WIFSIGNALED(cpstat));
+			is_signaled = (is_signaled
+					|| (0 < cparr[i_wait - 1].pid && WIFSIGNALED(cpstat)));
 		}
 		cetype = get_cmdterm(cparr[i_exec - 1].cmd);
 		if (_is_end_and_get_stat(cpstat, cetype, is_signaled, &exit_stat))
