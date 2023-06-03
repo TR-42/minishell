@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _exec_ch_proc_info_arr.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 22:55:33 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/24 09:27:09 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/03 19:36:16 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 #include "ft_printf/ft_printf.h"
-
+#include "builtin.h"
 #include "childs.h"
 #include "_build_cmd.h"
 
@@ -39,6 +39,8 @@ static void	_free_argv(char ***argv)
 __attribute__((nonnull))
 static bool	_is_end_and_get_stat(int *cpstat, t_cetyp cetype, bool is_signaled)
 {
+	if (*cpstat >> 16 != 0)
+		return (true);
 	if (is_signaled || !WIFEXITED(*cpstat))
 	{
 		*cpstat = 130;
@@ -56,17 +58,29 @@ static bool	_is_end_and_get_stat(int *cpstat, t_cetyp cetype, bool is_signaled)
 // -> <inherit> pipe_fork_exec
 __attribute__((nonnull))
 static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
-	size_t *i_exec, t_cetyp	*cetype)
+	size_t *i_exec, t_cetyp	*cetype, int *cpstat)
 {
 	bool	is_pfe_success;
+	int		status;
+	bool	is_one_command;
 
+	is_one_command = get_cmdterm(cparr[*i_exec].cmd) != CMDTYP_PIPE;
 	while (*i_exec < cparr_len)
 	{
+		is_pfe_success = false;
 		*cetype = get_cmdterm(cparr[*i_exec].cmd);
 		cparr[*i_exec].argv = build_cmd(cparr[*i_exec].cmd, cparr->envp);
-		is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
-		_free_argv(&(cparr[*i_exec].argv));
+		if (is_one_command)
+		{
+			status = exec_builtin(cparr[*i_exec].argv, cpstat);
+			if (status < 0)
+				*cpstat += (1 << 16);
+			is_pfe_success = status != 0;
+		}
 		if (!is_pfe_success)
+			is_pfe_success = pipe_fork_exec(cparr, *i_exec, cparr_len);
+		_free_argv(&(cparr[*i_exec].argv));
+		if (!is_pfe_success || (is_one_command && status < 0))
 			return (false);
 		*i_exec += 1;
 		if (*cetype != CMDTYP_PIPE)
@@ -93,7 +107,7 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
 	is_signaled = false;
 	while (i_exec < cparr_len)
 	{
-		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &cetype);
+		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &cetype, &cpstat);
 		while (i_wait < i_exec)
 		{
 			if (0 < cparr[i_wait++].pid)

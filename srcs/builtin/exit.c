@@ -6,9 +6,11 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 14:36:33 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 20:02:56 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 18:43:17 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
 
 #include "_environ.h"
 #include "_util_commands.h"
@@ -22,7 +24,7 @@ int	builtin_exit(char **argv, int status)
 {
 	char	*tmp;
 
-	ft_printf("%s\n", COMMAND);
+	ft_dprintf(STDERR_FILENO, "%s\n", COMMAND);
 	if (*(++argv) != NULL)
 	{
 		status = ft_strtol(*argv, &tmp, 10);

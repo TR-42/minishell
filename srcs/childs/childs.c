@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:56:28 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/30 23:44:19 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 17:43:36 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 #include <stdlib.h>
 
 #include "error_utils.h"
-#include "builtin.h"
 #include "_childs.h"
 
 // !! ERR_PRINTED
@@ -56,8 +55,6 @@ bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
 	if (!create_pipe(info_arr, index))
 		return (false);
 	_errno = errno;
-	if (exec_builtin(info_arr[index].argv, &_errno) != 0)
-		return (true);
 	if (info_arr[index].argv != NULL)
 		info_arr[index].pid = fork();
 	if (info_arr[index].argv != NULL && info_arr[index].pid == PID_FORKED)

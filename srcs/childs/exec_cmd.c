@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/30 23:42:28 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 19:35:07 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 #include "ft_printf/ft_printf.h"
 
+#include "builtin.h"
 #include "error_utils.h"
 #include "_build_cmd.h"
 #include "_childs.h"
@@ -96,7 +97,8 @@ static void	free_2darr(void ***argv)
 static noreturn void	_revert_stdio_dispose_arr(
 	const t_ch_proc_info *info,
 	t_ch_proc_info *info_arr,
-	char ***argv)
+	char ***argv,
+	int status)
 {
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
@@ -118,7 +120,7 @@ static noreturn void	_revert_stdio_dispose_arr(
 		dispose_proc_info_arr(info_arr);
 	if (argv != NULL)
 		free_2darr((void ***)argv);
-	exit(1);
+	exit(status);
 }
 
 // !! ERR_PRINTED
@@ -131,19 +133,23 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	t_ch_proc_info	info;
 	char			*exec_path;
 	bool			ret;
+	int				status;
 
+	status = 1;
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
-		_revert_stdio_dispose_arr(&info, info_arr, &(info.argv));
+		_revert_stdio_dispose_arr(&info, info_arr, &(info.argv), status);
 	exec_path = NULL;
-	ret = chk_and_get_fpath(info.argv[0], info.path_arr, &exec_path);
+	ret = is_builtin(info.argv)
+		|| chk_and_get_fpath(info.argv[0], info.path_arr, &exec_path);
 	if (ret == true)
 		dup2_and_close(&info);
 	dispose_proc_info_arr(info_arr);
-	if (ret == true)
+	if (is_builtin(info.argv))
+		exec_builtin(info.argv, &status);
+	else if (ret == true)
 		execve(exec_path, info.argv, info.envp);
-	if (ret == true)
+	if (!is_builtin(info.argv) && ret == true)
 		strerr_ret_false(info.argv[0]);
-	_revert_stdio_dispose_arr(&info, NULL, &(info.argv));
-	exit(1);
+	_revert_stdio_dispose_arr(&info, NULL, &(info.argv), status);
 }

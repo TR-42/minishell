@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/30 23:40:02 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 19:34:52 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, const char *argv[], char **envp)
 	if (!init_sig_handler())
 		return (1);
 	ret = 0;
-	while (true)
+	while (ret >> 16 == 0)
 	{
 		register_rl_ev_hook_handler();
 		line = readline(PROMPT_STR);
@@ -85,7 +85,7 @@ int	main(int argc, const char *argv[], char **envp)
 		rl_on_new_line();
 	}
 	dispose_environs();
-	return (0);
+	return (ret & 255);
 }
 
 #if DEBUG

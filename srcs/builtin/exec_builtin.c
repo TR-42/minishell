@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 17:53:48 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/05/28 20:15:32 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 18:29:26 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,19 @@ int	exec_builtin(char **argv, int *exit_status)
 	else
 		return (0);
 	return (1);
+}
+
+bool	is_builtin(char **argv)
+{
+	if (argv == NULL || *argv == NULL)
+		return (false);
+	if (ft_strncmp(*argv, CD, sizeof(CD)) == 0
+		|| ft_strncmp(*argv, ECHO, sizeof(ECHO)) == 0
+		|| ft_strncmp(*argv, ENV, sizeof(ENV)) == 0
+		|| ft_strncmp(*argv, EXIT, sizeof(EXIT)) == 0
+		|| ft_strncmp(*argv, EXPORT, sizeof(EXPORT)) == 0
+		|| ft_strncmp(*argv, PWD, sizeof(PWD)) == 0
+		|| ft_strncmp(*argv, UNSET, sizeof(UNSET)) == 0)
+		return (true);
+	return (false);
 }
