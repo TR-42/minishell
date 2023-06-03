@@ -32,4 +32,10 @@ char	*ft_dirname(const char *path);
 bool	vect_append_ptr(t_vect *vect, const void *elem)
 		__attribute__((nonnull));
 
+char	*gen_path_str(
+			const char *ldir,
+			const char *fname,
+			const char *rdir
+			);
+
 #endif

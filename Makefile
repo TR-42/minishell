@@ -62,6 +62,7 @@ SRCS_UTILS :=\
 SRCS_FILECTRL_TOOLS :=\
 	filectrl_tools.c\
 	ft_dirname.c\
+	gen_path_str.c\
 	vect_append_ptr.c\
 
 SRCS_HEREDOC :=\
