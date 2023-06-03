@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/22 23:01:13 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/03 20:58:39 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static bool	_chk_do_c_opt(int argc, const char *argv[], int *ret)
 		*ret = 2;
 		return (!errstr_ret_false(argv[1], "option requires an argument"));
 	}
-	*ret = _parse_exec(argv[2]);
+	*ret = _parse_exec(argv[2], 0);
 	return (true);
 }
 
@@ -89,7 +89,7 @@ static bool	_chk_do_script(int *ret)
 		line = get_next_line(&gnl);
 		if (line == NULL)
 			break ;
-		*ret = _parse_exec(line);
+		*ret = _parse_exec(line, *ret);
 		free(line);
 	}
 	if (errno != 0)
@@ -118,7 +118,7 @@ static int	do_loop(void)
 		else if (*line != '\0')
 		{
 			add_history(line);
-			ret = _parse_exec(line);
+			ret = _parse_exec(line, ret);
 		}
 		free(line);
 		rl_on_new_line();

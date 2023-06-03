@@ -24,10 +24,10 @@ size_t	_one_elem_count(const t_cmdelmarr *elemarr, size_t i_start)
 char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start)
 		__attribute__((nonnull(1, 2)));
 
-char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp)
+char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp, int exit_stat)
 		__attribute__((nonnull(1)));
 
-bool	set_var_values(t_cmdelmarr *elemarr, char *const *envp)
+bool	set_var_values(t_cmdelmarr *elemarr, char *const *envp, int exit_stat)
 		__attribute__((nonnull));
 
 char	**ft_split_fp(char const *s, int (*is_spc)(int))

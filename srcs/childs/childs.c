@@ -49,7 +49,8 @@ static bool	create_pipe(t_ch_proc_info *info_arr, size_t index)
 // !! ERR_PRINTED
 // -> <inherit> create_pipe
 // -> (root) for fork function
-bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
+bool	pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
+	size_t count)
 {
 	int	_errno;
 
