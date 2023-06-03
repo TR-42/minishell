@@ -18,8 +18,9 @@
 
 #include "ft_printf/ft_printf.h"
 #include "builtin.h"
-#include "childs.h"
+#include "_childs.h"
 #include "_build_cmd.h"
+#include "_redirect.h"
 
 // !! NO_ERROR
 static void	_free_argv(char ***argv)
@@ -51,24 +52,6 @@ static bool	_is_end_and_get_stat(int *cpstat, t_cetyp cetype, bool is_signaled)
 		|| (cetype == CMDTYP_OP_OR && *cpstat == EXIT_SUCCESS))
 		return (true);
 	return (false);
-}
-
-// !! ERR_PRINTED
-// -> <inherit> exec_builtin
-static int	_exec_builtin_red(
-	t_ch_proc_info *info,
-	int *cpstat
-)
-{
-	int	status;
-
-	status = 0;
-	if (!is_builtin(info->argv))
-		return (0);
-	status = exec_builtin(info->argv, cpstat);
-	if (status < 0)
-		*cpstat += (1 << 16);
-	return (status);
 }
 
 // !! ERR_PRINTED

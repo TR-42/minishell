@@ -27,4 +27,9 @@
 noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 				__attribute__((nonnull));
 
+int				_exec_builtin_red(
+					t_ch_proc_info *info,
+					int *cpstat
+					);
+
 #endif

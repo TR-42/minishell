@@ -39,6 +39,7 @@ SRCS_BUILD_CMD	:=\
 	vect_insert_range.c\
 
 SRCS_CHILDS	:=\
+	_exec_builtin_red.c\
 	_exec_ch_proc_info_arr.c\
 	_redirect.c\
 	_parse_exec.c\
