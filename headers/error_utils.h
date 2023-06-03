@@ -21,4 +21,9 @@ bool	strerr_ret_false(const char *str);
 bool	strerr_errno_ret_false(const char *str, int _errno);
 bool	errstr_ret_false(const char *str1, const char *str2);
 
+void	*perr_ret_null(const char *str);
+void	*strerr_ret_null(const char *str);
+void	*strerr_errno_ret_null(const char *str, int _errno);
+void	*errstr_ret_null(const char *str1, const char *str2);
+
 #endif

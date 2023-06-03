@@ -6,7 +6,7 @@
 #    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/06/04 01:47:36 by kfujita          ###   ########.fr        #
+#    Updated: 2023/06/04 01:47:47 by kfujita          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRCS_CHILDS	:=\
 SRCS_UTILS :=\
 	err_ret_false.c\
 	free_2darr.c\
+	err_ret_null.c\
 
 SRCS_FILECTRL_TOOLS :=\
 	filectrl_tools.c\
