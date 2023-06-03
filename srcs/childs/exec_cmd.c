@@ -31,6 +31,7 @@
 
 #include "ft_printf/ft_printf.h"
 
+#include "builtin.h"
 #include "error_utils.h"
 #include "_build_cmd.h"
 #include "_childs.h"
@@ -104,6 +105,7 @@ static noreturn void	_revert_stdio_dispose_arr(
 		dispose_proc_info_arr(info_arr);
 	free_2darr((void ***)&(info->envp));
 	free_2darr((void ***)&(info->argv));
+	dispose_environs();
 	exit(1);
 }
 
