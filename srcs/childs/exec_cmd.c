@@ -31,11 +31,13 @@
 
 #include "ft_printf/ft_printf.h"
 
+#include "builtin.h"
 #include "error_utils.h"
 #include "_build_cmd.h"
 #include "_childs.h"
 #include "_filectrl_tools.h"
 #include "_redirect.h"
+#include "utils.h"
 
 // !! PRINT_ERROR
 // -> (root) for dup2 function
@@ -77,26 +79,11 @@ static bool	dup2_and_close(t_ch_proc_info *info)
 }
 
 // !! NO_ERROR
-static void	free_2darr(void ***argv)
-{
-	size_t	i;
-
-	if (argv == NULL || *argv == NULL)
-		return ;
-	i = 0;
-	while ((*argv)[i] != NULL)
-		free((*argv)[i++]);
-	free(*argv);
-	*argv = NULL;
-}
-
-// !! NO_ERROR
 // (dup2でエラーの可能性はあるけど、この関数はエラールートで実行されるため、改めてエラーを吐くことはしない。)
 // (そもそも、dup2でエラーが起きる可能性自体低いし。)
 static noreturn void	_revert_stdio_dispose_arr(
 	const t_ch_proc_info *info,
-	t_ch_proc_info *info_arr,
-	char ***argv)
+	t_ch_proc_info *info_arr)
 {
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
@@ -116,8 +103,9 @@ static noreturn void	_revert_stdio_dispose_arr(
 		close(info->fd_from_this);
 	if (info_arr != NULL)
 		dispose_proc_info_arr(info_arr);
-	if (argv != NULL)
-		free_2darr((void ***)argv);
+	free_2darr((void ***)&(info->envp));
+	free_2darr((void ***)&(info->argv));
+	dispose_environs();
 	exit(1);
 }
 
@@ -134,9 +122,9 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
-		_revert_stdio_dispose_arr(&info, info_arr, &(info.argv));
+		_revert_stdio_dispose_arr(&info, info_arr);
 	exec_path = NULL;
-	ret = chk_and_get_fpath(info.argv[0], info.path_arr, &exec_path);
+	ret = chk_and_get_fpath(info.argv[0], &exec_path, info.envp);
 	if (ret == true)
 		dup2_and_close(&info);
 	dispose_proc_info_arr(info_arr);
@@ -144,6 +132,6 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 		execve(exec_path, info.argv, info.envp);
 	if (ret == true)
 		strerr_ret_false(info.argv[0]);
-	_revert_stdio_dispose_arr(&info, NULL, &(info.argv));
+	_revert_stdio_dispose_arr(&info, NULL);
 	exit(1);
 }

@@ -26,6 +26,8 @@
 #include "ft_printf/ft_printf.h"
 
 #include "error_utils.h"
+#include "utils.h"
+#include "_env_util.h"
 
 #include "_filectrl_tools.h"
 
@@ -90,10 +92,12 @@ static bool	_search_executable(const char *given_path, char *const *env_path,
 // -> (root) for strdup (malloc failure)
 // -> (root) for arg `envp` is NULL (= Command not found)
 // -> <inherit> _search_executable
-__attribute__((nonnull(3)))
-bool	chk_and_get_fpath(const char *given_path, char *const *env_path,
-	char **dst)
+__attribute__((nonnull(2)))
+bool	chk_and_get_fpath(const char *given_path, char **dst, char **envp)
 {
+	char	**env_path;
+	bool	is_success;
+
 	*dst = NULL;
 	if (given_path == NULL)
 		return (_print_err(given_path, CHK_GET_PATH_ERR_NOCMD));
@@ -106,8 +110,10 @@ bool	chk_and_get_fpath(const char *given_path, char *const *env_path,
 			return (strerr_ret_false(given_path));
 		return (true);
 	}
-	else if (env_path == NULL)
+	env_path = get_path_in_env(envp);
+	if (env_path == NULL)
 		return (_print_err(given_path, CHK_GET_PATH_ERR_NOCMD));
-	else
-		return (_search_executable(given_path, env_path, dst));
+	is_success = _search_executable(given_path, env_path, dst);
+	free_2darr((void ***)&env_path);
+	return (is_success);
 }

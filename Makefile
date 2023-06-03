@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+         #
+#    By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/22 23:00:11 by kfujita          ###   ########.fr        #
+#    Updated: 2023/05/28 21:34:53 by kitsuki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,20 @@ NAME	:=	minishell
 
 SRCS_MAIN	:= \
 	main.c \
+
+SRCS_BUILDIN :=\
+	_environ_utils.c\
+	_util_commands.c\
+	cd.c\
+	echo.c\
+	env.c\
+	exec_builtin.c\
+	exit.c\
+	export.c\
+	ft_putstr_fd_with_err.c\
+	pwd.c\
+	save_environ.c\
+	unset.c\
 
 SRCS_BUILD_CMD	:=\
 	_get_argc.c\
@@ -26,6 +40,7 @@ SRCS_BUILD_CMD	:=\
 
 SRCS_CHILDS	:=\
 	_exec_ch_proc_info_arr.c\
+	_gen_envp.c\
 	_redirect.c\
 	_parse_exec.c\
 	childs_dispose.c\
@@ -35,8 +50,9 @@ SRCS_CHILDS	:=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
-SRCS_ERR_UTILS :=\
+SRCS_UTILS :=\
 	err_ret_false.c\
+	free_2darr.c\
 
 SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
@@ -65,9 +81,10 @@ SRCS_VALIDATOR =\
 	validate_red_fname.c\
 
 SRCS_NOMAIN	:= \
+	$(addprefix builtin/, $(SRCS_BUILDIN))\
 	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\
 	$(addprefix childs/, $(SRCS_CHILDS))\
-	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
+	$(addprefix utils/, $(SRCS_UTILS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
 	$(addprefix signal_handling/, $(SRCS_SIGNAL))\
