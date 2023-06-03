@@ -6,7 +6,7 @@
 #    By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 18:44:27 by kfujita           #+#    #+#              #
-#    Updated: 2023/05/30 23:16:06 by kitsuki          ###   ########.fr        #
+#    Updated: 2023/06/03 21:30:59 by kitsuki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS_BUILD_CMD	:=\
 SRCS_CHILDS	:=\
 	_exec_builtin_red.c\
 	_exec_ch_proc_info_arr.c\
+	_gen_envp.c\
 	_redirect.c\
 	_parse_exec.c\
 	childs_dispose.c\
@@ -50,8 +51,9 @@ SRCS_CHILDS	:=\
 	filectrl_tools.c\
 	init_ch_proc_info_arr.c\
 
-SRCS_ERR_UTILS :=\
+SRCS_UTILS :=\
 	err_ret_false.c\
+	free_2darr.c\
 
 SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
@@ -83,7 +85,7 @@ SRCS_NOMAIN	:= \
 	$(addprefix builtin/, $(SRCS_BUILDIN))\
 	$(addprefix build_cmd/, $(SRCS_BUILD_CMD))\
 	$(addprefix childs/, $(SRCS_CHILDS))\
-	$(addprefix error_utils/, $(SRCS_ERR_UTILS))\
+	$(addprefix utils/, $(SRCS_UTILS))\
 	$(addprefix heredoc/, $(SRCS_HEREDOC))\
 	$(addprefix serializer/, $(SRCS_SERIALIZER))\
 	$(addprefix signal_handling/, $(SRCS_SIGNAL))\

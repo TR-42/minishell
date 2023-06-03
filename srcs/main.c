@@ -6,9 +6,12 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:45:07 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 19:34:52 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:29:27 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// - errno
+#include <errno.h>
 
 // - bool
 #include <stdbool.h>
@@ -27,13 +30,18 @@
 // - sprintf
 #include <stdio.h>
 
+// - fstat
+#include <sys/stat.h>
+
 // - readline etc.
 #include <readline/readline.h>
 #include <readline/history.h>
 
 #include "ft_string/ft_string.h"
-#include "builtin.h"
+#include "gnl/get_next_line.h"
+
 #include "childs.h"
+#include "builtin.h"
 #include "error_utils.h"
 #include "serializer.h"
 #include "signal_handling.h"
@@ -46,27 +54,58 @@
 // -> (root) too few args
 // -> <inherit> _parse_exec
 __attribute__((nonnull))
-static void	_chk_do_c_opt(int argc, const char *argv[], char *const envp[])
+static bool	_chk_do_c_opt(int argc, const char *argv[], int *ret)
 {
 	if (argc < 2 || ft_strncmp(argv[1], "-c", 3) != 0)
-		return ;
+		return (false);
 	if (argc == 2)
 	{
-		errstr_ret_false(argv[1], "option requires an argument");
-		exit(2);
+		*ret = 2;
+		return (!errstr_ret_false(argv[1], "option requires an argument"));
 	}
-	exit(_parse_exec(argv[2], envp));
+	*ret = _parse_exec(argv[2], 0);
+	return (true);
 }
 
-int	main(int argc, const char *argv[], char **envp)
+// ref: https://syohex.hatenablog.com/entry/20130302/1362190989
+// !! ERR_PRINTED
+// -> (root) for fstat (エラーが出ても処理は続行する)
+// -> (root) for gen_gnl_state / malloc (エラーが出たらプログラム終了)
+// -> (root) for get_next_line / malloc (エラーが出たらプログラム終了)
+static bool	_chk_do_script(int *ret)
+{
+	struct stat	st;
+	t_gnl_state	gnl;
+	char		*line;
+
+	if (fstat(STDIN_FILENO, &st) != 0)
+		return (strerr_ret_false("_chk_do_script()/fstat"));
+	if (!(S_ISFIFO(st.st_mode) || S_ISREG(st.st_mode)))
+		return (false);
+	gnl = gen_gnl_state(STDIN_FILENO, 256);
+	while (gnl.buf != NULL)
+	{
+		errno = 0;
+		line = get_next_line(&gnl);
+		if (line == NULL)
+			break ;
+		*ret = _parse_exec(line, *ret);
+		free(line);
+	}
+	if (errno != 0)
+	{
+		*ret = 1;
+		strerr_ret_false("_chk_do_script()");
+	}
+	dispose_gnl_state(&gnl);
+	return (true);
+}
+
+static int	do_loop(void)
 {
 	char	*line;
 	int		ret;
 
-	init_environs(envp);
-	_chk_do_c_opt(argc, argv, envp);
-	if (!init_sig_handler())
-		return (1);
 	ret = 0;
 	while (ret >> 16 == 0)
 	{
@@ -79,13 +118,33 @@ int	main(int argc, const char *argv[], char **envp)
 		else if (*line != '\0')
 		{
 			add_history(line);
-			ret = _parse_exec(line, envp);
+			ret = _parse_exec(line, ret);
 		}
 		free(line);
 		rl_on_new_line();
 	}
-	dispose_environs();
 	return (ret & 255);
+}
+
+int	main(int argc, const char *argv[], char **envp)
+{
+	int		ret;
+
+	if (!init_environs(envp))
+	{
+		errstr_ret_false("init_environs()", "malloc failed");
+		return (1);
+	}
+	if (_chk_do_c_opt(argc, argv, &ret)
+		|| _chk_do_script(&ret)
+		|| !init_sig_handler())
+	{
+		dispose_environs();
+		return (ret);
+	}
+	ret = do_loop();
+	dispose_environs();
+	return (ret);
 }
 
 #if DEBUG
