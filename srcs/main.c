@@ -80,7 +80,7 @@ static bool	_chk_do_script(int *ret)
 
 	if (fstat(STDIN_FILENO, &st) != 0)
 		return (strerr_ret_false("_chk_do_script()/fstat"));
-	if (!S_ISFIFO(st.st_mode))
+	if (!(S_ISFIFO(st.st_mode) || S_ISREG(st.st_mode)))
 		return (false);
 	gnl = gen_gnl_state(STDIN_FILENO, 256);
 	while (gnl.buf != NULL)
