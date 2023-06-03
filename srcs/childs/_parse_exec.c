@@ -30,8 +30,8 @@ int	_parse_exec(const char *str, int exit_stat)
 	if (*str == '\0')
 		return (0);
 	arr = serialize(str);
-	if (!_validate_input(&arr, &exit_stat))
-		return (exit_stat);
+	if (!_validate_input(&arr, &validate_input_err))
+		return (validate_input_err);
 	if (!chk_do_heredoc(&arr))
 		return (dispose_t_cmdarr(&arr) + 1);
 	cparr = init_ch_proc_info_arr(&arr);
