@@ -27,7 +27,6 @@ typedef struct s_ch_proc_info
 	int			fd_to_this;
 	int			fd_from_this;
 	pid_t		pid;
-	char		**path_arr;
 	char		**envp;
 	char		**argv;
 }	t_ch_proc_info;
@@ -38,17 +37,18 @@ void		dispose_proc_info_arr(t_ch_proc_info *info_arr);
 
 // バリデーション後、そのままの状態で渡す。
 // 変数展開等はfork後に子プロセス側で実行する
-bool		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index,
-				size_t count)
+bool		pipe_fork_exec(t_ch_proc_info *info_arr, size_t index, size_t count)
 			__attribute__((nonnull));
 
 // バリデーション実行後にこの関数を呼ぶ
-t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr, char **envp)
+t_cprocinf	*init_ch_proc_info_arr(t_cmdarr *cmdarr)
 			__attribute__((nonnull));
 
-int			_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len)
+int			_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len,
+				int exit_stat)
 			__attribute__((nonnull));
-int			_parse_exec(const char *str, char *const envp[])
+
+int			_parse_exec(const char *str, int exit_stat)
 			__attribute__((nonnull));
 
 #endif

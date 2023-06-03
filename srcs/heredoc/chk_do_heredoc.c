@@ -26,6 +26,8 @@
 #include "ft_string/ft_string.h"
 
 #include "_build_cmd.h"
+#include "builtin.h"
+#include "error_utils.h"
 #include "heredoc.h"
 #include "signal_handling.h"
 
@@ -91,20 +93,24 @@ static bool	_do_heredoc(const t_cmdelmarr *elems, size_t *i, int fd)
 // !! ERR_PRINTED
 // -> <inherit> create_tmpfile
 // -> <inherit> _do_heredoc
-static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr, char *const *envp)
+static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr)
 {
 	int			fd;
 	t_cmd_elem	*elems;
 	size_t		i_elem;
 	bool		result;
+	char		**envp;
 
 	elems = (t_cmd_elem *)(elemarr->p);
 	i_elem = 0;
 	result = true;
+	envp = get_environs();
 	while (result && i_elem < elemarr->len)
 	{
 		if (elems[i_elem++].type == CMDTYP_RED_HEREDOC)
 		{
+			if (envp == NULL)
+				return (errstr_ret_false("(heredoc)", "envp was NULL"));
 			elems[i_elem - 1].type = CMDTYP_RED_HEREDOC_SAVED;
 			fd = create_tmpfile(envp, &(elems[i_elem - 1].p_malloced));
 			if (fd < 0)
@@ -118,7 +124,7 @@ static bool	_chk_do_heredoc_elemarr(t_cmdelmarr *elemarr, char *const *envp)
 
 // !! ERR_PRINTED
 // -> <inherit> _chk_do_heredoc_elemarr
-bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp)
+bool	chk_do_heredoc(t_cmdarr *cmdarr)
 {
 	size_t		i_cmd;
 	t_cmdelmarr	*cmds;
@@ -128,7 +134,7 @@ bool	chk_do_heredoc(t_cmdarr *cmdarr, char *const *envp)
 	while (i_cmd < cmdarr->len)
 	{
 		ignore_var_in_delimiter(cmds + i_cmd);
-		if (!_chk_do_heredoc_elemarr(cmds + i_cmd, envp))
+		if (!_chk_do_heredoc_elemarr(cmds + i_cmd))
 			return (false);
 		i_cmd += 1;
 	}

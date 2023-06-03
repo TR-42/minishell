@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 19:35:07 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:27:33 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 #include "_childs.h"
 #include "_filectrl_tools.h"
 #include "_redirect.h"
+#include "utils.h"
 
 // !! PRINT_ERROR
 // -> (root) for dup2 function
@@ -78,26 +79,11 @@ static bool	dup2_and_close(t_ch_proc_info *info)
 }
 
 // !! NO_ERROR
-static void	free_2darr(void ***argv)
-{
-	size_t	i;
-
-	if (argv == NULL || *argv == NULL)
-		return ;
-	i = 0;
-	while ((*argv)[i] != NULL)
-		free((*argv)[i++]);
-	free(*argv);
-	*argv = NULL;
-}
-
-// !! NO_ERROR
 // (dup2でエラーの可能性はあるけど、この関数はエラールートで実行されるため、改めてエラーを吐くことはしない。)
 // (そもそも、dup2でエラーが起きる可能性自体低いし。)
 static noreturn void	_revert_stdio_dispose_arr(
 	const t_ch_proc_info *info,
 	t_ch_proc_info *info_arr,
-	char ***argv,
 	int status)
 {
 	close(STDIN_FILENO);
@@ -118,8 +104,9 @@ static noreturn void	_revert_stdio_dispose_arr(
 		close(info->fd_from_this);
 	if (info_arr != NULL)
 		dispose_proc_info_arr(info_arr);
-	if (argv != NULL)
-		free_2darr((void ***)argv);
+	free_2darr((void ***)&(info->envp));
+	free_2darr((void ***)&(info->argv));
+	dispose_environs();
 	exit(status);
 }
 
@@ -138,10 +125,10 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 	status = 1;
 	info = info_arr[index];
 	if (!_proc_redirect(&info))
-		_revert_stdio_dispose_arr(&info, info_arr, &(info.argv), status);
+		_revert_stdio_dispose_arr(&info, info_arr, status);
 	exec_path = NULL;
 	ret = is_builtin(info.argv)
-		|| chk_and_get_fpath(info.argv[0], info.path_arr, &exec_path);
+		|| chk_and_get_fpath(info.argv[0], &exec_path, info.envp);
 	if (ret == true)
 		dup2_and_close(&info);
 	dispose_proc_info_arr(info_arr);
@@ -151,5 +138,5 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index)
 		execve(exec_path, info.argv, info.envp);
 	if (!is_builtin(info.argv) && ret == true)
 		strerr_ret_false(info.argv[0]);
-	_revert_stdio_dispose_arr(&info, NULL, &(info.argv), status);
+	_revert_stdio_dispose_arr(&info, NULL, status);
 }
