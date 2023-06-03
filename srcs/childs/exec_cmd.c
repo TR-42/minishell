@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 19:05:51 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/03 21:46:18 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/04 00:07:49 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,11 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index, int status)
 		exec_builtin(info.argv, &status);
 	else if (ret == true)
 		execve(exec_path, info.argv, info.envp);
-	if (!is_builtin(info.argv) && ret == true)
-		strerr_ret_false(info.argv[0]);
+	if (!is_builtin(info.argv))
+	{
+		status = 1;
+		if (ret == true)
+			strerr_ret_false(info.argv[0]);
+	}
 	_revert_stdio_dispose_arr(&info, NULL, status);
 }
