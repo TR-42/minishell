@@ -38,4 +38,6 @@ char	*gen_path_str(
 			const char *rdir
 			);
 
+bool	ft_isstrnullempty(const char *str);
+
 #endif
