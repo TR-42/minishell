@@ -64,6 +64,7 @@ SRCS_FILECTRL_TOOLS :=\
 	ft_dirname.c\
 	ft_isstrnullempty.c\
 	gen_path_str.c\
+	search_files.c\
 	vect_append_ptr.c\
 
 SRCS_HEREDOC :=\

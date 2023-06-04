@@ -20,6 +20,14 @@
 # define CHK_GET_PATH_ERR_NOFILE (1)
 # define CHK_GET_PATH_ERR_NOCMD (2)
 
+typedef struct s_wcinfo
+{
+	const char	*left_dir;
+	const char	*left_fname;
+	const char	*right_fname;
+	const char	*right_path;
+}	t_wcinfo;
+
 bool	chk_and_get_fpath(
 			const char *given_path, char **dst, char **envp)
 		__attribute__((nonnull(2)));
@@ -39,5 +47,21 @@ char	*gen_path_str(
 			);
 
 bool	ft_isstrnullempty(const char *str);
+
+/**
+ * @brief 指定のディレクトリから指定の条件に合致するファイルを探索する
+ * 
+ * @param left_dir 上位ディレクトリ (指定しない場合は、`NULL` or `.`)
+ * @param left_fname 左のファイル名条件 (指定しない場合は`NULL`)
+ * @param right_fname 右のファイル名条件 (指定しない場合は`NULL`)
+ * @param right_dir 下位ディレクトリ (指定しない場合は、`NULL`)
+ * @return char** 検索結果となるファイル一覧 (存在しなかった場合は空の配列、NULLはERR)
+ */
+char	**search_files(
+			const char *left_dir,
+			const char *left_fname,
+			const char *right_fname,
+			const char *right_dir
+			);
 
 #endif
