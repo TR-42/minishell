@@ -85,6 +85,16 @@ static bool	_set_next_fname(char *fname_btm)
 	return (true);
 }
 
+static int	_err_chk_proc(int fd, char **fname_save)
+{
+	if (0 <= fd)
+		return (fd);
+	strerr_ret_false(*fname_save);
+	free(*fname_save);
+	*fname_save = NULL;
+	return (-1);
+}
+
 // tmpファイルを作成する。書き込み専用で作成し、基本的に呼び出し元で責任をもって削除する。
 // `fname_save`にはファイルパスが記録される。
 // !! ERR_PRINTED
@@ -111,7 +121,7 @@ int	create_tmpfile(char *const *envp, char **fname_save)
 		}
 		fd = open(*fname_save, O_WRONLY | O_CREAT | O_EXCL, 0600);
 		if (fd < 0 && errno != EEXIST)
-			return ((strerr_ret_false(*fname_save) * 0) - 1);
+			break ;
 	}
-	return (fd);
+	return (_err_chk_proc(fd, fname_save));
 }
