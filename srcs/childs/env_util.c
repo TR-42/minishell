@@ -46,6 +46,8 @@ const char	*get_env_value_nlen(char *const envp[], const char *name,
 		p_value = is_this_requested_env(*envp, name, name_len);
 		envp++;
 	}
+	if (p_value != NULL && *p_value == '\0')
+		return (NULL);
 	return (p_value);
 }
 
