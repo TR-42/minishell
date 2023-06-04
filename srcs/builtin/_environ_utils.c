@@ -106,8 +106,8 @@ bool	remove_environ(char *name)
 		src_envs++;
 	}
 	*tmp = NULL;
+	free(*target);
 	free(*get_saved_environs());
 	*get_saved_environs() = envs;
-	free(*target);
 	return (true);
 }
