@@ -32,4 +32,12 @@ bool	get_left_path(
 			)
 		__attribute__((nonnull));
 
+bool	get_right_path(
+			t_cmd_elem *elems,
+			size_t i_wildcard,
+			size_t i_len,
+			char **buf
+			)
+		__attribute__((nonnull));
+
 #endif
