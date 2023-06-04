@@ -13,6 +13,8 @@
 #ifndef _BUILD_CMD_WILDCARD_H
 # define _BUILD_CMD_WILDCARD_H
 
+# include <stdbool.h>
+
 # include "serializer.h"
 
 bool	_contains_valid_wildcard(
@@ -23,9 +25,10 @@ bool	_contains_valid_wildcard(
 			)
 		__attribute__((nonnull));
 
-char	*get_left_path(
+bool	get_left_path(
 			t_cmd_elem *elems,
-			size_t i_wildcard
+			size_t i_wildcard,
+			char **buf
 			)
 		__attribute__((nonnull));
 

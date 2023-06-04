@@ -17,20 +17,22 @@
 
 // !! MUST_PRINT_ERROR_IN_CALLER (malloc error)
 __attribute__((nonnull))
-char	*get_left_path(
+bool	get_left_path(
 	t_cmd_elem *elems,
-	size_t i_wildcard
+	size_t i_wildcard,
+	char **buf
 )
 {
 	size_t		tmp;
 	t_cmdelmarr	elemarr;
 
 	if (i_wildcard == 0)
-		return (NULL);
+		return (true);
 	elemarr = (t_cmdelmarr){0};
 	elemarr.len = i_wildcard;
 	elemarr.elemsize = sizeof(t_cmd_elem);
 	elemarr.p = (void *)elems;
 	tmp = 0;
-	return (_get_argv_one(&elemarr, &tmp));
+	*buf = _get_argv_one(&elemarr, &tmp);
+	return (*buf != NULL);
 }
