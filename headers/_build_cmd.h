@@ -39,4 +39,9 @@ bool	vect_insert_range(t_vect *vect, size_t index, void *d, size_t len)
 bool	elems_make_flat(t_cmdelmarr *elemarr)
 		__attribute__((nonnull));
 
+bool	set_wildcard_values(
+			t_cmdelmarr *elemarr
+			)
+		__attribute__((nonnull));
+
 #endif

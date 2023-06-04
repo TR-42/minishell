@@ -41,6 +41,7 @@ SRCS_BUILD_CMD	:=\
 SRCS_BUILD_CMD_WILDCARD	:=\
 	_contains_valid_wildcard.c\
 	_get_left_path.c\
+	set_wildcard_values.c\
 
 SRCS_CHILDS	:=\
 	_exec_builtin_red.c\
