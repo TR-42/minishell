@@ -33,7 +33,10 @@ int	_parse_exec(const char *str, int exit_stat)
 	if (!_validate_input(&arr, &validate_input_err))
 		return (validate_input_err);
 	if (!chk_do_heredoc(&arr))
+	{
+		rm_tmpfile(&arr);
 		return (dispose_t_cmdarr(&arr) + 1);
+	}
 	cparr = init_ch_proc_info_arr(&arr);
 	if (cparr == NULL)
 		exit_stat = 1;
