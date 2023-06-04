@@ -16,6 +16,9 @@
 // - NULL
 #include <stddef.h>
 
+// - free
+#include <stdlib.h>
+
 // - access
 #include <unistd.h>
 
