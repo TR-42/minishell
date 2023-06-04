@@ -92,7 +92,8 @@ char	*_get_argv_one(const t_cmdelmarr *elemarr, size_t *i_start)
 		elem = (t_cmd_elem *)(elemarr->p) + *i_start;
 		current_seg_len = _one_elem_count(elemarr, *i_start);
 		*i_start += current_seg_len;
-		if (!is_cetyp_var_or_normal(elem->type))
+		if (!_is_value_exists(elem, current_seg_len)
+			|| !is_cetyp_var_or_normal(elem->type))
 			continue ;
 		tmp = _gen_argv_one_str(elem, current_seg_len);
 		if (tmp == NULL)
