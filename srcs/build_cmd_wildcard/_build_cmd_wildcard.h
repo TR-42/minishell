@@ -18,7 +18,8 @@
 bool	_contains_valid_wildcard(
 			t_cmd_elem *elems,
 			size_t i_start,
-			size_t i_next
+			size_t i_next,
+			size_t	*wildcard_index
 			)
 		__attribute__((nonnull));
 

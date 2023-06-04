@@ -19,11 +19,11 @@ __attribute__((nonnull))
 bool	_contains_valid_wildcard(
 	t_cmd_elem *elems,
 	size_t i_start,
-	size_t i_next
+	size_t i_next,
+	size_t	*wildcard_index
 )
 {
 	bool	contains_wildcard;
-	size_t	wildcard_index;
 	bool	contains_multival_var;
 
 	contains_wildcard = false;
@@ -32,7 +32,7 @@ bool	_contains_valid_wildcard(
 	{
 		if (elems[i_start].type == CMDTYP_VAR_WILDCARD)
 		{
-			wildcard_index = i_start;
+			*wildcard_index = i_start;
 			contains_wildcard = true;
 		}
 		else if (elems[i_start].type == CMDTYP_VARIABLE
@@ -40,7 +40,7 @@ bool	_contains_valid_wildcard(
 			contains_multival_var = true;
 		if (contains_wildcard && contains_multival_var)
 		{
-			elems[wildcard_index].type = CMDTYP_NORMAL;
+			elems[*wildcard_index].type = CMDTYP_NORMAL;
 			return (false);
 		}
 	}
