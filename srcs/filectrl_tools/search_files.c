@@ -63,7 +63,7 @@ static char	*_is_pat_matched(t_wcinfo wcinfo, const t_dent *dent)
 	if (ft_isstrnullempty(wcinfo.left_fname)
 		&& ft_isstrnullempty(wcinfo.right_fname)
 		&& ft_isstrnullempty(wcinfo.right_path))
-		return (ft_strdup(dent->d_name));
+		return (gen_path_str(wcinfo.left_dir, dent->d_name, NULL));
 	if (!ft_isstrnullempty(wcinfo.right_path) && dent->d_type != DT_DIR)
 		return (NULL);
 	if (!_match_chk(dent->d_name, wcinfo.left_fname, wcinfo.right_fname))
