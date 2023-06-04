@@ -92,7 +92,7 @@ static t_vect	_pick_matched_fname(
 		dent = readdir(dir);
 		if (dent == NULL)
 			return (vect);
-		if ((wcinfo.left_fname != NULL || wcinfo.left_fname[0] != '.')
+		if (wcinfo.left_fname != NULL && wcinfo.left_fname[0] != '.'
 			&& dent->d_name[0] == '.')
 			continue ;
 		str = _is_pat_matched(wcinfo, dent);
