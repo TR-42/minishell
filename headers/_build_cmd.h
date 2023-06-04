@@ -39,4 +39,10 @@ bool	vect_insert_range(t_vect *vect, size_t index, void *d, size_t len)
 bool	elems_make_flat(t_cmdelmarr *elemarr)
 		__attribute__((nonnull));
 
+bool	_is_value_exists(
+			const t_cmd_elem *elems,
+			size_t len
+			)
+		__attribute__((nonnull));
+
 #endif
