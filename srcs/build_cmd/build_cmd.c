@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 19:36:55 by kfujita           #+#    #+#             */
-/*   Updated: 2023/05/28 17:41:02 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:21:00 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ char	**build_cmd(t_cmdelmarr *elemarr, char *const *envp, int exit_stat)
 	size_t		i_elemarr;
 
 	if (!set_var_values(elemarr, envp, exit_stat)
-		|| !validate_red_fname(elemarr) || !elems_make_flat(elemarr))
+		|| !validate_red_fname(elemarr) || !set_wildcard_values(elemarr)
+		|| !elems_make_flat(elemarr))
 		return (NULL);
 	argc = _get_argc(elemarr);
 	if (argc <= 0)
