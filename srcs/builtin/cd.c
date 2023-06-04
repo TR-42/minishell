@@ -25,6 +25,7 @@
 #endif
 #define COMMAND "cd"
 #define OLDPWD "OLDPWD="
+#define PWD_ENV "PWD="
 
 int	builtin_cd(char **argv)
 {
@@ -38,6 +39,11 @@ int	builtin_cd(char **argv)
 		return (print_error(COMMAND, NULL, NULL, errno));
 	if (chdir(*argv) != 0)
 		return (print_error(COMMAND, *argv, NULL, errno));
+	if (!set_environ(oldpath))
+		return (print_error(COMMAND, NULL, SETENVERR, 1));
+	if (getcwd(oldpath + sizeof(PWD_ENV) - 1, PATH_MAX) == NULL)
+		return (print_error(COMMAND, NULL, NULL, errno));
+	ft_memcpy(oldpath, PWD_ENV, sizeof(PWD_ENV) - 1);
 	if (!set_environ(oldpath))
 		return (print_error(COMMAND, NULL, SETENVERR, 1));
 	return (0);
