@@ -51,20 +51,8 @@ char	*gen_path_str(
 
 bool	ft_isstrnullempty(const char *str);
 
-/**
- * @brief 指定のディレクトリから指定の条件に合致するファイルを探索する
- * 
- * @param left_dir 上位ディレクトリ (指定しない場合は、`NULL` or `.`)
- * @param left_fname 左のファイル名条件 (指定しない場合は`NULL`)
- * @param right_fname 右のファイル名条件 (指定しない場合は`NULL`)
- * @param right_dir 下位ディレクトリ (指定しない場合は、`NULL`)
- * @return char** 検索結果となるファイル一覧 (存在しなかった場合は空の配列、NULLはERR)
- */
 char	**search_files(
-			const char *left_dir,
-			const char *left_fname,
-			const char *right_fname,
-			const char *right_dir
+			t_wcinfo info
 			);
 
 #endif

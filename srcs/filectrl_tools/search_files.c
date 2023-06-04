@@ -112,10 +112,7 @@ static t_vect	_pick_matched_fname(
 // -> (root) for opendir
 // -> (root) for _pick_matched_fname (vect_init / readdir)
 char	**search_files(
-	const char *left_dir,
-	const char *left_fname,
-	const char *right_fname,
-	const char *right_dir
+	t_wcinfo info
 )
 {
 	DIR			*dir;
@@ -123,15 +120,14 @@ char	**search_files(
 	t_vect		vect;
 	const char	*ldir_to_open;
 
-	ldir_to_open = left_dir;
+	ldir_to_open = info.left_dir;
 	if (ft_isstrnullempty(ldir_to_open))
 		ldir_to_open = ".";
 	dir = opendir(ldir_to_open);
 	if (dir == NULL)
 		return (strerr_ret_null("search_files/opendir"));
 	errno = 0;
-	vect = _pick_matched_fname(dir,
-			(t_wcinfo){left_dir, left_fname, right_fname, right_dir});
+	vect = _pick_matched_fname(dir, info);
 	_errno = errno;
 	closedir(dir);
 	if (_errno != 0)
