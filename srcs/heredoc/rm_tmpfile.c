@@ -33,6 +33,8 @@ static int	_rm_tmpfile_from_elems(t_cmd_elem *elemarr, size_t len)
 	{
 		if (elemarr[i++].type != CMDTYP_RED_HEREDOC_SAVED)
 			continue ;
+		if (elemarr[i - 1].p_malloced == NULL)
+			continue ;
 		if (unlink(elemarr[i - 1].p_malloced) != 0)
 			strerr_ret_false(elemarr[i - 1].p_malloced);
 		free((char *)(elemarr[i - 1].p_malloced));
