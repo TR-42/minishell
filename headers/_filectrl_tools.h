@@ -36,6 +36,7 @@ char	*join_path(const char *path1, const char *path2)
 		__attribute__((nonnull));
 
 char	*ft_dirname(const char *path);
+char	*ft_basename(const char *path);
 
 bool	vect_append_ptr(t_vect *vect, const void *elem)
 		__attribute__((nonnull));

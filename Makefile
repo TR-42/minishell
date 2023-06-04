@@ -61,6 +61,7 @@ SRCS_UTILS :=\
 
 SRCS_FILECTRL_TOOLS :=\
 	filectrl_tools.c\
+	ft_basename.c\
 	ft_dirname.c\
 	ft_isstrnullempty.c\
 	gen_path_str.c\
