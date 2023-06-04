@@ -16,7 +16,7 @@
 // - bool
 # include <stdbool.h>
 
-#include "ft_vect/ft_vect.h"
+# include "ft_vect/ft_vect.h"
 
 # define CHK_GET_PATH_ERR_OK (0)
 # define CHK_GET_PATH_ERR_NOFILE (1)
