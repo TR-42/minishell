@@ -45,5 +45,7 @@ bool	_contains_valid_wildcard(
 		}
 		i_start += 1;
 	}
+	if (!contains_wildcard)
+		*wildcard_index = i_next;
 	return (contains_wildcard);
 }

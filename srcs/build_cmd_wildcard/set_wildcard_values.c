@@ -149,7 +149,7 @@ bool	set_wildcard_values(
 			if (!_set_wildcard_values_seg(elems, i, i + len, i_wildcard))
 				return (false);
 		}
-		else
+		else if (i_wildcard < (i + len))
 			return (errstr_ret_false("_contains_valid_wildcard()",
 					"Invalid Wildcard Usage"));
 		i += len;
