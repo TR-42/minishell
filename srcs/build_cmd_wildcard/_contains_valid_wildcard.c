@@ -43,6 +43,7 @@ bool	_contains_valid_wildcard(
 			elems[*wildcard_index].type = CMDTYP_NORMAL;
 			return (false);
 		}
+		i_start += 1;
 	}
 	return (contains_wildcard);
 }
