@@ -35,6 +35,7 @@ bool	_is_special_var_chk(const char **input, t_pars_mde *mode,
 		{
 			*mode = M_NORMAL;
 			*input += 1;
+			v->nospace = !ft_isspcornil(**input);
 		}
 		else
 			*mode -= 1;
