@@ -58,6 +58,35 @@ static bool	add_environ(char *src)
 	return (true);
 }
 
+static bool	join_environ(char *src, char *input)
+{
+	char	**env;
+	char	*tmp;
+	bool	flag;
+
+	*input = '\0';
+	env = search_environ(src);
+	*input = '+';
+	if (env == NULL)
+	{
+		while (*(++input) != '\0')
+			*(input - 1) = *input;
+		*(input - 1) = '\0';
+		flag = add_environ(src);
+		while (*(--input) != '=')
+			*(input + 1) = *input;
+		*(input + 1) = '=';
+		*input = '+';
+		return (flag);
+	}
+	tmp = ft_strjoin(src, input + 2);
+	if (tmp == NULL)
+		return (false);
+	free(*env);
+	*env = tmp;
+	return (true);
+}
+
 bool	set_environ(char *src)
 {
 	char	**env;
@@ -70,6 +99,8 @@ bool	set_environ(char *src)
 		return (false);
 	else if (tmp != NULL)
 	{
+		if (tmp != src && *(tmp - 1) == '+')
+			return (join_environ(src, tmp - 1));
 		*tmp = '\0';
 		env = search_environ(src);
 		*tmp = '=';
