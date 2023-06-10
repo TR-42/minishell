@@ -79,7 +79,7 @@ static bool	join_environ(char *src, char *input)
 		*input = '+';
 		return (flag);
 	}
-	tmp = ft_strjoin(src, input + 2);
+	tmp = ft_strjoin(*env, input + 2);
 	if (tmp == NULL)
 		return (false);
 	free(*env);
