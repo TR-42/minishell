@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+
 // - waitpid
 #include <sys/wait.h>
 
@@ -22,6 +24,7 @@
 #include "_childs.h"
 #include "_build_cmd.h"
 #include "utils.h"
+#include "error_utils.h"
 
 // !! NO_ERROR
 __attribute__((nonnull))
@@ -35,7 +38,7 @@ static bool	_is_end_and_get_stat(int cpstat, t_cetyp cetype, bool is_signaled,
 	}
 	if (is_signaled || !WIFEXITED(cpstat))
 	{
-		*exit_status = 130;
+		*exit_status = 128 + WTERMSIG(cpstat);
 		return (true);
 	}
 	*exit_status = WEXITSTATUS(cpstat);
@@ -80,6 +83,25 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 	return (true);
 }
 
+__attribute__((nonnull))
+static bool	_wait_set_is_signaled(
+	const t_cprocinf *info,
+	int *cpstat,
+	bool *is_signaled
+)
+{
+	if (info->pid <= 0)
+		return (true);
+	errno = 0;
+	while (waitpid(info->pid, cpstat, 0) <= 0)
+		if (errno != EINTR)
+			return (strerr_ret_false("waitpid"));
+	if (!WIFSIGNALED(*cpstat))
+		return (true);
+	*is_signaled = true;
+	return (!print_sig_ret_false(info->pid, WTERMSIG(*cpstat)));
+}
+
 // !! ERR_PRINTED
 // -> <inherit> _exec_until_term
 // (pipe_fork_execでエラー発生の場合、return 130)
@@ -100,12 +122,7 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len, int exit_stat)
 		cpstat = exit_stat;
 		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &cpstat);
 		while (i_wait < i_exec)
-		{
-			if (0 < cparr[i_wait++].pid)
-				waitpid(cparr[i_wait - 1].pid, &cpstat, 0);
-			is_signaled = (is_signaled
-					|| (0 < cparr[i_wait - 1].pid && WIFSIGNALED(cpstat)));
-		}
+			_wait_set_is_signaled(cparr + i_wait++, &cpstat, &is_signaled);
 		cetype = get_cmdterm(cparr[i_exec - 1].cmd);
 		if (_is_end_and_get_stat(cpstat, cetype, is_signaled, &exit_stat))
 			break ;
