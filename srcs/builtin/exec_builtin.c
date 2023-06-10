@@ -35,7 +35,7 @@ int	exec_builtin(char **argv, int *exit_status)
 	else if (ft_strncmp(*argv, ENV, sizeof(ENV)) == 0)
 		*exit_status = builtin_env(argv);
 	else if (ft_strncmp(*argv, EXIT, sizeof(EXIT)) == 0)
-		return (handle_exit(argv, *exit_status));
+		return (handle_exit(argv, exit_status));
 	else if (ft_strncmp(*argv, EXPORT, sizeof(EXPORT)) == 0)
 		*exit_status = builtin_export(argv);
 	else if (ft_strncmp(*argv, PWD, sizeof(PWD)) == 0)
