@@ -47,7 +47,7 @@ static int	_rl_ev_hook_handler(void)
 {
 	if (!g_is_interrupted)
 		return (0);
-	rl_event_hook = NULL;
+	rl_replace_line("", 0);
 	rl_done = true;
 	return (0);
 }
@@ -82,8 +82,6 @@ bool	init_sig_handler(void)
 
 void	register_rl_ev_hook_handler(void)
 {
-	if (g_is_interrupted)
-		write(STDOUT_FILENO, "\n", 1);
 	g_is_interrupted = false;
 	rl_event_hook = _rl_ev_hook_handler;
 }
