@@ -36,11 +36,12 @@ static bool	_is_end_and_get_stat(int cpstat, t_cetyp cetype, bool is_signaled,
 		*exit_status = cpstat >> 8;
 		return (true);
 	}
-	if (is_signaled || !WIFEXITED(cpstat))
-	{
+	if (WIFSIGNALED(cpstat))
 		*exit_status = 128 + WTERMSIG(cpstat);
+	else
+		*exit_status = 0;
+	if (is_signaled)
 		return (true);
-	}
 	*exit_status = WEXITSTATUS(cpstat);
 	if ((cetype == CMDTYP_OP_AND && *exit_status != EXIT_SUCCESS)
 		|| (cetype == CMDTYP_OP_OR && *exit_status == EXIT_SUCCESS))
@@ -90,13 +91,15 @@ static bool	_wait_set_is_signaled(
 	bool *is_signaled
 )
 {
+	if (*is_signaled)
+		*cpstat = 0;
 	if (info->pid <= 0)
 		return (true);
 	errno = 0;
 	while (waitpid(info->pid, cpstat, 0) <= 0)
 		if (errno != EINTR)
 			return (strerr_ret_false("waitpid"));
-	if (!WIFSIGNALED(*cpstat))
+	if (WIFEXITED(*cpstat) || !WIFSIGNALED(*cpstat))
 		return (true);
 	*is_signaled = true;
 	return (!print_sig_ret_false(info->pid, WTERMSIG(*cpstat)));
