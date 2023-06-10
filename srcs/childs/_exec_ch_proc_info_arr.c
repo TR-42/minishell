@@ -87,8 +87,7 @@ static t_cetyp	_exec_until_term(t_cprocinf *cparr, size_t cparr_len,
 __attribute__((nonnull))
 static bool	_wait_set_is_signaled(
 	const t_cprocinf *info,
-	int *cpstat,
-	bool *is_signaled
+	int *cpstat
 )
 {
 	if (info->pid <= 0)
@@ -99,7 +98,6 @@ static bool	_wait_set_is_signaled(
 			return (strerr_ret_false("waitpid"));
 	if (WIFEXITED(*cpstat) || !WIFSIGNALED(*cpstat))
 		return (true);
-	*is_signaled = true;
 	return (!print_sig_ret_false(info->pid, WTERMSIG(*cpstat)));
 }
 
@@ -123,7 +121,7 @@ int	_exec_ch_proc_info_arr(t_cprocinf *cparr, size_t cparr_len, int exit_stat)
 		cpstat = exit_stat;
 		is_signaled = !_exec_until_term(cparr, cparr_len, &i_exec, &cpstat);
 		while (i_wait < i_exec)
-			_wait_set_is_signaled(cparr + i_wait++, &cpstat, &is_signaled);
+			_wait_set_is_signaled(cparr + i_wait++, &cpstat);
 		cetype = get_cmdterm(cparr[i_exec - 1].cmd);
 		if (_is_end_and_get_stat(cpstat, cetype, is_signaled, &exit_stat))
 			break ;
