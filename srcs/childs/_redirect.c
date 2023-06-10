@@ -65,7 +65,7 @@ static bool	_open_set_close_fd(t_ch_proc_info *info, t_cmd_elem_type type,
 		info->fd_to_this = fd;
 		return (true);
 	}
-	if (info->fd_from_this != STDIN_FILENO)
+	if (info->fd_from_this != STDOUT_FILENO)
 		close(info->fd_from_this);
 	info->fd_from_this = fd;
 	return (true);
