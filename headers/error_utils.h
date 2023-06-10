@@ -17,7 +17,7 @@
 # include <stdbool.h>
 
 // - pid
-#include <sys/_types/_pid_t.h>
+# include <sys/_types/_pid_t.h>
 
 bool	perr_ret_false(const char *str);
 bool	strerr_ret_false(const char *str);
