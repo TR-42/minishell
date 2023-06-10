@@ -91,8 +91,6 @@ static bool	_wait_set_is_signaled(
 	bool *is_signaled
 )
 {
-	if (*is_signaled)
-		*cpstat = 0;
 	if (info->pid <= 0)
 		return (true);
 	errno = 0;
