@@ -26,46 +26,49 @@
 #define COMMAND "cd"
 #define OLDPWD "OLDPWD="
 #define PWD_ENV "PWD="
+#define OLDFAIL "failure to save `OLDPWD'"
+#define PWDFAIL "failure to save `PWD'"
+
+static bool	get_pwd(char *str, int len);
 
 int	builtin_cd(char **argv)
 {
 	char	oldpath[PATH_MAX + sizeof(OLDPWD)];
+	bool	flag;
 
+	flag = true;
 	if (*(++argv) == NULL)
 		return (print_error(COMMAND, NULL, FEWARGERR, 1));
 	else if (*(argv + 1) != NULL)
 		return (print_error(COMMAND, NULL, MANYARGERR, 1));
 	ft_bzero(oldpath, PATH_MAX + 1);
 	ft_strlcpy(oldpath, OLDPWD, sizeof(OLDPWD));
-	if (getcwd(oldpath + sizeof(OLDPWD) - 1, PATH_MAX) == NULL)
-		return (print_error(COMMAND, NULL, NULL, errno));
+	if (!get_pwd(oldpath, PATH_MAX))
+		flag = false;
 	if (chdir(*argv) != 0)
-		return (print_error(COMMAND, *argv, NULL, errno));
-	if (!set_environ(oldpath))
-		return (print_error(COMMAND, NULL, SETENVERR, 1));
+		return (print_error(COMMAND, *argv, strerror(errno), 1));
+	if (flag && !set_environ(oldpath))
+		print_error(COMMAND, NULL, OLDFAIL, 1);
+	flag = true;
+	ft_strlcpy(oldpath, PWD_ENV, sizeof(PWD_ENV));
 	if (getcwd(oldpath + sizeof(PWD_ENV) - 1, PATH_MAX) == NULL)
-		return (print_error(COMMAND, NULL, NULL, errno));
-	ft_memcpy(oldpath, PWD_ENV, sizeof(PWD_ENV) - 1);
-	if (!set_environ(oldpath))
-		return (print_error(COMMAND, NULL, SETENVERR, 1));
+		flag = false;
+	if (flag && !set_environ(oldpath))
+		print_error(COMMAND, NULL, PWDFAIL, 1);
 	return (0);
 }
 
-static bool	save_pwd(void)
+static bool	get_pwd(char *str, int len)
 {
-	char	path[PATH_MAX + 1];
 	char	*tmp;
 
-	ft_bzero(path, PATH_MAX + 1);
-	if (getcwd(path, PATH_MAX) != NULL)
-		return (0);
-	tmp = search_environ(PWD);
+	if (getcwd(str + sizeof(OLDPWD) - 1, len) != NULL)
+		return (true);
+	tmp = search_environ("PWD");
 	if (tmp != NULL)
 	{
-		if (ft_putstr_fd_with_err(*tmp, STDOUT_FILENO) == 0
-			|| ft_putstr_fd_with_err("\n", STDOUT_FILENO) == 0)
-			return (print_error(COMMAND, NULL, PRINTFERR, 1));
-		return (0);
+		ft_strlcpy(str, tmp, ft_strlen(tmp) + 1);
+		return (true);
 	}
-	return (print_error(COMMAND, NULL, FAILERR, 1));
+	return (false);
 }
