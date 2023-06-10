@@ -54,6 +54,7 @@ SRCS_CHILDS	:=\
 SRCS_UTILS :=\
 	err_ret_false.c\
 	free_2darr.c\
+	print_sig.c\
 
 SRCS_HEREDOC :=\
 	chk_do_heredoc.c\
