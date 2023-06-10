@@ -60,14 +60,14 @@ int	builtin_cd(char **argv)
 
 static bool	get_pwd(char *str, int len)
 {
-	char	*tmp;
+	char	**tmp;
 
 	if (getcwd(str + sizeof(OLDPWD) - 1, len) != NULL)
 		return (true);
 	tmp = search_environ("PWD");
 	if (tmp != NULL)
 	{
-		ft_strlcpy(str, tmp, ft_strlen(tmp) + 1);
+		ft_strlcpy(str, *tmp, ft_strlen(*tmp) + 1);
 		return (true);
 	}
 	return (false);

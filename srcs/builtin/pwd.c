@@ -30,7 +30,7 @@
 int	builtin_pwd(void)
 {
 	char	path[PATH_MAX + 1];
-	char	*tmp;
+	char	**tmp;
 
 	ft_bzero(path, PATH_MAX + 1);
 	if (getcwd(path, PATH_MAX) != NULL)
