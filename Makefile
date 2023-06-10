@@ -74,6 +74,7 @@ SRCS_SERIALIZER	:= \
 
 SRCS_SIGNAL =\
 	init_sig_handler.c\
+	restore_sig_handler.c\
 
 SRCS_VALIDATOR =\
 	_validate_input.c\
