@@ -32,7 +32,7 @@
 #define PWDFAIL "failure to save `PWD'"
 
 static bool	copy_pwd(char *str);
-static bool change_currentdir(char *arg);
+static bool	change_currentdir(char *arg);
 static bool	change_absolute_dir(char *arg);
 
 int	builtin_cd(char **argv)
@@ -71,7 +71,7 @@ static bool	copy_pwd(char *str)
 	return (true);
 }
 
-static bool change_currentdir(char *arg)
+static bool	change_currentdir(char *arg)
 {
 	char	**tmp;
 
