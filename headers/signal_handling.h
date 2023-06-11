@@ -18,5 +18,6 @@
 bool	get_is_interrupted(void);
 bool	init_sig_handler(void);
 void	register_rl_ev_hook_handler(void);
+bool	restore_sig_handler(void);
 
 #endif

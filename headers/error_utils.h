@@ -16,9 +16,14 @@
 // - bool
 # include <stdbool.h>
 
+// - pid
+# include <sys/_types/_pid_t.h>
+
 bool	perr_ret_false(const char *str);
 bool	strerr_ret_false(const char *str);
 bool	strerr_errno_ret_false(const char *str, int _errno);
 bool	errstr_ret_false(const char *str1, const char *str2);
+
+bool	print_sig_ret_false(pid_t pid, int sig);
 
 #endif

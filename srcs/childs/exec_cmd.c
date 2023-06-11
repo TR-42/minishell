@@ -38,6 +38,7 @@
 #include "_filectrl_tools.h"
 #include "_redirect.h"
 #include "utils.h"
+#include "signal_handling.h"
 
 // !! PRINT_ERROR
 // -> (root) for dup2 function
@@ -132,10 +133,11 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index, int status)
 	dispose_proc_info_arr(info_arr);
 	if (is_builtin(info.argv))
 		exec_builtin(info.argv, &status);
-	else if (ret == true)
-		execve(exec_path, info.argv, info.envp);
-	if (!is_builtin(info.argv))
+	else
 	{
+		ret = restore_sig_handler();
+		if (ret == true)
+			execve(exec_path, info.argv, info.envp);
 		status = 1;
 		if (ret == true)
 			strerr_ret_false(info.argv[0]);
