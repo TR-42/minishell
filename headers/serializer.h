@@ -13,6 +13,9 @@
 #ifndef SERIALIZER_H
 # define SERIALIZER_H
 
+// - pid_t
+# include <unistd.h>
+
 # include "ft_vect/ft_vect.h"
 
 typedef t_vect			t_cmdarr;
@@ -51,6 +54,80 @@ typedef struct s_cmd_elem
 	size_t			p_mlc_len;
 	bool			nospace;
 }	t_cmd_elem;
+
+/**
+ * @brief 複数のコマンドを一まとまりで扱うための構造体
+ */
+typedef struct s_cmdgr	t_cmdgr;
+
+/**
+ * @brief 一つのコマンドを表す構造体
+ */
+typedef struct s_cmd	t_cmd;
+
+/**
+ * @brief Command Groupと単一のコマンドを共通のインターフェイスで扱えるようにしたもの
+ */
+typedef union u_gr_cmd	t_gr_cmd;
+
+/**
+ * @brief コマンド構造体の種類を表すもの
+ */
+typedef enum e_gr_typ
+{
+	STRTYP_GROUP,
+	STRTYP_ONECMD,
+}	t_gr_typ;
+
+/**
+ * @brief CommandGroup と OneCommandの共通部分
+ */
+typedef struct s_gr_common
+{
+	t_gr_typ	struct_type;
+	t_cetyp		cmd_term_type;
+	int			exit_status;
+	t_gr_cmd	*next;
+	t_gr_cmd	*root;
+}	t_gr_common;
+
+/**
+ * @brief 括弧やパイプ等、一まとまりで扱うもの
+ */
+struct s_cmdgr
+{
+	t_gr_common	common_data;
+	t_gr_cmd	*first_child;
+};
+
+/**
+ * @brief コマンド一つ一つを表すもの
+ * 各コマンドを実行する子プロセスの情報もついでに入れちゃう
+ */
+struct s_cmd
+{
+	t_gr_common	common_data;
+	t_cmdelmarr	elemarr;
+	int			fd_stdin_save;
+	int			fd_stdout_save;
+	int			fd_to_this;
+	int			fd_from_this;
+	pid_t		pid;
+	char		**envp;
+	char		**argv;
+};
+
+/**
+ * @brief コマンドラインの各コマンド部分を共通で扱うための構造体
+ */
+union u_gr_cmd
+{
+	t_cmd		cmd;
+	t_cmdgr		cmdgr;
+	t_gr_common	_;
+};
+
+/* -------- methods -------- */
 
 // エラー発生時は、メッセージを出力したうえで (t_vect){0} を返す
 // return: t_vect<t_cmdelmarr>
