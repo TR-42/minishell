@@ -10,3 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef _PWD_H
+# define _PWD_H
+
+# include <stdbool.h>
+
+void	dispose_pwd(void);
+bool	update_pwd(bool is_use_env);
+char	*get_pwd(void);
+
+#endif
