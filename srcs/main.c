@@ -114,7 +114,10 @@ static int	do_loop(void)
 		if (get_is_interrupted())
 			ret = 1;
 		else if (line == NULL)
+		{
+			write(STDERR_FILENO, "exit\n", 5);
 			return (ret);
+		}
 		else if (*line != '\0')
 		{
 			add_history(line);
@@ -142,6 +145,7 @@ int	main(int argc, const char *argv[], char **envp)
 		dispose_environs();
 		return (ret);
 	}
+	rl_outstream = stderr;
 	ret = do_loop();
 	dispose_environs();
 	return (ret);
