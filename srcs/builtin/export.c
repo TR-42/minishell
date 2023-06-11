@@ -16,6 +16,7 @@
 #include "ft_is/ft_is.h"
 #include <unistd.h>
 #include <limits.h>
+#include <stdint.h>
 
 #define COMMAND "export"
 #define DECLARE "declare -x "

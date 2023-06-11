@@ -12,6 +12,7 @@
 
 #include "_util_commands.h"
 #include "ft_string/ft_string.h"
+#include "_pwd.h"
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
@@ -34,6 +35,7 @@ void	dispose_environs(void)
 {
 	free_all(*get_saved_environs());
 	*get_saved_environs() = NULL;
+	dispose_pwd();
 }
 
 bool	init_environs(char **src)
@@ -60,6 +62,8 @@ bool	init_environs(char **src)
 	}
 	*tmp = NULL;
 	*get_saved_environs() = dst;
+	if (!update_pwd(true))
+		print_error(NULL, NULL, "failed to set current directory", 1);
 	return (true);
 }
 

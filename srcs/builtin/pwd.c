@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "_pwd.h"
 #include "_environ.h"
 #include "_util_commands.h"
 #include "ft_printf/ft_printf.h"
 #include "ft_mem/ft_mem.h"
+#include "ft_string/ft_string.h"
 #include <sys/param.h>
 #include <limits.h>
 #include <string.h>
@@ -29,21 +31,13 @@
 
 int	builtin_pwd(void)
 {
-	char	path[PATH_MAX + 1];
-	char	**tmp;
+	char	*tmp;
 
-	ft_bzero(path, PATH_MAX + 1);
-	if (getcwd(path, PATH_MAX) != NULL)
-	{
-		if (ft_putstr_fd_with_err(path, STDOUT_FILENO) == 0
-			|| ft_putstr_fd_with_err("\n", STDOUT_FILENO) == 0)
-			return (print_error(COMMAND, NULL, PRINTFERR, 1));
-		return (0);
-	}
-	tmp = search_environ(PWD);
+	update_pwd(false);
+	tmp = get_pwd();
 	if (tmp != NULL)
 	{
-		if (ft_putstr_fd_with_err(*tmp, STDOUT_FILENO) == 0
+		if (ft_putstr_fd_with_err(tmp, STDOUT_FILENO) == 0
 			|| ft_putstr_fd_with_err("\n", STDOUT_FILENO) == 0)
 			return (print_error(COMMAND, NULL, PRINTFERR, 1));
 		return (0);
