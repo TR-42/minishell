@@ -59,7 +59,7 @@ static void	print_cmdarr(const t_cmdarr *cmdarr, char *const *envp)
 	{
 		printf("  cmd[%zu] ~~~~~~~~~~~~~~~~~~\n", i);
 		elemarr = (t_cmdelmarr *)vect_at(cmdarr, i++);
-		v = build_cmd(elemarr, envp);
+		v = build_cmd(elemarr, envp, 0);
 		_print_argv((const char **)v);
 		_free_argv(v);
 	}
