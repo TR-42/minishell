@@ -107,7 +107,6 @@ static noreturn void	_revert_stdio_dispose_arr(
 		dispose_proc_info_arr(info_arr);
 	free_2darr((void ***)&(info->envp));
 	free_2darr((void ***)&(info->argv));
-	dispose_environs();
 	exit(status);
 }
 
