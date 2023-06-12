@@ -35,7 +35,6 @@ void	dispose_pwd(void)
 {
 	if (*save_pwd() != NULL)
 		free(*save_pwd());
-	*save_pwd() = NULL;
 }
 
 static bool	set_pwd(char *src)
@@ -47,8 +46,9 @@ static bool	set_pwd(char *src)
 	return (true);
 }
 
-bool	update_pwd(void)
+bool	update_pwd(bool is_use_env)
 {
+	char	**pwd;
 	char	*tmp;
 
 	tmp = (char *)ft_calloc(PATH_MAX + 1, sizeof(char));
@@ -59,10 +59,25 @@ bool	update_pwd(void)
 		else
 			free(tmp);
 	}
+	if (!is_use_env)
+		return (false);
+	pwd = search_environ("PWD");
+	if (pwd != NULL && ft_strchr(*pwd, '=') != NULL)
+	{
+		tmp = ft_strdup(ft_strchr(*pwd, '=') + 1);
+		return (set_pwd(tmp));
+	}
 	return (false);
 }
 
 char	*get_pwd(void)
 {
-	return (*save_pwd());
+	char	**tmp;
+
+	if (*save_pwd() != NULL)
+		return (*save_pwd());
+	tmp = search_environ("PWD");
+	if (tmp != NULL && ft_strchr(*tmp, '=') != NULL)
+		return (ft_strchr(*tmp, '=') + 1);
+	return (NULL);
 }
