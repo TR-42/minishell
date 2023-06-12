@@ -135,7 +135,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index, int status)
 		exec_builtin(info.argv, &status);
 	else
 	{
-		ret = restore_sig_handler();
+		ret = (ret && restore_sig_handler());
 		if (ret == true)
 			execve(exec_path, info.argv, info.envp);
 		status = 1;
