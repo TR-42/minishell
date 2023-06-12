@@ -16,7 +16,7 @@
 # include <stdbool.h>
 
 void	dispose_pwd(void);
-bool	update_pwd(void);
+bool	update_pwd(bool is_use_env);
 char	*get_pwd(void);
 
 #endif

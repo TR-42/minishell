@@ -47,15 +47,14 @@ int	builtin_cd(char **argv)
 		return (print_error(COMMAND, NULL, MANYARGERR, 1));
 	ft_bzero(oldpath, PATH_MAX + 1);
 	ft_strlcpy(oldpath, OLDPWD, sizeof(OLDPWD));
-	update_pwd();
-	if (!copy_pwd(oldpath + sizeof(OLDPWD) - 1))
+	if (!update_pwd(false) || !copy_pwd(oldpath + sizeof(OLDPWD) - 1))
 		flag = false;
 	if (!change_currentdir(*argv))
 		return (print_error(COMMAND, *argv, strerror(errno), 1));
-	if (!flag || !set_environ(oldpath))
+	if (flag && !set_environ(oldpath))
 		print_error(COMMAND, NULL, OLDFAIL, 1);
 	ft_memcpy(oldpath, PWD_ENV, sizeof(PWD_ENV));
-	if (!update_pwd() || !copy_pwd(oldpath + sizeof(PWD_ENV) - 1)
+	if (!update_pwd(false) || !copy_pwd(oldpath + sizeof(PWD_ENV) - 1)
 		|| !set_environ(oldpath))
 		print_error(COMMAND, NULL, PWDFAIL, 1);
 	return (0);
