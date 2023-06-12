@@ -62,7 +62,7 @@ bool	init_environs(char **src)
 	}
 	*tmp = NULL;
 	*get_saved_environs() = dst;
-	if (!update_pwd(true))
+	if (!update_pwd())
 		print_error(NULL, NULL, "failed to set current directory", 1);
 	return (true);
 }
