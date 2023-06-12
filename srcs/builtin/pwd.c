@@ -33,7 +33,7 @@ int	builtin_pwd(void)
 {
 	char	*tmp;
 
-	update_pwd(false);
+	update_pwd();
 	tmp = get_pwd();
 	if (tmp != NULL)
 	{
