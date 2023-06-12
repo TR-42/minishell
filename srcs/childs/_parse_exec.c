@@ -42,6 +42,8 @@ int	_parse_exec(const char *str, int exit_stat)
 		exit_stat = 1;
 	else
 		exit_stat = _exec_ch_proc_info_arr(cparr, arr.len, exit_stat);
+	close(cparr->fd_stdin_save);
+	close(cparr->fd_stdout_save);
 	rm_tmpfile(&arr);
 	dispose_t_cmdarr(&arr);
 	dispose_proc_info_arr(cparr);
