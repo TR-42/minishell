@@ -134,6 +134,7 @@ endif
 CC		:=	cc
 
 all:	$(NAME)
+bonus:	$(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIB_LINK)
