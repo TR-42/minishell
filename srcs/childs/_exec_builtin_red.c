@@ -78,7 +78,7 @@ int	_exec_builtin_red(
 	tf = _dup2_and_close(info);
 	status = 1;
 	if (tf)
-		status = exec_builtin(info->argv, cpstat);
+		status = exec_builtin(info->argv, cpstat, true);
 	tf = (_revert_stdio(info) && tf);
 	if (!tf && 0 < status)
 		*cpstat = 1;

@@ -22,9 +22,9 @@
 #define PWD "pwd"
 #define UNSET "unset"
 
-static int	handle_exit(char **argv, int *status);
+static int	handle_exit(char **argv, int *status, bool is_parent);
 
-int	exec_builtin(char **argv, int *exit_status)
+int	exec_builtin(char **argv, int *exit_status, bool is_parent)
 {
 	if (argv == NULL || *argv == NULL)
 		return (-1);
@@ -35,7 +35,7 @@ int	exec_builtin(char **argv, int *exit_status)
 	else if (ft_strncmp(*argv, ENV, sizeof(ENV)) == 0)
 		*exit_status = builtin_env(argv);
 	else if (ft_strncmp(*argv, EXIT, sizeof(EXIT)) == 0)
-		return (handle_exit(argv, exit_status));
+		return (handle_exit(argv, exit_status, is_parent));
 	else if (ft_strncmp(*argv, EXPORT, sizeof(EXPORT)) == 0)
 		*exit_status = builtin_export(argv);
 	else if (ft_strncmp(*argv, PWD, sizeof(PWD)) == 0)
@@ -49,9 +49,9 @@ int	exec_builtin(char **argv, int *exit_status)
 	return (1);
 }
 
-static int	handle_exit(char **argv, int *status)
+static int	handle_exit(char **argv, int *status, bool is_parent)
 {
-	*status = builtin_exit(argv, *status);
+	*status = builtin_exit(argv, *status, is_parent);
 	if (*status <= 0xff)
 		return (1);
 	*status &= 0xff;

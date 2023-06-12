@@ -19,7 +19,7 @@ char	**get_environs(void);
 bool	init_environs(char **envs);
 void	dispose_environs(void);
 
-int		exec_builtin(char **argv, int *exit_status);
+int		exec_builtin(char **argv, int *exit_status, bool is_parent);
 bool	is_builtin(char **argv);
 
 #endif
