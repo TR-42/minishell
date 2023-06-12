@@ -25,19 +25,22 @@ static bool	identify_endstr(char *arg, char *end);
 int	builtin_exit(char **argv, int status)
 {
 	char	*tmp;
+	size_t	size;
 
 	ft_dprintf(STDERR_FILENO, "%s\n", COMMAND);
-	if (get_strslen(argv) > 2)
-		return (print_error(COMMAND, NULL, MANYARGERR, 1));
+	if (*(argv + 1) != NULL && ft_strncmp(*(argv + 1), "--", 3) == 0)
+		argv++;
+	size = get_strslen(argv);
 	if (*(++argv) != NULL)
 	{
 		status = ft_strtol(*argv, &tmp, 10);
 		if (**argv == '\0' || (*tmp == '\0' && !ft_isdigit(*(tmp - 1)))
-			|| (*tmp != '\0' && ft_strncmp(*argv, "--", 3) != 0
-				&& !identify_endstr(*argv, tmp)))
+			|| (*tmp != '\0' && !identify_endstr(*argv, tmp)))
 			return (print_error(COMMAND, *argv, NOTNUMERR, 0x1ff));
 		status &= 0xff;
 	}
+	if (size > 2)
+		return (print_error(COMMAND, NULL, MANYARGERR, 1));
 	status += 0x100;
 	return (status);
 }
