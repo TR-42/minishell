@@ -16,6 +16,7 @@
 #include "ft_is/ft_is.h"
 #include <unistd.h>
 #include <limits.h>
+#include <stdint.h>
 
 #define COMMAND "export"
 #define DECLARE "declare -x "
@@ -114,11 +115,13 @@ static bool	check_is_invalid(char *arg)
 {
 	if (!ft_isalpha(*arg) && *arg != '_')
 		return (true);
-	while (*arg != '=' && *arg != '\0')
+	while (*arg != '+' && *arg != '=' && *arg != '\0')
 	{
 		if (!ft_isalnum(*arg) && *arg != '_')
 			return (true);
 		arg++;
 	}
+	if (*arg == '+' && *(arg + 1) != '=')
+		return (true);
 	return (false);
 }

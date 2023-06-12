@@ -27,6 +27,7 @@ SRCS_BUILDIN :=\
 	ft_putstr_fd_with_err.c\
 	pwd.c\
 	save_environ.c\
+	save_pwd.c\
 	unset.c\
 
 SRCS_BUILD_CMD	:=\

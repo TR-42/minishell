@@ -18,6 +18,8 @@
 
 #define COMMAND "echo"
 
+static bool	is_only_option_n(char *arg);
+
 int	builtin_echo(char **argv)
 {
 	bool	flag;
@@ -25,7 +27,7 @@ int	builtin_echo(char **argv)
 
 	is_option_n = false;
 	argv++;
-	while (*argv != NULL && ft_strncmp(*argv, "-n", 3) == 0)
+	while (*argv != NULL && is_only_option_n(*argv))
 	{
 		is_option_n = true;
 		argv++;
@@ -44,4 +46,15 @@ int	builtin_echo(char **argv)
 	if (!flag)
 		return (print_error(COMMAND, NULL, PRINTFERR, 1));
 	return (0);
+}
+
+static bool	is_only_option_n(char *arg)
+{
+	if (*(arg++) != '-')
+		return (false);
+	while (*arg == 'n')
+		arg++;
+	if (*arg != '\0')
+		return (false);
+	return (true);
 }

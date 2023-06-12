@@ -6,7 +6,7 @@
 /*   By: kitsuki <kitsuki@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 02:04:47 by kitsuki           #+#    #+#             */
-/*   Updated: 2023/06/03 18:56:49 by kitsuki          ###   ########.fr       */
+/*   Updated: 2023/06/10 23:20:46 by kitsuki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define PRINTFERR "an error happened in printf"
 # define INVALIDERR "not a valid identifier"
 # define NOTNUMERR "numeric argument required"
+# define FAILERR "failure to execute this command"
 
 size_t	get_strslen(char **src);
 void	free_all(char **dst);

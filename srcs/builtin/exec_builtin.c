@@ -22,6 +22,8 @@
 #define PWD "pwd"
 #define UNSET "unset"
 
+static int	handle_exit(char **argv, int *status);
+
 int	exec_builtin(char **argv, int *exit_status)
 {
 	if (argv == NULL || *argv == NULL)
@@ -33,10 +35,7 @@ int	exec_builtin(char **argv, int *exit_status)
 	else if (ft_strncmp(*argv, ENV, sizeof(ENV)) == 0)
 		*exit_status = builtin_env(argv);
 	else if (ft_strncmp(*argv, EXIT, sizeof(EXIT)) == 0)
-	{
-		*exit_status = builtin_exit(argv, *exit_status);
-		return (-1);
-	}
+		return (handle_exit(argv, exit_status));
 	else if (ft_strncmp(*argv, EXPORT, sizeof(EXPORT)) == 0)
 		*exit_status = builtin_export(argv);
 	else if (ft_strncmp(*argv, PWD, sizeof(PWD)) == 0)
@@ -48,6 +47,15 @@ int	exec_builtin(char **argv, int *exit_status)
 	if (*get_saved_environs() == NULL)
 		return (-1);
 	return (1);
+}
+
+static int	handle_exit(char **argv, int *status)
+{
+	*status = builtin_exit(argv, *status);
+	if (*status <= 0xff)
+		return (1);
+	*status &= 0xff;
+	return (-1);
 }
 
 bool	is_builtin(char **argv)
