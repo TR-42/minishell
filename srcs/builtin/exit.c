@@ -22,12 +22,13 @@
 
 static bool	identify_endstr(char *arg, char *end);
 
-int	builtin_exit(char **argv, int status)
+int	builtin_exit(char **argv, int status, bool is_parent)
 {
 	char	*tmp;
 	size_t	size;
 
-	ft_dprintf(STDERR_FILENO, "%s\n", COMMAND);
+	if (is_parent)
+		ft_dprintf(STDERR_FILENO, "%s\n", COMMAND);
 	if (*(argv + 1) != NULL && ft_strncmp(*(argv + 1), "--", 3) == 0)
 		argv++;
 	size = get_strslen(argv);

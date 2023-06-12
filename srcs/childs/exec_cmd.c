@@ -132,7 +132,7 @@ noreturn void	exec_command(t_ch_proc_info *info_arr, size_t index, int status)
 		dup2_and_close(&info);
 	dispose_proc_info_arr(info_arr);
 	if (is_builtin(info.argv))
-		exec_builtin(info.argv, &status);
+		exec_builtin(info.argv, &status, false);
 	else
 	{
 		ret = restore_sig_handler();
